@@ -42,7 +42,7 @@ export const AlergiasContainer = (props) => {
               <CheckCustom checked={alergias.niquel} onChange={onChangeCheck} name="niquel" label="NIQUEL" />
               <CheckCustom checked={alergias.picadura_insectos} onChange={onChangeCheck} name="picadura_insectos" label="PICADURA INSECTOS" />
               <CheckCustom checked={alergias.polen} onChange={onChangeCheck} name="polen" label="POLEN" />
-              <CheckCustom checked={alergias.polen} onChange={onChangeCheck} name="polen" label="POLVO" />
+              <CheckCustom checked={alergias.polvo} onChange={onChangeCheck} name="polvo" label="POLVO" />
               <CheckCustom checked={alergias.sol} onChange={onChangeCheck} name="sol" label="SOL" />
             </FormGroup>
           </Paper>
