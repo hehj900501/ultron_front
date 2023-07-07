@@ -10,6 +10,7 @@ class ECTReactComponent extends Component {
   iNo = 1
 
   constructor(props) {
+    console.log("KAOZ", props);
     super(props);
 
     // configure the ECT
@@ -37,12 +38,13 @@ class ECTReactComponent extends Component {
     return (
       <Fragment>
         {/* input element used for typing the search */}
-        <input
-          type="text"
-          className="ctw-input"
-          data-ctw-ino={this.iNo}
-        />
+        
         <Grid item xs={12} >
+          <input
+            type="text"
+            className="ctw-input"
+            data-ctw-ino={this.iNo}
+          />
           <TextField 
             id="fullWidth"
             fullWidth

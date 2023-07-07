@@ -53,7 +53,7 @@ export const ExpedienteElectronicoContainer = (props) => {
                 onChange={onChange}
                 fullWidth
                 multiline
-                label="TOPOLOGÍA" />
+                label="TOPOGRAGÍA" />
             </Grid>
             <Grid item xs={12} className={classes.textFieldFullWidth}>
               <TextField 
@@ -75,9 +75,9 @@ export const ExpedienteElectronicoContainer = (props) => {
                 multiline
                 label="DIAGNOSTICO CIE-11" />
             </Grid>
-            {/* <Grid item xs={12} >
+            <Grid item xs={12} >
               <ECTReactComponent />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12} className={classes.textFieldFullWidth}>
               <TextField 
                 id="fullWidth"

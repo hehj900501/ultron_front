@@ -60,10 +60,9 @@ export const SignosVitalesContainer = (props) => {
               name="temperatura"
               value={signosVitales.temperatura}
               onChange={onChange}
-              type='Number'
               onInput={(e) => {
 								e.target.value = e.target.value < 0 ? 0 : e.target.value;
-								e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 2)
+								e.target.value = (e.target.value).toString().slice(0, 5)
 							}}
               label="TEMPERATURA (C°)" />
           </Grid>

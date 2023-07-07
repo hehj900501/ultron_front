@@ -51,9 +51,9 @@ const SignosVitales = (props) => {
 		{ title: 'TENSION ARTERIAL', field: 'tension_arterial' },
 		{ title: 'FRECUENCIA RESPIRATORIA', field: 'frecuencia_respiratoria' },
 		{ title: 'FRECUENCIA CARDIACA', field: 'frecuencia_cardiaca' },
-		{ title: 'TEMPERATURA', field: 'temperatura' },
-		{ title: 'PESO', field: 'peso' },
-		{ title: 'ALTURA', field: 'altura' },
+		{ title: 'TEMPERATURA (C°)', field: 'temperatura' },
+		{ title: 'PESO (KG)', field: 'peso' },
+		{ title: 'ALTURA (CM)', field: 'altura' },
 		{ title: 'IMC', field: 'imc' }
 	]
 
@@ -131,9 +131,6 @@ const SignosVitales = (props) => {
 				const fecha = new Date(signoVital.create_date);
 				signoVital.fecha = dateToString(fecha)
 				signoVital.hora = `${addZero(fecha.getHours())}:${addZero(fecha.getMinutes())}`
-				signoVital.temperatura = `${signoVital.temperatura} C°`
-				signoVital.peso = `${signoVital.peso} KG`
-				signoVital.altura = `${signoVital.altura} CM`
 			})
 			historiaClinica.signos_vitales.sort((a, b) => {
 				if (a.create_date > b.create_date) return -1;
