@@ -91,7 +91,8 @@ const ExpedienteElectronico = (props) => {
 						colorBase={colorBase}
 						expedienteElectronico={expedienteElectronico}
 						onChange={handleChange}
-						onClickGuardar={handleClickGuardar} /> :
+						onClickGuardar={handleClickGuardar}
+						setExpedienteElectronico={setExpedienteElectronico} /> :
 					<Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />
 					</Backdrop>

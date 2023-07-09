@@ -16,6 +16,7 @@ export const ExpedienteElectronicoContainer = (props) => {
     expedienteElectronico,
     onChange,
     onClickGuardar,
+    setExpedienteElectronico,
   } = props;
 
   const classes = myStyles(colorBase)();
@@ -65,6 +66,12 @@ export const ExpedienteElectronicoContainer = (props) => {
                 multiline
                 label="MORFOLOGÍA" />
             </Grid>
+            <Grid item xs={12} >
+              <ECTReactComponent
+                expedienteElectronico={expedienteElectronico}
+                setExpedienteElectronico={setExpedienteElectronico} 
+              />
+            </Grid>
             <Grid item xs={12} className={classes.textFieldFullWidth}>
               <TextField 
                 id="fullWidth"
@@ -75,9 +82,6 @@ export const ExpedienteElectronicoContainer = (props) => {
                 multiline
                 label="DIAGNOSTICO CIE-11" />
             </Grid>
-            {/* <Grid item xs={12} >
-              <ECTReactComponent />
-            </Grid> */}
             <Grid item xs={12} className={classes.textFieldFullWidth}>
               <TextField 
                 id="fullWidth"
