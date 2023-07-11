@@ -212,6 +212,10 @@ const myStyles = (colorBase) => makeStyles( (theme) => {
 		},
         foot: {
             height: '150px',
+        },
+        cie11 : {
+            float: 'left',
+            placeSelf: 'center'
         }
     }
 }
