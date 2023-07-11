@@ -7,6 +7,7 @@ import { Component } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import { useEffect } from "react";
 import myStyles from "../../css";
+import { useState } from "react";
 
 const ECTReactComponent = (props) => {
 
@@ -15,6 +16,8 @@ const ECTReactComponent = (props) => {
     expedienteElectronico,
     setExpedienteElectronico,
   } = props
+
+	const [show, setShow] = useState(true)
 
   const classes = myStyles(colorBase)();
 
@@ -35,11 +38,14 @@ const ECTReactComponent = (props) => {
           ...expedienteElectronico,
           diagnostico_cie: `${selectedEntity.code} ${selectedEntity.title}`.toUpperCase()
         })
+        document.getElementById("cie11").disabled = false
+
+        setShow(false)
       }
     };
-    ECT.Handler.configure(settings, callbacks);
+    ECT.Handler.configure(settings, callbacks)
 
-    ECT.Handler.bind(1);
+    ECT.Handler.bind(1)
 
 
 	}, [])
@@ -55,14 +61,22 @@ const ECTReactComponent = (props) => {
         </Grid>
         <Grid item xs={9} className={classes.cie11}>
           <input
+            id="cie11"
             type="text"
             className={`ctw-input ${classes.cie11}`}
             data-ctw-ino={1}
+            placeholder="BUSCAR DIAGNOSTICO"
           />
         </Grid>
       </Grid>
       {/* div element used for showing the search results */}
-      <div className="ctw-window" data-ctw-ino={1}></div>
+      {
+        show 
+        ? <Fragment>
+          <div className="ctw-window" data-ctw-ino={1}></div>
+          </Fragment>
+        :''
+      }
     </Fragment>
   )
 }

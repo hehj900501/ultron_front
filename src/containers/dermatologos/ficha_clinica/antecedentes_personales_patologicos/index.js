@@ -228,9 +228,18 @@ const AntecedentesPersonalesPatologicos = (props) => {
 	}
 
 	const handleClickGuardar = async() => {
-		const responseAntecedentesPersonalesPatologicos = await updateAntecedentesPersonalesPatologicos(antecedentesPersonalesPatologicos._id, antecedentesPersonalesPatologicos)
-		if (`${responseAntecedentesPersonalesPatologicos.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			findConsultorio()
+		let responseAntecedentesPersonalesPatologicos = null
+		if (!historiaClinica.antecedentes_personales_patologicos) {
+			responseAntecedentesPersonalesPatologicos = await createAntecedentesPersonalesPatologicos(antecedentesPersonalesPatologicos)
+			if ( `${responseAntecedentesPersonalesPatologicos.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED ) {
+				historiaClinica.antecedentes_personales_patologicos = responseAntecedentesPersonalesPatologicos.data._id
+				await commitHistoriaClinica()
+			}
+		} else {
+			responseAntecedentesPersonalesPatologicos = await updateAntecedentesPersonalesPatologicos(antecedentesPersonalesPatologicos._id, antecedentesPersonalesPatologicos)
+			if (`${responseAntecedentesPersonalesPatologicos.status}` === process.env.REACT_APP_RESPONSE_CODE_OK ) {
+				findConsultorio()
+			}
 		}
 	}
 
