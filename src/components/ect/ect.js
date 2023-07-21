@@ -1,13 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from "react"
 
 // import the ECT package and style
-import * as ECT from "@whoicd/icd11ect";
-import "@whoicd/icd11ect/style.css";
-import { Component } from "react";
-import { Grid, TextField } from "@material-ui/core";
-import { useEffect } from "react";
-import myStyles from "../../css";
-import { useState } from "react";
+import * as ECT from "@whoicd/icd11ect"
+import "@whoicd/icd11ect/style.css"
+import { Grid } from "@material-ui/core"
+import { useEffect } from "react"
+import myStyles from "../../css"
+import { useState } from "react"
 
 const ECTReactComponent = (props) => {
 
@@ -19,7 +18,7 @@ const ECTReactComponent = (props) => {
 
 	const [show, setShow] = useState(true)
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   useEffect(() => {
     const settings = {
@@ -28,7 +27,7 @@ const ECTReactComponent = (props) => {
       autoBind: false, // in React we recommend using the manual binding
       language: "es",
       sourceApp: "ULTRON"
-    };
+    }
     const callbacks = {
       selectedEntityFunction: (selectedEntity) => {
         ECT.Handler.clear()
@@ -42,7 +41,7 @@ const ECTReactComponent = (props) => {
 
         setShow(false)
       }
-    };
+    }
     ECT.Handler.configure(settings, callbacks)
 
     ECT.Handler.bind(1)
@@ -81,4 +80,4 @@ const ECTReactComponent = (props) => {
   )
 }
 
-export default ECTReactComponent;
+export default ECTReactComponent

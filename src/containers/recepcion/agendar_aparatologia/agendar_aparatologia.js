@@ -1,26 +1,25 @@
-import 'date-fns';
-import React, { Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { Paper, TextField } from '@material-ui/core';
-import TableComponent from '../../../components/table/TableComponent';
-import ModalCita from '../../../components/modales/modal_cita';
-import { Multiselect } from 'multiselect-react-dropdown';
-import ModalPagos from '../../../components/modales/modal_pagos';
-import { toFormatterCurrency } from '../../../utils/utils';
-import ModalImprimirTratamiento from '../../../components/modales/imprimir/tratamiento';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalProximaCita from '../../../components/modales/modal_proxima_cita';
-import myStyles from '../../../css';
-import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio';
-import { formaPagoTarjetaId, sucursalFederalismoId, sucursalOccidentalId } from '../../../utils/constants';
-import { CheckCustom } from '../../../components/basic/CheckCustom';
+import 'date-fns'
+import React, { Fragment } from 'react'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import { Paper, TextField } from '@material-ui/core'
+import TableComponent from '../../../components/table/TableComponent'
+import ModalCita from '../../../components/modales/modal_cita'
+import { Multiselect } from 'multiselect-react-dropdown'
+import ModalPagos from '../../../components/modales/modal_pagos'
+import { toFormatterCurrency } from '../../../utils/utils'
+import ModalImprimirTratamiento from '../../../components/modales/imprimir/tratamiento'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalProximaCita from '../../../components/modales/modal_proxima_cita'
+import myStyles from '../../../css'
+import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
+import { formaPagoTarjetaId, sucursalFederalismoId, sucursalOccidentalId } from '../../../utils/constants'
+import { CheckCustom } from '../../../components/basic/CheckCustom'
 
 export const AgendarAparatologiaContainer = (props) => {
 
@@ -102,14 +101,14 @@ export const AgendarAparatologiaContainer = (props) => {
 		// MODAL APARATOLOGIA
 		openModalTraspaso,
 		onCloseTraspasos,
-	} = props;
+	} = props
 
-	const classes = myStyles(colorBase)();
+	const classes = myStyles(colorBase)()
 
 	const showPromovendedores = [
 		...promovendedores,
 		...recepcionistas,
-	];
+	]
 
 	return (
 		<Fragment>
@@ -522,5 +521,5 @@ export const AgendarAparatologiaContainer = (props) => {
 				components={components} />
 
 		</Fragment>
-	);
+	)
 }

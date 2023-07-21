@@ -1,26 +1,26 @@
-import React from 'react';
-import Modal from '@material-ui/core/Modal';
-import TableComponent from '../../table/TableComponent';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import ModalUsoCfdi from '../modal_uso_cfdi';
-import ModalRazonSocial from '../modal_razon_social';
-import myStyles from '../../../css';
-import ImprimirDatosFacturacion from '../imprimir/datos_facturacion';
+import React from 'react'
+import Modal from '@material-ui/core/Modal'
+import TableComponent from '../../table/TableComponent'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import ModalUsoCfdi from '../modal_uso_cfdi'
+import ModalRazonSocial from '../modal_razon_social'
+import myStyles from '../../../css'
+import ImprimirDatosFacturacion from '../imprimir/datos_facturacion'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const ModalFormBuscarRazonSocial = (props) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     open,
@@ -44,9 +44,9 @@ const ModalFormBuscarRazonSocial = (props) => {
     handleCloseNuevaRazonSocial,
     colorBase,
     sucursal,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -109,7 +109,7 @@ const ModalFormBuscarRazonSocial = (props) => {
         </div>
       </Modal>
     </div >
-  );
+  )
 }
 
-export default ModalFormBuscarRazonSocial;
+export default ModalFormBuscarRazonSocial

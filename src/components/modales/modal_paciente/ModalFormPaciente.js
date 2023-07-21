@@ -1,34 +1,32 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import myStyles from '../../../css';
-import { CheckCustom } from '../../basic/CheckCustom';
-import { ComboCustom } from '../../basic/ComboCustom';
+import React from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid, FormControl } from '@material-ui/core'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import myStyles from '../../../css'
+import { CheckCustom } from '../../basic/CheckCustom'
+import { ComboCustom } from '../../basic/ComboCustom'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const ModalFormPaciente = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
     handleSubmit,
     onChange,
     onChangeSexo,
-    onChangeEstado,
     onChangeEmail,
     onChangeFamiliar,
     dataComplete,
@@ -39,10 +37,9 @@ const ModalFormPaciente = (props) => {
     sexos,
     colorBase,
     sucursal,
-    state,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -79,19 +76,6 @@ const ModalFormPaciente = (props) => {
                   onChange={onChange}
                   variant="outlined" />
               </Grid>
-              {/*
-              <Grid item xs={12}>
-                <TextField
-                className={classes.textField}
-                name="domicilio"
-                helperText={touched.domicilio ? errors.domicilio : ""}
-                error={Boolean(errors.domicilio)}
-                label="Direccion"
-                value={values.domicilio}
-                onChange={handleChange}
-                variant="outlined" />
-              </Grid>
-              */}
               <Grid item xs={12}>
                 <TextField
                   className={classes.textField}
@@ -186,7 +170,7 @@ const ModalFormPaciente = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormPaciente;
+export default ModalFormPaciente

@@ -1,6 +1,6 @@
-import React from "react";
-import { Checkbox, FormControlLabel, withStyles } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
+import React from "react"
+import { Checkbox, FormControlLabel, withStyles } from "@material-ui/core"
+import { green } from "@material-ui/core/colors"
 
 const GreenCheckbox = withStyles({
     root: {
@@ -10,7 +10,7 @@ const GreenCheckbox = withStyles({
         },
     },
     checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+})((props) => <Checkbox color="default" {...props} />)
 
 export const CheckCustom = (props) => {
 
@@ -20,7 +20,7 @@ export const CheckCustom = (props) => {
         name,
         label,
         disabled,
-    } = props;
+    } = props
 
     return (
         <FormControlLabel

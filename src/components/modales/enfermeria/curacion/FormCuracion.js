@@ -1,45 +1,43 @@
-import React, { Fragment } from 'react';
-import Modal from '@material-ui/core/Modal';
-import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
-import { ButtonCustom } from '../../../basic/ButtonCustom';
-import { ComboCustom } from "../../../../components/basic/ComboCustom";
-import myStyles from '../../../../css';
+import React from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, FormControl, Grid } from '@material-ui/core'
+import { ButtonCustom } from '../../../basic/ButtonCustom'
+import { ComboCustom } from "../../../../components/basic/ComboCustom"
+import myStyles from '../../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
-  };
+  }
 }
 
 const FormCuracion = (props) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
     onClose,
     onClickGurardar,
     open,
-    onChangeMotivos,
     onChangeNombre,
     onChangeTipo,
     onChangeArea,
-    motivos,
     curacionNombres,
     curacionTipos,
     areas,
     onChange,
     curacion,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -121,7 +119,7 @@ const FormCuracion = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default FormCuracion;
+export default FormCuracion

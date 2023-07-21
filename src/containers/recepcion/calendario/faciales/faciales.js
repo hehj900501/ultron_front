@@ -1,12 +1,12 @@
-import React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
+import React from 'react'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment'
 
-const localizer = momentLocalizer(moment);
+const localizer = momentLocalizer(moment)
 
 export const FacialesContainer = (props) => {
 
-    const { events } = props;
+    const { events } = props
 
     const messages = {
         allDay: 'Todo el dia',
@@ -20,9 +20,9 @@ export const FacialesContainer = (props) => {
         date: 'Fecha',
         time: 'Hora',
         event: 'Evento',
-    };
+    }
 
-    const textColor = "#FFFFFF";
+    const textColor = "#FFFFFF"
 
     const eventPropGetter = (event, start, end, isSelected) => {
 
@@ -30,12 +30,12 @@ export const FacialesContainer = (props) => {
             backgroundColor: event.servicio.color,
             color: textColor,
             borderRadius: "5px",
-        };
+        }
     
         return {
             className: "",
             style: newStyle
-        };
+        }
     }
 
     return (
@@ -49,5 +49,5 @@ export const FacialesContainer = (props) => {
                 messages={messages}
                 eventPropGetter={eventPropGetter} />
         </div>
-    );
+    )
 }

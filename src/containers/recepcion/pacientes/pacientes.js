@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import TableComponent from '../../../components/table/TableComponent';
-import { Grid, makeStyles } from '@material-ui/core';
-import ModalPaciente from '../../../components/modales/modal_paciente';
-import MenuHistoricos from '../../../components/modales/modal_historico';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import { baseUrl } from '../../../services';
-import myStyles from '../../../css';
-import PagosAnticipados from '../../../components/modales/pagos_anticipados';
+import React, { Fragment } from 'react'
+import TableComponent from '../../../components/table/TableComponent'
+import { Grid, makeStyles } from '@material-ui/core'
+import ModalPaciente from '../../../components/modales/modal_paciente'
+import MenuHistoricos from '../../../components/modales/modal_historico'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import { baseUrl } from '../../../services'
+import myStyles from '../../../css'
+import PagosAnticipados from '../../../components/modales/pagos_anticipados'
 
 export const PacientesContainer = (props) => {
 
@@ -27,13 +27,9 @@ export const PacientesContainer = (props) => {
     onClickGuardar,
     onClickcConsulta,
     colorBase,
-    setIsLoading,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
-
-console.log("KAOZ", columns);
-
+  const classes = myStyles(colorBase)()
 
   const pacientes = query =>
   new Promise((resolve, reject) => {
@@ -51,43 +47,7 @@ console.log("KAOZ", columns);
         totalCount: result.total,
       })
     })
-});
-
-// const pacientesSucrusal = () => {
-//   setIsLoading(true);
-//   const JsonFields = ["Nombre","Email","Genero","Fecha nacimiento"]
-
-//   let csvStr = JsonFields.join(",") + "\n";
-
-//   const url = `${baseUrl}/paciente/`
-//   fetch(url, {
-//     headers: {
-//       Authorization: `Bearer ${empleado.access_token}`
-//     }
-//   })
-//     .then(response => response.json())
-//     .then(result => {
-//       result.forEach(({nombres, apellidos, email, sexo, fecha_nacimiento}) => {
-//         const Name          = nombres +' '+ apellidos;
-//         const Email         = email ? email : 'NA';
-//         const Gender        = sexo ? sexo.nombre : 'NA';
-//         const Date          = fecha_nacimiento;
-    
-//         csvStr += Name + ',' + Email + ',' + Gender + ','  + Date + "\n";
-//       })
-
-//       const exportName = 'Pacientes_' + new Date().toLocaleDateString('es-MX');
-//       var dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(csvStr);
-//       var downloadAnchorNode = document.createElement('a');
-//       downloadAnchorNode.setAttribute("href",     dataStr);
-//       downloadAnchorNode.setAttribute("download", exportName + ".csv");
-//       document.body.appendChild(downloadAnchorNode); // required for firefox
-//       downloadAnchorNode.click();
-//       downloadAnchorNode.remove();
-//       setIsLoading(false);
-//     })
-// }
-
+})
 
   return (
     <Fragment>
@@ -151,5 +111,5 @@ console.log("KAOZ", columns);
 
       </Grid>
     </Fragment>
-  );
+  )
 }

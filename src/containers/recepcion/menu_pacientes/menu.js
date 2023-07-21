@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Pacientes from '../pacientes/index';
-import AgendarConsulta from '../agendar_consulta';
-import Consultas from '../calendario/consultas';
-import AgendarFacial from '../agendar_facial';
-import GeneralCitas from '../general_citas';
-import AgendarAparatologia from '../agendar_aparatologia';
-import Faciales from '../calendario/faciales';
-import Laser from '../calendario/laser';
-import Aparatologia from '../calendario/aparatologia';
-import ModalDermapen from '../../../components/modales/modal_dermapen';
-import AgendarDermapen from '../agendar_dermapen';
-import AgendarCuracion from '../agendar_curacion';
-import AgendarEstetica from '../agendar_estetica';
-import Calendario from '../calendario';
-import myStyles from '../../../css';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Pacientes from '../pacientes/index'
+import AgendarConsulta from '../agendar_consulta'
+import AgendarFacial from '../agendar_facial'
+import GeneralCitas from '../general_citas'
+import AgendarAparatologia from '../agendar_aparatologia'
+import AgendarDermapen from '../agendar_dermapen'
+import AgendarCuracion from '../agendar_curacion'
+import AgendarEstetica from '../agendar_estetica'
+import Calendario from '../calendario'
+import DashboardForm from '../dashboard'
+import myStyles from '../../../css'
 
 function TabPanel(props) {
-	const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props
 
 	return (
 		<Typography
@@ -36,20 +32,20 @@ function TabPanel(props) {
 		>
 			{value === index && <Box p={3}>{children}</Box>}
 		</Typography>
-	);
+	)
 }
 
 TabPanel.propTypes = {
 	children: PropTypes.node,
 	index: PropTypes.any.isRequired,
 	value: PropTypes.any.isRequired,
-};
+}
 
 function a11yProps(index) {
 	return {
 		id: `simple-tab-${index}`,
 		'aria-controls': `simple-tabpanel-${index}`,
-	};
+	}
 }
 
 export const MenuContainer = props => {
@@ -71,17 +67,17 @@ export const MenuContainer = props => {
 		sucursal,
 		colorBase,
 		turno,
-	} = props;
+	} = props
 
 	const useStyles = makeStyles(theme => ({
 		root: {
 			flexGrow: 1,
 			backgroundColor: theme.palette.background.paper,
 		}
-	}));
+	}))
 
-	const classes = myStyles(colorBase)();
-	const classess = useStyles();
+	const classes = myStyles(colorBase)()
+	const classess = useStyles()
 
 	return (
 		<div className={classess.root}>
@@ -103,6 +99,7 @@ export const MenuContainer = props => {
 					<Tab className={classes.tabs} label="ESTÉTICA" {...a11yProps(6)} />
 					<Tab className={classes.tabs} label="GENERAL" {...a11yProps(7)} />
 					<Tab className={classes.tabs} label="CALENDARIO" {...a11yProps(8)} />
+					<Tab className={classes.tabs} label="DASHBOARD" {...a11yProps(9)} />
 					{
 						/*
 						
@@ -202,15 +199,12 @@ export const MenuContainer = props => {
 					sucursal={sucursal._id} />
 			</TabPanel>
 			<TabPanel value={value} index={9}>
-				<Aparatologia
-					sucursal={sucursal._id}
+				<DashboardForm
+					empleado={empleado}
 					colorBase={colorBase} />
 			</TabPanel>
-			<TabPanel value={value} index={10}>
-				<Faciales
-					sucursal={sucursal._id}
-					colorBase={colorBase} />
-			</TabPanel>
+			
 		</div>
-	);
+		
+	)
 }

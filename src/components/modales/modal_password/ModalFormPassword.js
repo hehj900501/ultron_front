@@ -1,20 +1,20 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { Button, Grid, IconButton, InputAdornment, OutlinedInput, InputLabel, FormControl } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { ButtonCustom } from '../../basic/ButtonCustom';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Modal from '@material-ui/core/Modal'
+import { Grid, IconButton, InputAdornment, OutlinedInput, InputLabel, FormControl } from '@material-ui/core'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { ButtonCustom } from '../../basic/ButtonCustom'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const useStyles = makeStyles(theme => ({
@@ -33,13 +33,13 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     color: '#FFFFFF',
   },
-}));
+}))
 
 const ModalFormPassword = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
@@ -52,7 +52,7 @@ const ModalFormPassword = (props) => {
     handleChangeNewPassword,
     open,
     dataComplete,
-  } = props;
+  } = props
 
   return (
     <Modal
@@ -62,7 +62,7 @@ const ModalFormPassword = (props) => {
       <div style={modalStyle} className={classes.paper}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <FormControl className={classes.margin, classes.textField} variant="outlined">
+            <FormControl className={`${classes.margin}, ${classes.textField}`} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Antigua Contraseña</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
@@ -130,7 +130,7 @@ const ModalFormPassword = (props) => {
       </div>
     </Modal>
 
-  );
+  )
 }
 
-export default ModalFormPassword;
+export default ModalFormPassword

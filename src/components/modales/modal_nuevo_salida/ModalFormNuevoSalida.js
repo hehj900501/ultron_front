@@ -1,54 +1,28 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { Button, Grid, IconButton, InputAdornment, OutlinedInput, InputLabel, FormControl, MenuItem, Select, TextField } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import ModalConfirmacion from '../modal_confirmacion';
-import myStyles from '../../../css';
+import React from 'react'
+import Modal from '@material-ui/core/Modal'
+import { Grid, InputLabel, FormControl, MenuItem, Select, TextField } from '@material-ui/core'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import ModalConfirmacion from '../modal_confirmacion'
+import myStyles from '../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
-
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    minWidth: 120,
-    width: '100%',
-  },
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  textField: {
-    width: '100%',
-  },
-  button: {
-    width: '100%',
-    color: '#FFFFFF',
-  },
-}));
 
 const ModalFormNuevoSalida = (props) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
     onClickCancel,
-    onClickGuardar,
     open,
     dataComplete,
     onChangeTipoSalida,
@@ -56,7 +30,6 @@ const ModalFormNuevoSalida = (props) => {
     onChange,
     onAgregarSalida,
     empleado,
-    previousTipoSalida,
     openModalConfirmacion,
     onCloseModalConfirmacion,
     onConfirmModalConfirmacion,
@@ -64,9 +37,9 @@ const ModalFormNuevoSalida = (props) => {
     setSeverity,
     setOpenAlert,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <Modal
@@ -156,7 +129,7 @@ const ModalFormNuevoSalida = (props) => {
       </div>
     </Modal>
 
-  );
+  )
 }
 
-export default ModalFormNuevoSalida;
+export default ModalFormNuevoSalida

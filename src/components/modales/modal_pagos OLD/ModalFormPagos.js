@@ -1,39 +1,36 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Button, Grid } from '@material-ui/core';
-import { ButtonCustom } from "../../basic/ButtonCustom";
-import { CheckCustom } from '../../basic/CheckCustom';
-import TableComponent from '../../table/TableComponent';
-import ModalPago from '../modal_pago';
-import ModalBuscarRazonSocial from '../modal_buscar_razon_social';
-import { toFormatterCurrency } from '../../../utils/utils';
-import myStyles from '../../../css';
+import React from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid } from '@material-ui/core'
+import { ButtonCustom } from "../../basic/ButtonCustom"
+import { CheckCustom } from '../../basic/CheckCustom'
+import TableComponent from '../../table/TableComponent'
+import ModalPago from '../modal_pago'
+import ModalBuscarRazonSocial from '../modal_buscar_razon_social'
+import { toFormatterCurrency } from '../../../utils/utils'
+import myStyles from '../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const ModalFormPagos = (props) => {
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     pago,
     pagos,
     titulo,
-    isValid,
     onClickCancel,
-    onClickGuardar,
     isLoading,
     open,
     columns,
@@ -56,7 +53,7 @@ const ModalFormPagos = (props) => {
     onChangDescuentoDermatologo,
     values,
     colorBase,
-  } = props;
+  } = props
 
   return (
     <div>
@@ -109,7 +106,7 @@ const ModalFormPagos = (props) => {
                 type='Number'
 
                 onInput={(e) => {
-                  e.target.value = e.target.value > 100 ? 100 : e.target.value;
+                  e.target.value = e.target.value > 100 ? 100 : e.target.value
                   e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 5)
                 }}
                 variant="outlined" />
@@ -184,7 +181,7 @@ const ModalFormPagos = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormPagos;
+export default ModalFormPagos

@@ -1,14 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import myStyles from '../../../css';
-import { ComboCustom } from '../../basic/ComboCustom';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid, FormControl } from '@material-ui/core'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import { ComboCustom } from '../../basic/ComboCustom'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -16,7 +15,7 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
     height: '70%',
-  };
+  }
 }
 
 const useStyles = makeStyles(theme => ({
@@ -39,13 +38,13 @@ const useStyles = makeStyles(theme => ({
     minWidth: 120,
     width: '100%',
   },
-}));
+}))
 
 const FormItemReceta = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     handleSubmit,
@@ -56,9 +55,8 @@ const FormItemReceta = (props) => {
     onAgregarProducto,
     onClickCancel,
     open,
-    laboratorios,
     productos,
-  } = props;
+  } = props
 
   return (
     <div>
@@ -86,16 +84,6 @@ const FormItemReceta = (props) => {
               <Grid item xs={5} className={classes.label}>
                 <h2 className={classes.label}>{`LABORATORIO: ${values.producto._id ? values.producto._id.laboratorio.nombre : "-"}`}</h2>
               </Grid>
-
-              {/* <Grid item xs={12} >
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <ComboCustom
-                    label='LABORATORIOS'
-                    value={values.laboratorio._id}
-                    // onChange={onChangeLaboratorio}
-                    options={laboratorios} />
-                </FormControl>
-              </Grid> */}
 
               <Grid item xs={12}>
                 <TextField
@@ -129,7 +117,7 @@ const FormItemReceta = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default FormItemReceta;
+export default FormItemReceta

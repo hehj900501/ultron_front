@@ -1,18 +1,18 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Button, Grid } from '@material-ui/core';
-import { ButtonCustom } from "../../basic/ButtonCustom";
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid } from '@material-ui/core'
+import { ButtonCustom } from "../../basic/ButtonCustom"
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const useStyles = makeStyles(theme => ({
@@ -31,13 +31,13 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     color: '#FFFFFF',
   },
-}));
+}))
 
 const ModalFormConsultorio = (props) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
 		values,
@@ -49,7 +49,7 @@ const ModalFormConsultorio = (props) => {
     onClickCancel,
     onClickGuardar,
     open,
-  } = props;
+  } = props
 
   return (
     <div>
@@ -97,7 +97,7 @@ const ModalFormConsultorio = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-  export default ModalFormConsultorio;
+  export default ModalFormConsultorio

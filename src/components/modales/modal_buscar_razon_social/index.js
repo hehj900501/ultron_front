@@ -1,14 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import ModalFormBuscarRazonSocial from './ModalFormBuscarRazonSocial';
-import { showAllRazonSocials } from '../../../services/razones_sociales';
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
-import MuiAlert from '@material-ui/lab/Alert';
-import PrintIcon from '@material-ui/icons/Print';
-
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import React, { useState, useEffect, Fragment } from 'react'
+import ModalFormBuscarRazonSocial from './ModalFormBuscarRazonSocial'
+import { showAllRazonSocials } from '../../../services/razones_sociales'
+import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core'
+import CheckIcon from '@material-ui/icons/Check'
 
 const useStyles = makeStyles(theme => ({
   backdrop: {
@@ -29,19 +23,19 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   }
-}));
+}))
 
 const ModalBuscarRazonSocial = (props) => {
 
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [razonSociales, setRazonSociales] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [factura, setFactura] = useState();
-  const [openModalUsoCfdi, setOpenModalUsoCfdi] = useState(false);
-  const [openNuevaRazonSocial, setOpenNuevaRazonSocial] = useState(false);
-  const [datosImpresion, setDatosImpresion] = useState();
-  const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false);
+  const [razonSociales, setRazonSociales] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [factura, setFactura] = useState()
+  const [openModalUsoCfdi, setOpenModalUsoCfdi] = useState(false)
+  const [openNuevaRazonSocial, setOpenNuevaRazonSocial] = useState(false)
+  const [datosImpresion, setDatosImpresion] = useState()
+  const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
 
   const {
     open,
@@ -50,7 +44,7 @@ const ModalBuscarRazonSocial = (props) => {
     servicio,
     sucursal,
     colorBase,
-  } = props;
+  } = props
 
   const columns = [
     { title: 'NOMBRE COMPLETO', field: 'nombre_completo' },
@@ -60,7 +54,7 @@ const ModalBuscarRazonSocial = (props) => {
     { title: 'CÓDIGO POSTAL', field: 'codigo_postal' },
     { title: 'COLONIA', field: 'colonia' },
     { title: 'TELÉFONO', field: 'telefono' },
-  ];
+  ]
 
   const options = {
     headerStyle: {
@@ -82,17 +76,12 @@ const ModalBuscarRazonSocial = (props) => {
       tipo_servicio: servicio.servicio,
       servicio: servicio,
     }
-    setFactura(factura);
-    setOpenModalUsoCfdi(true);
+    setFactura(factura)
+    setOpenModalUsoCfdi(true)
   }
 
   const handleCloseImprimirConsulta = (event, rowData) => {
-    setOpenModalImprimirCita(false);
-  }
-
-  const handlePrint = async (event, rowData) => {
-    setDatosImpresion(rowData);
-    setOpenModalImprimirCita(true);
+    setOpenModalImprimirCita(false)
   }
 
   const actions = [
@@ -101,40 +90,40 @@ const ModalBuscarRazonSocial = (props) => {
       tooltip: 'SELECCIONAR',
       onClick: hanldeSelectRazonSocial
     },
-  ];
+  ]
 
   const loadRazonSocial = async () => {
-    const response = await showAllRazonSocials();
+    const response = await showAllRazonSocials()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
       await response.data.forEach(item => {
-        item.domicilio_completo = `${item.domicilio} #${item.numero_exterior} ${item.numero_interior ? '- ' + item.numero_interior : ''}`;
-      });
-      setRazonSociales(response.data);
+        item.domicilio_completo = `${item.domicilio} #${item.numero_exterior} ${item.numero_interior ? '- ' + item.numero_interior : ''}`
+      })
+      setRazonSociales(response.data)
     }
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   const handleCloseUsoCfdi = () => {
-    setOpenModalUsoCfdi(false);
+    setOpenModalUsoCfdi(false)
   }
 
   const handleOpenNuevaRazonSocial = () => {
-    setOpenNuevaRazonSocial(true);
+    setOpenNuevaRazonSocial(true)
   }
 
   const handleCloseNuevaRazonSocial = () => {
-    setOpenNuevaRazonSocial(false);
+    setOpenNuevaRazonSocial(false)
   }
 
   const loadAll = async () => {
-    setIsLoading(true);
-    await loadRazonSocial();
-    setIsLoading(false);
+    setIsLoading(true)
+    await loadRazonSocial()
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    loadAll();
-  }, []);
+    loadAll()
+  }, [])
 
   return (
     <Fragment>
@@ -168,7 +157,7 @@ const ModalBuscarRazonSocial = (props) => {
       }
     </Fragment>
 
-  );
+  )
 }
 
-export default ModalBuscarRazonSocial;
+export default ModalBuscarRazonSocial

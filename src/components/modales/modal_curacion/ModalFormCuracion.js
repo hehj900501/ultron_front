@@ -1,35 +1,34 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
-import { CheckCustom } from '../../basic/CheckCustom';
-import ModalPagos from '../modal_pagos';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Multiselect } from 'multiselect-react-dropdown';
-import { toFormatterCurrency } from '../../../utils/utils';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import myStyles from '../../../css';
+import React, { Fragment } from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core'
+import { CheckCustom } from '../../basic/CheckCustom'
+import ModalPagos from '../modal_pagos'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { Multiselect } from 'multiselect-react-dropdown'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import myStyles from '../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
-  };
+  }
 }
 
-const canceloStatusId = process.env.REACT_APP_CANCELO_STATUS_ID;
-const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID;
-const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID;
+const canceloStatusId = process.env.REACT_APP_CANCELO_STATUS_ID
+const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID
+const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID
 
 const ModalFormCuracion = (props) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
@@ -38,7 +37,6 @@ const ModalFormCuracion = (props) => {
     onClickCrearCuracion,
     open,
     onChangeTotal,
-    onChangePagado,
     sucursal,
     materiales,
     onChangeMateriales,
@@ -46,7 +44,6 @@ const ModalFormCuracion = (props) => {
     dataComplete,
     onChangeBiopsia,
     onEliminarBiopsias,
-    onChangeCantidadBiopsias,
     onChange,
     onChangeMotivos,
     onChangeFrecuencia,
@@ -74,15 +71,14 @@ const ModalFormCuracion = (props) => {
     onChangeFecha,
     onChangeHora,
     onChangeMinutos,
-    horarios,
     colorBase,
     isDataComplete,
     eliminarBiopsias,
-  } = props;
+  } = props
 
-  isDataComplete(values);
+  isDataComplete(values)
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -159,7 +155,7 @@ const ModalFormCuracion = (props) => {
                         type='Text'
                         onChange={onChangeHora}
                         onInput={(e) => {
-                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value);
+                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value)
                           e.target.value = (e.target.value).toString().slice(0, 2)
                         }}
                         variant="outlined" />
@@ -174,7 +170,7 @@ const ModalFormCuracion = (props) => {
                         type='Text'
                         onChange={onChangeMinutos}
                         onInput={(e) => {
-                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value);
+                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value)
                           e.target.value = (e.target.value).toString().slice(0, 2)
                         }}
                         variant="outlined" />
@@ -287,7 +283,7 @@ const ModalFormCuracion = (props) => {
                   type='Number'
                   onChange={onChangeTotal}
                   onInput={(e) => {
-                    e.target.value = e.target.value < 0 ? 0 : e.target.value;
+                    e.target.value = e.target.value < 0 ? 0 : e.target.value
                     e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 6)
                   }}
                   variant="outlined" />
@@ -349,7 +345,7 @@ const ModalFormCuracion = (props) => {
                       type='Number'
                       onChange={onChange}
                       onInput={(e) => {
-                        e.target.value = e.target.value <= 0 ? 1 : e.target.value;
+                        e.target.value = e.target.value <= 0 ? 1 : e.target.value
                         e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 1)
                       }}
                       variant="outlined" />
@@ -364,7 +360,7 @@ const ModalFormCuracion = (props) => {
                       type='Number'
                       onChange={onChangeCostoBiopsias}
                       onInput={(e) => {
-                        e.target.value = e.target.value <= 0 ? 0 : e.target.value;
+                        e.target.value = e.target.value <= 0 ? 0 : e.target.value
                         e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 4)
                       }}
                       variant="outlined" />
@@ -386,19 +382,6 @@ const ModalFormCuracion = (props) => {
                   </Grid>
 
                 </Fragment> : ''
-              }
-
-              {
-                /*
-                values._id ?
-                  <Grid item xs={12}>
-                    <CheckCustom
-                      checked={values.pagado}
-                      onChange={onChangePagado}
-                      disabled={values.pagado}
-                      name="checkedG"
-                      label="PAGADO" />
-                  </Grid> : ''*/
               }
 
               <Grid item xs={12}>
@@ -426,7 +409,7 @@ const ModalFormCuracion = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormCuracion;
+export default ModalFormCuracion

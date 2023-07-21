@@ -1,30 +1,23 @@
-import 'date-fns';
-import React, { Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { Paper, TextField } from '@material-ui/core';
-import TableComponent from '../../../components/table/TableComponent';
-import { Multiselect } from 'multiselect-react-dropdown';
-import ModalPagos from '../../../components/modales/modal_pagos';
-import { toFormatterCurrency } from '../../../utils/utils';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalEstetica from '../../../components/modales/modal_estetica';
-import ModalImprimirCuracion from '../../../components/modales/imprimir/curacion';
-import myStyles from '../../../css';
-import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio';
-import ModalProximaEstetica from '../../../components/modales/modal_proxima_estetica';
-import ModalImprimirEstetica from '../../../components/modales/imprimir/estetica';
-import { 
-	sucursalManuelAcunaId,
-	sucursalRubenDarioId,
-	rolRecepcionistaId
-  } from '../../../utils/constants';
+import 'date-fns'
+import React, { Fragment } from 'react'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import { Paper, TextField } from '@material-ui/core'
+import TableComponent from '../../../components/table/TableComponent'
+import { Multiselect } from 'multiselect-react-dropdown'
+import ModalPagos from '../../../components/modales/modal_pagos'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalEstetica from '../../../components/modales/modal_estetica'
+import myStyles from '../../../css'
+import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
+import ModalProximaEstetica from '../../../components/modales/modal_proxima_estetica'
+import ModalImprimirEstetica from '../../../components/modales/imprimir/estetica'
 
 export const AgendarEsteticaContainer = (props) => {
 
@@ -33,11 +26,9 @@ export const AgendarEsteticaContainer = (props) => {
 		errors,
 		servicios,
 		tratamientos,
-		areas,
 		horarios,
 		onChangeServicio,
 		onChangeTratamientos,
-		onChangeAreas,
 		onChangeFecha,
 		onChangeHora,
 		onChangeMinutos,
@@ -47,31 +38,23 @@ export const AgendarEsteticaContainer = (props) => {
 		onClickAgendar,
 		isValid,
 		isSubmitting,
-		onChangeTiempo,
 		onChangeObservaciones,
 		empleado,
 		disableDate,
 		dermatologos,
 		promovendedores,
 		cosmetologas,
-		onChangeToxinasRellenos,
 		onChangeDermatologos,
 		onChangeTipoCita,
 		onChangeTotal,
 		onChangePromovendedor,
 		onChangeCosmetologa,
-		onChangeItemUnidades,
 		onChangeMedio,
 		medios,
-		materiales,
-		onChangeMateriales,
-		onChangeItemPrecio,
 		productos,
 		frecuencias,
 		onChangeProductos,
 		onChangeFrecuencia,
-		frecuenciaPrimeraVezId,
-		frecuenciaReconsultaId,
 		onChangePaymentMethod,
 		formasPago,
 		colorBase,
@@ -106,9 +89,9 @@ export const AgendarEsteticaContainer = (props) => {
 		// MODAL TRASPASOS
 		openModalTraspaso,
 		onCloseTraspasos,
-	} = props;
+	} = props
 
-	const classes = myStyles(colorBase)();
+	const classes = myStyles(colorBase)()
 
 	return (
 		<Fragment>
@@ -361,7 +344,7 @@ export const AgendarEsteticaContainer = (props) => {
 									type='Text'
 									onChange={onChangeHora}
 									onInput={(e) => {
-										e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value);
+										e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value)
 										e.target.value = (e.target.value).toString().slice(0, 2)
 									}}
 									variant="outlined" />
@@ -375,7 +358,7 @@ export const AgendarEsteticaContainer = (props) => {
 									type='Text'
 									onChange={onChangeMinutos}
 									onInput={(e) => {
-										e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value);
+										e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value)
 										e.target.value = (e.target.value).toString().slice(0, 2)
 									}}
 									variant="outlined" />
@@ -390,57 +373,12 @@ export const AgendarEsteticaContainer = (props) => {
 								type='Number'
 								onChange={onChangeTotal}
 								onInput={(e) => {
-									e.target.value = e.target.value < 0 ? 0 : e.target.value;
+									e.target.value = e.target.value < 0 ? 0 : e.target.value
 									e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 6)
 								}}
 								variant="outlined" />
 						</Grid>
 					</Grid>
-					{/*
-					<Grid container spacing={2} xs={12} sm={6}>
-						<Grid item xs={3} className={classes.grid_center}>
-							<h3 className={classes.labelItemLeft}>{`NOMBRE`}</h3>
-						</Grid>
-						<Grid item xs={3} className={classes.grid_center}>
-							<h3 className={classes.labelItemCenter}> {`CANTIDAD UNIDADES`} </h3>
-						</Grid>
-						<Grid className={classes.labelItemLeft, classes.grid_center} item xs={3} >
-							<h3 className={classes.labelItemCenter}>{`PRECIO POR UNIDAD`}</h3>
-						</Grid>
-						<Grid item xs={3} className={classes.grid_center}>
-							<h3 className={classes.labelItemRight}> {`TOTAL`} </h3>
-						</Grid>
-						{
-							values.toxinas_rellenos ?
-								values.toxinas_rellenos.map((item, index) =>
-									<Fragment>
-										<Grid item xs={3} className={classes.grid_center}>
-											<h3 className={classes.labelItemLeft}>{item.nombre}</h3>
-										</Grid>
-										<Grid item xs={12} sm={3} className={classes.grid_center}>
-											<TextField
-												className={classes.labelItemCenter}
-												name={item.unidades}
-												label={`UNIDADES`}
-												value={item.unidades}
-												type='Number'
-												onChange={(e) => onChangeItemUnidades(e, index)}
-												onInput={(e) => {
-													e.target.value = e.target.value < 0 ? 0 : e.target.value;
-													e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 3)
-												}}
-												variant="outlined" />
-										</Grid>
-										<Grid item xs={3} className={classes.grid_center}>
-											<h3 className={classes.labelItemCenter}>{toFormatterCurrency(item.precio)}</h3>
-										</Grid>
-										<Grid item xs={3} className={classes.grid_center}>
-											<h3 className={classes.labelItemRight}>{toFormatterCurrency(item.unidades * item.precio)}</h3>
-										</Grid>
-									</Fragment>) : ''
-						}
-					</Grid>
-*/}
 				</Grid>
 
 				<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -475,5 +413,5 @@ export const AgendarEsteticaContainer = (props) => {
 				components={components} />
 
 		</Fragment>
-	);
+	)
 }
