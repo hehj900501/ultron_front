@@ -1,22 +1,19 @@
-import React, { Fragment } from "react";
-import TextField from "@material-ui/core/TextField";
+import React, { Fragment } from "react"
+import TextField from "@material-ui/core/TextField"
 import {
 	FormControl,
 	InputLabel,
-	Select,
 	makeStyles,
-	MenuItem,
 	Paper,
 	Grid,
 	InputAdornment,
 	IconButton,
 	OutlinedInput
-} from "@material-ui/core";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { ButtonCustom } from "../../../components/basic/ButtonCustom";
-import { ComboCustom } from "../../../components/basic/ComboCustom";
-import ECTReactComponent from "../../../components/ect/ect";
+} from "@material-ui/core"
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { ButtonCustom } from "../../../components/basic/ButtonCustom"
+import { ComboCustom } from "../../../components/basic/ComboCustom"
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -40,11 +37,11 @@ const useStyles = makeStyles(theme => ({
 		width: '80%',
 
 	},
-}));
+}))
 
 export const LoginContainer = (props) => {
 
-	const classes = useStyles();
+	const classes = useStyles()
 
 	const {
 		values,
@@ -53,20 +50,11 @@ export const LoginContainer = (props) => {
 		handleSubmit,
 		handleChangeNumber,
 		handleChangePassword,
-		isValid,
 		sucursales,
 		onChangeSucursal,
 		handleClickShowPassword,
 		handleMouseDownPassword,
-		//setFieldTouched
-	} = props;
-	// console.table(props);
-	/*
-	const change = (name, e) => {
-		e.persist();
-		handleChange(e);
-		setFieldTouched(name, true, false);
-	};*/
+	} = props
 
 	return (
 		<Fragment>
@@ -74,7 +62,7 @@ export const LoginContainer = (props) => {
 			<form>
 				<Grid container className={classes.root} justify="center" spacing={3}>
 					<Grid item xs={12} >
-						<FormControl variant="outlined" className={classes.margin, classes.textField}>
+						<FormControl variant="outlined" className={`${classes.margin}, ${classes.textField}`}>
 							<ComboCustom
 								label='SUCURSALES'
 								value={values.sucursal}
@@ -133,5 +121,5 @@ export const LoginContainer = (props) => {
 		</Paper>
 		</Fragment>
 	
-	);
-};
+	)
+}

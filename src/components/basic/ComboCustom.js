@@ -1,13 +1,6 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { createMuiTheme } from '@mui/material';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: { main: process.env.REACT_APP_TOP_BAR_COLOR },
-    }
-});
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
 
 export const ComboCustom = (props) => {
 
@@ -17,9 +10,9 @@ export const ComboCustom = (props) => {
         onChange,
         value,
         className,
-    } = props;
+    } = props
 
-    const newValue = value;
+    const newValue = value
 
     return (
         <Autocomplete
@@ -36,5 +29,5 @@ export const ComboCustom = (props) => {
                 return <TextField {...params} label={label} />
             }}
         />
-    );
+    )
 }

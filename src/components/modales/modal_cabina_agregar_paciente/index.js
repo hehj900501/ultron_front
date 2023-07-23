@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import * as Yup from "yup";
-import { Formik } from 'formik';
+import React, { useState, useEffect } from 'react'
+import * as Yup from "yup"
+import { Formik } from 'formik'
 import {
   findCabinaBySucursalIdAndFree,
   updateCabina,
-} from '../../../services';
-import { findFacialById, updateFacial } from '../../../services/faciales';
-import { findLaserById, updateLaser } from '../../../services/laser';
-import { findAparatologiaById, updateAparatologia } from '../../../services/aparatolgia';
-import { addZero } from '../../../utils/utils';
-import ModalFormCabinaAgregarPaciente from './ModalFormCabinaAgregarPaciente';
-import { findDermapenById, updateDermapen } from '../../../services/dermapens';
+} from '../../../services'
+import { findFacialById, updateFacial } from '../../../services/faciales'
+import { findLaserById, updateLaser } from '../../../services/laser'
+import { findAparatologiaById, updateAparatologia } from '../../../services/aparatolgia'
+import { addZero } from '../../../utils/utils'
+import ModalFormCabinaAgregarPaciente from './ModalFormCabinaAgregarPaciente'
+import { findDermapenById, updateDermapen } from '../../../services/dermapens'
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Ingresa los nombres")
     .required("Los nombres del pacientes son requeridos")
-});
+})
 
 const ModalCabinaAgregarPaciente = (props) => {
   const {
@@ -31,101 +31,101 @@ const ModalCabinaAgregarPaciente = (props) => {
     cambio,
     paciente,
     colorBase,
-  } = props;
+  } = props
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [cabinas, setCabinas] = useState([]);
-  //const [consulta, setConsulta] = useState();
-  //const [cita, setCita] = useState();
+  const [isLoading, setIsLoading] = useState(true)
+  const [cabinas, setCabinas] = useState([])
+  //const [consulta, setConsulta] = useState()
+  //const [cita, setCita] = useState()
 
   const [values, setValues] = useState({
-  });
+  })
 
-  const enCabinaStatusId = process.env.REACT_APP_EN_CABINA_STATUS_ID;
-  const facialServicioId = process.env.REACT_APP_FACIAL_SERVICIO_ID;
-  const laserServicioId = process.env.REACT_APP_LASER_SERVICIO_ID;
-  const aparatologiaServicioId = process.env.REACT_APP_APARATOLOGIA_SERVICIO_ID;
-  const dermapenServicioId = process.env.REACT_APP_DERMAPEN_SERVICIO_ID;
+  const enCabinaStatusId = process.env.REACT_APP_EN_CABINA_STATUS_ID
+  const facialServicioId = process.env.REACT_APP_FACIAL_SERVICIO_ID
+  const laserServicioId = process.env.REACT_APP_LASER_SERVICIO_ID
+  const aparatologiaServicioId = process.env.REACT_APP_APARATOLOGIA_SERVICIO_ID
+  const dermapenServicioId = process.env.REACT_APP_DERMAPEN_SERVICIO_ID
 
   useEffect(() => {
     const loadCabinasDisponibles = async () => {
-      const response = await findCabinaBySucursalIdAndFree(sucursal);
+      const response = await findCabinaBySucursalIdAndFree(sucursal)
       if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-        setCabinas(response.data);
+        setCabinas(response.data)
       }
     }
 
-    loadCabinasDisponibles();
-    setIsLoading(false);
+    loadCabinasDisponibles()
+    setIsLoading(false)
 
-  }, [sucursal]);
+  }, [sucursal])
 
   const handleClickGuardar = async (event, rowData) => {
-    setIsLoading(true);
-    let responseCita;
+    setIsLoading(true)
+    let responseCita
     switch (tipo_servicio) {
       case facialServicioId:
-        responseCita = await findFacialById(servicio, empleado.access_token);
-        break;
+        responseCita = await findFacialById(servicio, empleado.access_token)
+        break
       case dermapenServicioId:
-        responseCita = await findDermapenById(servicio, empleado.access_token);
-        break;
+        responseCita = await findDermapenById(servicio, empleado.access_token)
+        break
       case laserServicioId:
-        responseCita = await findLaserById(servicio, empleado.access_token);
-        break;
+        responseCita = await findLaserById(servicio, empleado.access_token)
+        break
       case aparatologiaServicioId:
-        responseCita = await findAparatologiaById(servicio, empleado.access_token);
-        break;
+        responseCita = await findAparatologiaById(servicio, empleado.access_token)
+        break
     }
 
     if (`${responseCita.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      const cita = responseCita.data;
-      const dateNow = new Date();
-      let updateCita = cita;
-      updateCita.status = enCabinaStatusId;
-      updateCita.cosmetologa = values.cabina.cosmetologa;
+      const cita = responseCita.data
+      const dateNow = new Date()
+      let updateCita = cita
+      updateCita.status = enCabinaStatusId
+      updateCita.cosmetologa = values.cabina.cosmetologa
       if (!cambio) {
-        updateCita.hora_atencion = `${addZero(dateNow.getHours())}:${addZero(dateNow.getMinutes())}`;
+        updateCita.hora_atencion = `${addZero(dateNow.getHours())}:${addZero(dateNow.getMinutes())}`
       }
       switch (tipo_servicio) {
         case facialServicioId:
-          responseCita = await updateFacial(cita._id, updateCita, empleado.access_token);
-          break;
+          responseCita = await updateFacial(cita._id, updateCita, empleado.access_token)
+          break
         case dermapenServicioId:
-          responseCita = await updateDermapen(cita._id, updateCita, empleado.access_token);
-          break;
+          responseCita = await updateDermapen(cita._id, updateCita, empleado.access_token)
+          break
         case laserServicioId:
-          responseCita = await updateLaser(cita._id, updateCita, empleado.access_token);
-          break;
+          responseCita = await updateLaser(cita._id, updateCita, empleado.access_token)
+          break
         case aparatologiaServicioId:
-          responseCita = await updateAparatologia(cita._id, updateCita, empleado.access_token);
-          break;
+          responseCita = await updateAparatologia(cita._id, updateCita, empleado.access_token)
+          break
       }
 
-      setValues({ cabina: { paciente: cita.paciente._id } });
-      let cabina = values.cabina;
-      cabina.cita = cita._id;
-      cabina.dermatologo = cita.dermatologo;
-      cabina.cosmetologa = cita.cosmetologa;
-      cabina.paciente = paciente._id;
-      cabina.tipo_servicio = tipo_servicio;
-      cabina.servicio = servicio;
-      cabina.disponible = false;
+      setValues({ cabina: { paciente: cita.paciente._id } })
+      let cabina = values.cabina
+      cabina.cita = cita._id
+      cabina.dermatologo = cita.dermatologo
+      cabina.cosmetologa = cita.cosmetologa
+      cabina.paciente = paciente._id
+      cabina.tipo_servicio = tipo_servicio
+      cabina.servicio = servicio
+      cabina.disponible = false
 
-      const response = await updateCabina(cabina._id, cabina);
+      const response = await updateCabina(cabina._id, cabina)
       if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-        setOpenAlert(true);
-        setMessage('EL PACIENTE INGRESO.');
+        setOpenAlert(true)
+        setMessage('EL PACIENTE INGRESO.')
       }
     }
 
-    onClose();
-    await loadAll();
-    setIsLoading(false);
+    onClose()
+    await loadAll()
+    setIsLoading(false)
   }
 
   const handleChangeCabina = (event) => {
-    setValues({ cabina: event.target.value });
+    setValues({ cabina: event.target.value })
   }
 
   return (
@@ -149,7 +149,7 @@ const ModalCabinaAgregarPaciente = (props) => {
           {...props} />
       }
     </Formik>
-  );
+  )
 }
 
-export default ModalCabinaAgregarPaciente;
+export default ModalCabinaAgregarPaciente

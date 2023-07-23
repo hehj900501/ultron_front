@@ -1,18 +1,17 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Multiselect } from 'multiselect-react-dropdown';
-import ModalConfirmacion from '../modal_confirmacion';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import { toFormatterCurrency } from '../../../utils/utils';
-import myStyles from '../../../css';
+import React, { Fragment } from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { Multiselect } from 'multiselect-react-dropdown'
+import ModalConfirmacion from '../modal_confirmacion'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import { toFormatterCurrency } from '../../../utils/utils'
+import myStyles from '../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -20,43 +19,17 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
     height: '90%',
-  };
+  }
 }
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 500,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  textField: {
-    width: '100%',
-  },
-  formControl: {
-    minWidth: 120,
-    width: '100%',
-  },
-  button: {
-    width: '100%',
-    color: '#FFFFFF',
-  },
-  label: {
-    marginTop: '0px',
-    marginBottom: '0px',
-  }
-}));
-
-const canceloStatusId = process.env.REACT_APP_CANCELO_STATUS_ID;
-const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID;
-const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID;
+const canceloStatusId = process.env.REACT_APP_CANCELO_STATUS_ID
+const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID
+const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID
 
 const ModalFormCita = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
@@ -73,20 +46,16 @@ const ModalFormCita = (props) => {
     onChangePromovendedor,
     onChangeCosmetologa,
     onChangeQuienRealiza,
-    isValid,
     onClickCancel,
     onClickActualizarCita,
     open,
     tratamientos,
-    areas,
     horarios,
     promovendedores,
     cosmetologas,
     doctores,
     tipoCitas,
     statements,
-    onChangeSesion,
-    onChangePrecio,
     onChangeMotivos,
     onChangeObservaciones,
     onChangeDermatologo,
@@ -96,26 +65,22 @@ const ModalFormCita = (props) => {
     formasPago,
     medios,
     frecuencias,
-    onCloseModalPagos,
-    onGuardarModalPagos,
     cita,
     empleado,
-    sucursal,
     openModalConfirmacion,
     onCloseModalConfirmacion,
     onConfirmModalConfirmacion,
     setMessage,
     setSeverity,
     setOpenAlert,
-    selectedAreas,
     dataComplete,
     colorBase,
     isDataComplete,
-  } = props;
+  } = props
 
-  isDataComplete(values);
+  isDataComplete(values)
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -436,7 +401,7 @@ const ModalFormCita = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormCita;
+export default ModalFormCita

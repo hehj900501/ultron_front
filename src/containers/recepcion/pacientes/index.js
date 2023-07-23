@@ -1,37 +1,37 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { Backdrop, CircularProgress, Select, FormControl, InputLabel, MenuItem } from '@material-ui/core';
-import { PacientesContainer } from './pacientes';
+import React, { useState, Fragment } from "react"
+import { Backdrop, CircularProgress, Select, FormControl, MenuItem } from '@material-ui/core'
+import { PacientesContainer } from './pacientes'
 import {
 	updatePatient,
 	createPatient,
 	findPatientByPhoneNumber
-} from '../../../services/pacientes';
-import EditIcon from '@material-ui/icons/Edit';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import TodayIcon from '@material-ui/icons/Today';
-import HistoryIcon from '@material-ui/icons/History';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import { findCabinaBySucursalId } from "../../../services";
-import myStyles from "../../../css";
+} from '../../../services/pacientes'
+import EditIcon from '@material-ui/icons/Edit'
+import EventAvailableIcon from '@material-ui/icons/EventAvailable'
+import TodayIcon from '@material-ui/icons/Today'
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert'
+import myStyles from "../../../css"
+import { useNavigate } from "react-router-dom"
 
 function Alert(props) {
-	return <MuiAlert elevation={6} variant="filled" {...props} />;
+	return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const Pacientes = (props) => {
 
-	const classes = myStyles();
+	const classes = myStyles()
 
-	const [open, setOpen] = useState(false);
-	const [openHistoric, setOpenHistoric] = useState(false);
-	const [openPagosAnticipados, setOpenPagosAnticipados] = useState(false);
-	const [openAlert, setOpenAlert] = useState(false);
-	const [paciente, setPaciente] = useState({});
-	const [isLoading, setIsLoading] = useState(false);
-	const [message, setMessage] = useState('');
-	const [severity, setSeverity] = useState('success');
+	const navigate = useNavigate()
+
+	const [open, setOpen] = useState(false)
+	const [openHistoric, setOpenHistoric] = useState(false)
+	const [openPagosAnticipados, setOpenPagosAnticipados] = useState(false)
+	const [openAlert, setOpenAlert] = useState(false)
+	const [paciente, setPaciente] = useState({})
+	const [isLoading, setIsLoading] = useState(false)
+	const [message, setMessage] = useState('')
+	const [severity, setSeverity] = useState('success')
 
 	const {
 		empleado,
@@ -43,7 +43,7 @@ const Pacientes = (props) => {
 		onClickAgendarDermapen,
 		colorBase,
 		sucursal,
-	} = props;
+	} = props
 
 	const columns = [
 		{ title: 'NOMBRES', field: 'nombres' },
@@ -53,7 +53,7 @@ const Pacientes = (props) => {
 		{ title: 'SEXO', field: 'sexo.nombre' },
 		{ title: 'FECHA DE NACIMIENTO', field: 'fecha_nacimiento' },
 		empleado.super_admin ? { title: 'QUIEN CAPTURA', field: 'quien_captura.nombre' } : {},
-	];
+	]
 
 	const options = {
 		headerStyle: {
@@ -75,91 +75,101 @@ const Pacientes = (props) => {
 	}
 
 	const handleOpen = () => {
-		setOpen(true);
-	};
+		setOpen(true)
+	}
 
 	const handleClose = () => {
-		setPaciente({});
-		setOpen(false);
-		setOpenHistoric(false);
+		setPaciente({})
+		setOpen(false)
+		setOpenHistoric(false)
 		setOpenPagosAnticipados(false)
-	};
+	}
 
 	const handleCloseAlert = () => {
-		setOpenAlert(false);
-	};
+		setOpenAlert(false)
+	}
 
 	const handleOnClickGuardar = async (e, val) => {
-		setIsLoading(true);
+		setIsLoading(true)
 
 		if (!val.familiar) {
-			const existPatient = paciente._id ? '' : await findPatientByPhoneNumber(val.telefono, empleado.access_token);
+			const existPatient = paciente._id ? '' : await findPatientByPhoneNumber(val.telefono, empleado.access_token)
 
 			if (`${existPatient.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
 				if (existPatient.data.length > 0) {
-					setSeverity('warning');
-					setOpenAlert(true);
-					setMessage('YA EXISTE UN REGISTRO CON EL MISMO NUMERO DE TELÉFONO');
-					setIsLoading(false);
-					handleClose();
-					return;
+					setSeverity('warning')
+					setOpenAlert(true)
+					setMessage('YA EXISTE UN REGISTRO CON EL MISMO NUMERO DE TELÉFONO')
+					setIsLoading(false)
+					handleClose()
+					return
 				}
 			}
 		}
 
-		const response = paciente._id ? await updatePatient(paciente._id, val, empleado.access_token) : await createPatient(val, empleado.access_token);
+		const response = paciente._id ? await updatePatient(paciente._id, val, empleado.access_token) : await createPatient(val, empleado.access_token)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK
 			|| `${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-			setSeverity('success');
-			setOpenAlert(true);
-			setMessage(paciente._id ? 'PACIENTE ACTUALIZADO' : 'PACIENTE CREADO');
+			setSeverity('success')
+			setOpenAlert(true)
+			setMessage(paciente._id ? 'PACIENTE ACTUALIZADO' : 'PACIENTE CREADO')
 		}
 
-		handleClose();
+		handleClose()
 
-		setIsLoading(false);
+		setIsLoading(false)
 	}
 
 	const handleOnClickConsulta = async (e, val) => {
-		setIsLoading(true);
-		const existPatient = paciente._id ? '' : await findPatientByPhoneNumber(val.telefono, empleado.access_token);
-		setOpenAlert(true);
+		setIsLoading(true)
+		const existPatient = paciente._id ? '' : await findPatientByPhoneNumber(val.telefono, empleado.access_token)
+		setOpenAlert(true)
 
 		if (`${existPatient.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
 			if (existPatient.data.length > 0) {
-				setSeverity('warning');
-				setMessage('YA EXISTE UN REGISTRO CON EL MISMO NUMERO DE TELÉFONO');
-				setIsLoading(false);
-				handleClose();
-				return;
+				setSeverity('warning')
+				setMessage('YA EXISTE UN REGISTRO CON EL MISMO NUMERO DE TELÉFONO')
+				setIsLoading(false)
+				handleClose()
+				return
 			}
 		}
 
-		const response = paciente._id ? await updatePatient(paciente._id, val, empleado.access_token) : await createPatient(val, empleado.access_token);
+		const response = paciente._id ? await updatePatient(paciente._id, val, empleado.access_token) : await createPatient(val, empleado.access_token)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK
 			|| `${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-			setSeverity('success');
-			onClickAgendarConsulta(e, response.data);
-			setMessage(paciente._id ? 'PACIENTE ACTUALIZADO' : 'PACIENTE CREADO');
+			setSeverity('success')
+			onClickAgendarConsulta(e, response.data)
+			setMessage(paciente._id ? 'PACIENTE ACTUALIZADO' : 'PACIENTE CREADO')
 		}
 
-		handleClose();
-		setIsLoading(false);
+		handleClose()
+		setIsLoading(false)
 	}
 
 	const handleOnClickEditar = (event, rowData) => {
-		setPaciente(rowData);
-		setOpen(true);
+		setPaciente(rowData)
+		setOpen(true)
 	}
 
 	const handleClickHistorico = (event, rowData) => {
-		setPaciente(rowData);
-		setOpenHistoric(true);
+		setPaciente(rowData)
+		setOpenHistoric(true)
 	}
 
 	const handleClickPagosAnticipados = (event, rowData) => {
-		setPaciente(rowData);
-		setOpenPagosAnticipados(true);
+		setPaciente(rowData)
+		setOpenPagosAnticipados(true)
+	}
+
+	const handleClickHistoriaClinica = (event, rowData) => {
+		navigate('/imprimir/historia_clinica', {
+			state: {
+				sucursal:sucursal,
+				paciente:rowData,
+				colorBase:colorBase, 
+			}
+		  })
 	}
 
 	const actions = [
@@ -203,39 +213,45 @@ const Pacientes = (props) => {
 		},
 		{
 			tooltip: 'PAGOS ANTICIPADOS',
-		}
-	];
+		},
+		// {
+		// 	tooltip: 'HISTORIA CLINICA',
+		// }
+	]
 
 	const onChangeActions = (e, rowData) => {
-		const action = e.target.value;
+		const action = e.target.value
 		switch (action) {
 			case 'AGREGAR CONSULTA':
-				onClickAgendarConsulta(e, rowData);
-				break;
+				onClickAgendarConsulta(e, rowData)
+				break
 			case 'AGREGAR FACIAL':
-				onClickAgendarFaciales(e, rowData);
-				break;
+				onClickAgendarFaciales(e, rowData)
+				break
 			case 'AGREGAR CURACIÓN':
-				onClickAgendarCuracion(e, rowData);
-				break;
+				onClickAgendarCuracion(e, rowData)
+				break
 			case 'AGREGAR ESTÉTICA':
-				onClickAgendarEstetica(e, rowData);
-				break;
+				onClickAgendarEstetica(e, rowData)
+				break
 			case 'AGREGAR DERMAPEN':
-				onClickAgendarDermapen(e, rowData);
-				break;
+				onClickAgendarDermapen(e, rowData)
+				break
 			case 'AGREGAR APARATOLOGÍA':
-				onClickAgendarAparatologia(e, rowData);
-				break;
+				onClickAgendarAparatologia(e, rowData)
+				break
 			case 'ACTUALIZAR REGISTRO':
-				handleOnClickEditar(e, rowData);
-				break;
+				handleOnClickEditar(e, rowData)
+				break
 			case 'HISTÓRICO':
-				handleClickHistorico(e, rowData);
-				break;
+				handleClickHistorico(e, rowData)
+				break
 			case 'PAGOS ANTICIPADOS':
-				handleClickPagosAnticipados(e, rowData);
-				break;
+				handleClickPagosAnticipados(e, rowData)
+				break
+			case 'HISTORIA CLINICA':
+				handleClickHistoriaClinica(e, rowData)
+				break
 		}
 	}
 
@@ -262,7 +278,7 @@ const Pacientes = (props) => {
 				</Fragment>
 				: ''
 		}
-	};
+	}
 
 	return (
 		<Fragment>
@@ -297,7 +313,7 @@ const Pacientes = (props) => {
 				</Alert>
 			</Snackbar>
 		</Fragment>
-	);
+	)
 }
 
-export default Pacientes;
+export default Pacientes

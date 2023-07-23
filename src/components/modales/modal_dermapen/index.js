@@ -1,40 +1,39 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react'
 import {
   getAllSchedules,
   findScheduleByDateAndSucursalAndService,
   showAllTipoCitas,
-  createConsecutivo,
   showAllMaterials,
   showAllFrecuencias,
   showAllMedios,
   showAllMetodoPago,
-} from "../../../services";
+} from "../../../services"
 import {
   updateEntrada,
   deleteEntrada,
   findEntradaById,
-} from "../../../services/entradas";
-import ModalFormDermapen from './ModalFormDermapen';
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
-import { addZero } from '../../../utils/utils';
-import { createDermapen, updateDermapen } from '../../../services/dermapens';
-import { showAllStatusVisibles } from '../../../services/status';
-import { findAreasByTreatmentServicio } from '../../../services/areas';
-import { findEmployeesByRolIdAvailable } from '../../../services/empleados';
-import { deletePago, updatePago } from '../../../services/pagos';
-import { createSalida, findSalidaById, updateSalida } from '../../../services/salidas';
-import { formaPagoEfectivoId, tipoSalidaCuracionesId } from '../../../utils/constants';
+} from "../../../services/entradas"
+import ModalFormDermapen from './ModalFormDermapen'
+import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core'
+import { addZero } from '../../../utils/utils'
+import { createDermapen, updateDermapen } from '../../../services/dermapens'
+import { showAllStatusVisibles } from '../../../services/status'
+import { findAreasByTreatmentServicio } from '../../../services/areas'
+import { findEmployeesByRolIdAvailable } from '../../../services/empleados'
+import { deletePago, updatePago } from '../../../services/pagos'
+import { createSalida, findSalidaById, updateSalida } from '../../../services/salidas'
+import { formaPagoEfectivoId, tipoSalidaCuracionesId } from '../../../utils/constants'
 
 const useStyles = makeStyles(theme => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
   },
-}));
+}))
 
 const ModalDermapen = (props) => {
 
-  const classes = useStyles();
+  const classes = useStyles()
 
   const {
     open,
@@ -47,41 +46,41 @@ const ModalDermapen = (props) => {
     setMessage,
     setFilterDate,
     colorBase,
-  } = props;
+  } = props
 
-  const token = empleado.access_token;
+  const token = empleado.access_token
 
-  const promovendedorRolId = process.env.REACT_APP_PROMOVENDEDOR_ROL_ID;
-  const cosmetologaRolId = process.env.REACT_APP_COSMETOLOGA_ROL_ID;
-  const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID;
-  const pendienteStatusId = process.env.REACT_APP_PENDIENTE_STATUS_ID;
-  const asistioStatusId = process.env.REACT_APP_ASISTIO_STATUS_ID;
-  const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID;
-  const canceloCPStatusId = process.env.REACT_APP_CANCELO_CP_STATUS_ID;
-  const canceloSPStatusId = process.env.REACT_APP_CANCELO_SP_STATUS_ID;
-  const dermapenServicioId = process.env.REACT_APP_DERMAPEN_SERVICIO_ID;
-  const dermapenTratamientoId = process.env.REACT_APP_DERMAPEN_TRATAMIENTO_ID;
+  const promovendedorRolId = process.env.REACT_APP_PROMOVENDEDOR_ROL_ID
+  const cosmetologaRolId = process.env.REACT_APP_COSMETOLOGA_ROL_ID
+  const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID
+  const pendienteStatusId = process.env.REACT_APP_PENDIENTE_STATUS_ID
+  const asistioStatusId = process.env.REACT_APP_ASISTIO_STATUS_ID
+  const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID
+  const canceloCPStatusId = process.env.REACT_APP_CANCELO_CP_STATUS_ID
+  const canceloSPStatusId = process.env.REACT_APP_CANCELO_SP_STATUS_ID
+  const dermapenServicioId = process.env.REACT_APP_DERMAPEN_SERVICIO_ID
+  const dermapenTratamientoId = process.env.REACT_APP_DERMAPEN_TRATAMIENTO_ID
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [horarios, setHorarios] = useState([]);
-  const [frecuencias, setFrecuencias] = useState([]);
-  const [dermatologos, setDermatologos] = useState([]);
-  const [tipoCitas, setTipoCitas] = useState([]);
-  const [statements, setStatements] = useState([]);
-  const [materiales, setMateriales] = useState([]);
-  const [areas, setAreas] = useState([]);
-  const [medios, setMedios] = useState([]);
-  const [formasPago, setFormasPago] = useState([]);
-  const [promovendedores, setPromovendedores] = useState([]);
-  const [cosmetologas, setCosmetologas] = useState([]);
-  const [previousState, setPreviousState] = useState();
+  const [isLoading, setIsLoading] = useState(true)
+  const [horarios, setHorarios] = useState([])
+  const [frecuencias, setFrecuencias] = useState([])
+  const [dermatologos, setDermatologos] = useState([])
+  const [tipoCitas, setTipoCitas] = useState([])
+  const [statements, setStatements] = useState([])
+  const [materiales, setMateriales] = useState([])
+  const [areas, setAreas] = useState([])
+  const [medios, setMedios] = useState([])
+  const [formasPago, setFormasPago] = useState([])
+  const [promovendedores, setPromovendedores] = useState([])
+  const [cosmetologas, setCosmetologas] = useState([])
+  const [previousState, setPreviousState] = useState()
 
-  const [openModalPagos, setOpenModalPagos] = useState(false);
-  const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false);
+  const [openModalPagos, setOpenModalPagos] = useState(false)
+  const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false)
 
-  const fecha_dermapen = new Date(dermapen.fecha_hora);
-  const fecha = `${addZero(fecha_dermapen.getDate())}/${addZero(Number(fecha_dermapen.getMonth()) + 1)}/${addZero(fecha_dermapen.getFullYear())}`;
-  const hora = `${addZero(Number(fecha_dermapen.getHours()))}:${addZero(fecha_dermapen.getMinutes())}`;
+  const fecha_dermapen = new Date(dermapen.fecha_hora)
+  const fecha = `${addZero(fecha_dermapen.getDate())}/${addZero(Number(fecha_dermapen.getMonth()) + 1)}/${addZero(fecha_dermapen.getFullYear())}`
+  const hora = `${addZero(Number(fecha_dermapen.getHours()))}:${addZero(fecha_dermapen.getMinutes())}`
 
   const [values, setValues] = useState({
     fecha_hora: dermapen.fecha_hora,
@@ -120,140 +119,140 @@ const ModalDermapen = (props) => {
     medio: dermapen.medio._id,
     forma_pago: dermapen.forma_pago._id,
     producto: dermapen.producto,
-  });
+  })
 
   const loadHorarios = async () => {
-    const response = await getAllSchedules();
+    const response = await getAllSchedules()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setHorarios(response.data);
+      setHorarios(response.data)
     }
   }
 
   const handleChangeFecha = async (date) => {
-    setIsLoading(true);
-    const fechaObservaciones = `${addZero(date.getDate())}/${addZero(Number(date.getMonth() + 1))}/${date.getFullYear()} - ${values.hora} HRS`;
+    setIsLoading(true)
+    const fechaObservaciones = `${addZero(date.getDate())}/${addZero(Number(date.getMonth() + 1))}/${date.getFullYear()} - ${values.hora} HRS`
     await setValues({
       ...values,
       nueva_fecha_hora: date,
       observaciones: fechaObservaciones,
-    });
-    await loadHorarios(date);
-    setIsLoading(false);
-  };
+    })
+    await loadHorarios(date)
+    setIsLoading(false)
+  }
 
   const handleChangeHora = e => {
-    setIsLoading(true);
-    const hora = (e.target.value).split(':');
-    const date = new Date(values.nueva_fecha_hora);
-    date.setHours(Number(hora[0]));
-    date.setMinutes(hora[1]);
-    date.setSeconds(0);
-    const fechaObservaciones = `${addZero(date.getDate())}/${addZero(Number(date.getMonth() + 1))}/${date.getFullYear()} - ${e.target.value} HRS`;
+    setIsLoading(true)
+    const hora = (e.target.value).split(':')
+    const date = new Date(values.nueva_fecha_hora)
+    date.setHours(Number(hora[0]))
+    date.setMinutes(hora[1])
+    date.setSeconds(0)
+    const fechaObservaciones = `${addZero(date.getDate())}/${addZero(Number(date.getMonth() + 1))}/${date.getFullYear()} - ${e.target.value} HRS`
     setValues({
       ...values,
       nueva_fecha_hora: date,
       hora: e.target.value,
       observaciones: fechaObservaciones,
-    });
-    setIsLoading(false);
-  };
+    })
+    setIsLoading(false)
+  }
 
   const handleChangeTipoCita = e => {
-    setValues({ ...values, tipo_cita: e.target.value });
+    setValues({ ...values, tipo_cita: e.target.value })
   }
 
   const handleChangePromovendedor = e => {
-    setValues({ ...values, promovendedor: e.target.value });
+    setValues({ ...values, promovendedor: e.target.value })
   }
 
   const handleChangeCosmetologa = e => {
-    setValues({ ...values, cosmetologa: e.target.value });
+    setValues({ ...values, cosmetologa: e.target.value })
   }
 
   const handleChangeStatus = e => {
-    setPreviousState(values.status);
+    setPreviousState(values.status)
     const estado = statements.find(statement => {
-      return statement._id === e.target.value;
-    });
-    setOpenModalConfirmacion(estado.confirmacion);
-    setValues({ ...values, status: e.target.value });
+      return statement._id === e.target.value
+    })
+    setOpenModalConfirmacion(estado.confirmacion)
+    setValues({ ...values, status: e.target.value })
   }
 
   const handleChangeObservaciones = e => {
-    setValues({ ...values, observaciones: e.target.value.toUpperCase() });
+    setValues({ ...values, observaciones: e.target.value.toUpperCase() })
   }
 
   const handleOnClickActualizarDermapen = async (event, rowData) => {
-    setIsLoading(true);
+    setIsLoading(true)
     if (rowData.pagado) {
       if (rowData.status === canceloCPStatusId) {
         rowData.pagos.forEach(async (pago) => {
-          pago.pago_anticipado = true;
-          const entrada = await findEntradaById(pago.entrada);
+          pago.pago_anticipado = true
+          const entrada = await findEntradaById(pago.entrada)
           if (`${entrada.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            const updateEntradaData = entrada.data;
-            updateEntradaData.pago_anticipado = true;
-            await updateEntrada(updateEntradaData._id, updateEntradaData);
-            await updatePago(pago._id, pago);
+            const updateEntradaData = entrada.data
+            updateEntradaData.pago_anticipado = true
+            await updateEntrada(updateEntradaData._id, updateEntradaData)
+            await updatePago(pago._id, pago)
           }
-        });
+        })
       } else if (rowData.status === canceloSPStatusId) {
         rowData.pagos.forEach(async (pago) => {
-          await deleteEntrada(pago.entrada);
-          await deletePago(pago._id);
-        });
-        rowData.pagado = false;
+          await deleteEntrada(pago.entrada)
+          await deletePago(pago._id)
+        })
+        rowData.pagado = false
       }
     }
     if (rowData.status._id !== pendienteStatusId) {
-      rowData.quien_confirma_asistencia = empleado._id;
+      rowData.quien_confirma_asistencia = empleado._id
       if (rowData.status === asistioStatusId) {
-        const dateNow = new Date();
-        rowData.hora_aplicacion = rowData.hora_aplicacion ? rowData.hora_aplicacion : dateNow;
-        rowData.hora_llegada = (rowData.hora_llegada && rowData.hora_llegada !== '--:--') ? rowData.hora_llegada : `${addZero(dateNow.getHours())}:${addZero(dateNow.getMinutes())}`;
+        const dateNow = new Date()
+        rowData.hora_aplicacion = rowData.hora_aplicacion ? rowData.hora_aplicacion : dateNow
+        rowData.hora_llegada = (rowData.hora_llegada && rowData.hora_llegada !== '--:--') ? rowData.hora_llegada : `${addZero(dateNow.getHours())}:${addZero(dateNow.getMinutes())}`
       }
     }
 
     if (rowData.status === reagendoStatusId) {
-      await updateDermapen(dermapen._id, rowData, token);
-      rowData.quien_agenda = empleado._id;
-      rowData.sucursal = sucursal;
-      rowData.status = pendienteStatusId;
-      rowData.hora_llegada = '--:--';
-      rowData.hora_atencion = '--:--';
-      rowData.hora_salida = '--:--';
-      rowData.observaciones = `DERMAPEN REAGENDADO ${values.fecha_actual} - ${values.hora_actual} HRS`;
-      rowData.fecha_hora = rowData.nueva_fecha_hora;
-      const response = await createDermapen(rowData, token);
+      await updateDermapen(dermapen._id, rowData, token)
+      rowData.quien_agenda = empleado._id
+      rowData.sucursal = sucursal
+      rowData.status = pendienteStatusId
+      rowData.hora_llegada = '--:--'
+      rowData.hora_atencion = '--:--'
+      rowData.hora_salida = '--:--'
+      rowData.observaciones = `DERMAPEN REAGENDADO ${values.fecha_actual} - ${values.hora_actual} HRS`
+      rowData.fecha_hora = rowData.nueva_fecha_hora
+      const response = await createDermapen(rowData, token)
 
       if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-        setOpenAlert(true);
-        setMessage('DERMAPEN REAGENDADO CORRECTAMENTE');
+        setOpenAlert(true)
+        setMessage('DERMAPEN REAGENDADO CORRECTAMENTE')
       }
-      const dia = addZero(rowData.fecha_hora.getDate());
-      const mes = addZero(rowData.fecha_hora.getMonth());
-      const anio = rowData.fecha_hora.getFullYear();
+      const dia = addZero(rowData.fecha_hora.getDate())
+      const mes = addZero(rowData.fecha_hora.getMonth())
+      const anio = rowData.fecha_hora.getFullYear()
       setFilterDate({
         fecha_show: rowData.fecha_hora,
         fecha: `${dia}/${mes}/${anio}`
-      });
-      await loadDermapens(rowData.fecha_hora);
+      })
+      await loadDermapens(rowData.fecha_hora)
 
     } else {
-      const dia = addZero(rowData.fecha_show.getDate());
-      const mes = addZero(rowData.fecha_show.getMonth());
-      const anio = rowData.fecha_show.getFullYear();
+      const dia = addZero(rowData.fecha_show.getDate())
+      const mes = addZero(rowData.fecha_show.getMonth())
+      const anio = rowData.fecha_show.getFullYear()
       setFilterDate({
         fecha_show: rowData.fecha_show,
         fecha: `${dia}/${mes}/${anio}`
-      });
+      })
       if (rowData.materiales.length > 0) {
         rowData.materiales.forEach(async (material) => {
-          const responseSalida = await (material.salidaId ? findSalidaById(material.salidaId) : '0');
+          const responseSalida = await (material.salidaId ? findSalidaById(material.salidaId) : '0')
 
           if (responseSalida === '0' || `${responseSalida.status}` === process.env.REACT_APP_RESPONSE_CODE_OK
             || `${responseSalida.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-            const resSalida = responseSalida.data;
+            const resSalida = responseSalida.data
 
             const salida = {
               ...resSalida,
@@ -270,100 +269,100 @@ const ModalDermapen = (props) => {
               forma_pago: formaPagoEfectivoId,
             }
 
-            const response = await (salida._id ? updateSalida(salida._id, salida, token) : createSalida(salida, token));
+            const response = await (salida._id ? updateSalida(salida._id, salida, token) : createSalida(salida, token))
             if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK
               || `${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-              material.salidaId = material.salidaId ? material.salidaId : response.data._id;
+              material.salidaId = material.salidaId ? material.salidaId : response.data._id
               await updateDermapen(dermapen._id, rowData, token)
-              await loadDermapens(rowData.fecha_show);
+              await loadDermapens(rowData.fecha_show)
             }
           }
-        });
+        })
       } else {
-        await updateDermapen(dermapen._id, rowData, token);
-        await loadDermapens(rowData.fecha_show);
+        await updateDermapen(dermapen._id, rowData, token)
+        await loadDermapens(rowData.fecha_show)
       }
 
-      setOpenAlert(true);
-      setMessage('DERMAPEN ACTUALIZADO');
+      setOpenAlert(true)
+      setMessage('DERMAPEN ACTUALIZADO')
     }
-    setIsLoading(false);
-    onClose();
+    setIsLoading(false)
+    onClose()
   }
 
   const handleChangeSesion = e => {
-    setValues({ ...values, numero_sesion: e.target.value });
-  };
+    setValues({ ...values, numero_sesion: e.target.value })
+  }
 
   const handleChangePrecio = e => {
-    setValues({ ...values, precio: e.target.value });
-  };
+    setValues({ ...values, precio: e.target.value })
+  }
 
   const handleChangeMotivos = e => {
-    setValues({ ...values, motivos: e.target.value.toUpperCase() });
+    setValues({ ...values, motivos: e.target.value.toUpperCase() })
   }
 
   const handleChangeDermatologo = (e) => {
-    setValues({ ...values, dermatologo: e.target.value });
+    setValues({ ...values, dermatologo: e.target.value })
   }
 
   const handleChangeTiempo = e => {
-    setValues({ ...values, tiempo: e.target.value });
-  };
+    setValues({ ...values, tiempo: e.target.value })
+  }
 
   const handleChangePagado = (e) => {
-    setValues({ ...values, pagado: !values.pagado });
-    setOpenModalPagos(!values.pagado);
+    setValues({ ...values, pagado: !values.pagado })
+    setOpenModalPagos(!values.pagado)
   }
 
   const handleCloseModalPagos = () => {
-    setOpenModalPagos(false);
-    setValues({ ...values, pagado: false });
+    setOpenModalPagos(false)
+    setValues({ ...values, pagado: false })
   }
 
   const handleChangeMedio = (e) => {
-    setValues({ ...values, medio: e.target.value });
+    setValues({ ...values, medio: e.target.value })
   }
 
   const handleChangePaymentMethod = (event) => {
     setValues({
       ...values,
       forma_pago: event.target.value,
-    });
+    })
   }
 
   const handleCloseModalConfirmacion = () => {
-    setOpenModalConfirmacion(false);
-    setValues({ ...values, status: previousState });
+    setOpenModalConfirmacion(false)
+    setValues({ ...values, status: previousState })
   }
 
   const handleConfirmModalConfirmacion = () => {
-    setOpenModalConfirmacion(false);
+    setOpenModalConfirmacion(false)
   }
 
   const handleGuardarModalPagos = (pagos) => {
     setValues({
       ...values,
       pagos: pagos,
-    });
-    setOpenModalPagos(false);
+    })
+    setOpenModalPagos(false)
   }
 
   const handleChangeMateriales = async (items) => {
-    setIsLoading(true);
+    setIsLoading(true)
     setValues({
       ...values,
       materiales: items
-    });
-    setIsLoading(false);
+    })
+    setIsLoading(false)
   }
 
   const handleChangeTotal = (event) => {
-    const precio = event.target.value;
-    let total_aplicacion = precio;
+    const precio = event.target.value
+    let total_aplicacion = precio
     values.materiales.map((item) => {
-      total_aplicacion -= Number(item.precio);
-    });
+      total_aplicacion -= Number(item.precio)
+    })
     setValues({
       ...values,
       precio: precio,
@@ -374,7 +373,7 @@ const ModalDermapen = (props) => {
   }
 
   const handleChangeAreas = async (items) => {
-    setIsLoading(true);
+    setIsLoading(true)
     setValues({
       ...values,
       tratamientos: [
@@ -386,136 +385,136 @@ const ModalDermapen = (props) => {
         }
       ],
       fecha_hora: '',
-    });
-    setIsLoading(false);
+    })
+    setIsLoading(false)
   }
 
   const handleChangeItemPrecio = (e, index) => {
-    const newMateriales = values.materiales;
-    newMateriales[index].precio = e.target.value;
-    let total_aplicacion = Number(values.precio);
+    const newMateriales = values.materiales
+    newMateriales[index].precio = e.target.value
+    let total_aplicacion = Number(values.precio)
     newMateriales.map((item) => {
-      total_aplicacion -= Number(item.precio);
-    });
+      total_aplicacion -= Number(item.precio)
+    })
     setValues({
       ...values,
       materiales: newMateriales,
       total_aplicacion: total_aplicacion,
-    });
+    })
   }
 
   const loadAreas = async () => {
-    const response = await findAreasByTreatmentServicio(dermapenServicioId, dermapenTratamientoId);
+    const response = await findAreasByTreatmentServicio(dermapenServicioId, dermapenTratamientoId)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setAreas(response.data);
+      setAreas(response.data)
     }
   }
 
   const handleChangeFrecuencia = (e) => {
-    const frecuencia = e.target.value;
+    const frecuencia = e.target.value
     setValues({
       ...values,
       frecuencia: frecuencia,
-    });
+    })
   }
 
   const loadMedios = async () => {
-    const response = await showAllMedios();
+    const response = await showAllMedios()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setMedios(response.data);
+      setMedios(response.data)
     }
   }
 
   const loadPromovendedores = async () => {
-    const response = await findEmployeesByRolIdAvailable(promovendedorRolId, token);
+    const response = await findEmployeesByRolIdAvailable(promovendedorRolId, token)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setPromovendedores(response.data);
+      setPromovendedores(response.data)
     }
   }
 
   const loadCosmetologas = async () => {
-    const response = await findEmployeesByRolIdAvailable(cosmetologaRolId, token);
+    const response = await findEmployeesByRolIdAvailable(cosmetologaRolId, token)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setCosmetologas(response.data);
+      setCosmetologas(response.data)
     }
   }
 
   const loadDermatologos = async () => {
-    const response = await findEmployeesByRolIdAvailable(dermatologoRolId, token);
+    const response = await findEmployeesByRolIdAvailable(dermatologoRolId, token)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setDermatologos(response.data);
+      setDermatologos(response.data)
     }
   }
 
   const loadFrecuencias = async () => {
-    const response = await showAllFrecuencias();
+    const response = await showAllFrecuencias()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setFrecuencias(response.data);
+      setFrecuencias(response.data)
     }
   }
 
   const loadMateriales = async () => {
-    const response = await showAllMaterials();
+    const response = await showAllMaterials()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setMateriales(response.data);
+      setMateriales(response.data)
     }
   }
 
   const loadFormasPago = async () => {
-    const response = await showAllMetodoPago();
+    const response = await showAllMetodoPago()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setFormasPago(response.data);
+      setFormasPago(response.data)
     }
   }
 
   const loadHorariosByServicio = async () => {
-    const date = new Date(dermapen.fecha_hora);
-    const response = await findScheduleByDateAndSucursalAndService(date.getDate(), Number(date.getMonth()), date.getFullYear(), dermapen.sucursal._id, dermapen.servicio._id);
+    const date = new Date(dermapen.fecha_hora)
+    const response = await findScheduleByDateAndSucursalAndService(date.getDate(), Number(date.getMonth()), date.getFullYear(), dermapen.sucursal._id, dermapen.servicio._id)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      response.data.push({ hora: values.hora });
-      setHorarios(response.data);
+      response.data.push({ hora: values.hora })
+      setHorarios(response.data)
     }
   }
 
   const loadTipoCitas = async () => {
-    const response = await showAllTipoCitas();
+    const response = await showAllTipoCitas()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setTipoCitas(response.data);
+      setTipoCitas(response.data)
     }
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   const loadStaus = async () => {
-    const response = await showAllStatusVisibles();
+    const response = await showAllStatusVisibles()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
       // SI EL DIA DE LA CITA ES A FUTURO, ELIMINA EL STATUS ASISTIO
       const resStatus = response.data.filter(item => {
-        return item._id !== asistioStatusId ? true : new Date(dermapen.fecha_hora).getDate() === new Date().getDate();
-      });
-      setStatements(resStatus);
+        return item._id !== asistioStatusId ? true : new Date(dermapen.fecha_hora).getDate() === new Date().getDate()
+      })
+      setStatements(resStatus)
     }
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   const loadAll = async () => {
-    setIsLoading(true);
-    await loadMateriales();
-    await loadHorariosByServicio();
-    await loadTipoCitas();
-    await loadStaus();
+    setIsLoading(true)
+    await loadMateriales()
+    await loadHorariosByServicio()
+    await loadTipoCitas()
+    await loadStaus()
     await loadFrecuencias()
-    await loadAreas();
-    await loadMedios();
-    await loadPromovendedores();
-    await loadCosmetologas();
-    await loadDermatologos();
-    await loadFormasPago();
-    setIsLoading(false);
+    await loadAreas()
+    await loadMedios()
+    await loadPromovendedores()
+    await loadCosmetologas()
+    await loadDermatologos()
+    await loadFormasPago()
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    loadAll();
-  }, []);
+    loadAll()
+  }, [])
 
   return (
     <Fragment>
@@ -575,7 +574,7 @@ const ModalDermapen = (props) => {
       }
     </Fragment>
 
-  );
+  )
 }
 
-export default ModalDermapen;
+export default ModalDermapen

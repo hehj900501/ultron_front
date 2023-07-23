@@ -1,6 +1,6 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
 
 export const ComboCustomProductos = (props) => {
 
@@ -10,9 +10,9 @@ export const ComboCustomProductos = (props) => {
         onChange,
         value,
         className,
-    } = props;
+    } = props
 
-    const newValue = value;
+    const newValue = value
 
     return (
         <Autocomplete
@@ -29,5 +29,5 @@ export const ComboCustomProductos = (props) => {
                 return <TextField {...params} label={label} />
             }}
         />
-    );
+    )
 }

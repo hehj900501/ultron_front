@@ -1,19 +1,17 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { Multiselect } from 'multiselect-react-dropdown';
-import { ButtonCustom } from "../../basic/ButtonCustom";
-import { CheckCustom } from '../../basic/CheckCustom';
-import { toFormatterCurrency } from '../../../utils/utils';
-import myStyles from '../../../css';
-import SesionesAnticipadas from '../pagos_anticipados/sesiones_anticipadas/SesionesAnticipadas';
-import TableComponent from '../../table/TableComponent';
-import PagosMultiservicios from '../pagos_multiservicios';
+import React, { Fragment } from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { Multiselect } from 'multiselect-react-dropdown'
+import { ButtonCustom } from "../../basic/ButtonCustom"
+import { CheckCustom } from '../../basic/CheckCustom'
+import { toFormatterCurrency } from '../../../utils/utils'
+import myStyles from '../../../css'
+import TableComponent from '../../table/TableComponent'
+import PagosMultiservicios from '../pagos_multiservicios'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -21,16 +19,16 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
     height: '90%',
-  };
+  }
 }
 
 const FormAgregarPagosAnticipados = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
-  const consultaServicioId = process.env.REACT_APP_CONSULTA_SERVICIO_ID;
-  const curacionServicioId = process.env.REACT_APP_CURACION_SERVICIO_ID;
+  const consultaServicioId = process.env.REACT_APP_CONSULTA_SERVICIO_ID
+  const curacionServicioId = process.env.REACT_APP_CURACION_SERVICIO_ID
 
   const {
     values,
@@ -42,29 +40,15 @@ const FormAgregarPagosAnticipados = (props) => {
     dermatologos,
     tipoCitas,
     dermatologoDirectoId,
-    areas,
-    bancos,
     isLoading,
-    formasPago,
-    tiposTarjeta,
     onClickCancel,
-    onClickPagar,
     onChangeServicio,
     onChangeTratamientos,
     onChangeAreas,
-    onChangePaymentMethod,
-    onChangeBank,
-    onChangeCardType,
-    onChangeCantidad,
     onChangeDescuento,
-    onChangeConfirmado,
     onChange,
     onChangeIds,
     onChangePrecio,
-    onChangePagoAnticipado,
-    onChangDescuentoDermatologo,
-    cambioTurno,
-    onChangeCambioTurno,
     isHoliDay,
     onChangeHoliDay,
     frecuencias,
@@ -87,9 +71,9 @@ const FormAgregarPagosAnticipados = (props) => {
     setMessage,
     setSeverity,
     setOpenAlert,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -269,7 +253,7 @@ const FormAgregarPagosAnticipados = (props) => {
                   type='Number'
 
                   onInput={(e) => {
-                    e.target.value = e.target.value > 100 ? 100 : e.target.value;
+                    e.target.value = e.target.value > 100 ? 100 : e.target.value
                     e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 5)
                   }}
                   variant="outlined" />
@@ -336,7 +320,7 @@ const FormAgregarPagosAnticipados = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default FormAgregarPagosAnticipados;
+export default FormAgregarPagosAnticipados

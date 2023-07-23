@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import ModalFormPaciente from './ModalFormPaciente';
+import React, { useState, useEffect } from 'react'
+import ModalFormPaciente from './ModalFormPaciente'
 import {
   showAllSexos,
-} from "../../../services";
+} from "../../../services"
 import {stateMexico} from './states'
 
 const ModalPaciente = (props) => {
@@ -15,9 +15,9 @@ const ModalPaciente = (props) => {
     onClickcConsulta,
     colorBase,
     empleadoId,
-  } = props;
+  } = props
 
-  const [sexos, setSexos] = useState([]);
+  const [sexos, setSexos] = useState([])
 
   const [values, setValues] = useState({
     _id: paciente._id,
@@ -30,13 +30,13 @@ const ModalPaciente = (props) => {
     fecha_nacimiento: paciente.fecha_nacimiento ? paciente.fecha_nacimiento : '',
     familiar: false,
     quien_captura: paciente._id ? paciente.quien_captura : empleadoId,
-  });
+  })
 
   const handleChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value.toUpperCase()
-    });
+    })
   }
 
   const handleChangeSexo = (e, newValue) => {
@@ -68,18 +68,18 @@ const ModalPaciente = (props) => {
   }
 
   const dataComplete = !values.nombres || !values.apellidos
-    || !values.sexo || !values.telefono || !values.fecha_nacimiento || values.fecha_nacimiento.length !== 10;
+    || !values.sexo || !values.telefono || !values.fecha_nacimiento || values.fecha_nacimiento.length !== 10
 
   const loadSexos = async () => {
-    const response = await showAllSexos();
+    const response = await showAllSexos()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setSexos(response.data);
+      setSexos(response.data)
     }
   }
 
   useEffect(() => {
-    loadSexos();
-  }, []);
+    loadSexos()
+  }, [])
 
   return (
     <ModalFormPaciente
@@ -102,7 +102,7 @@ const ModalPaciente = (props) => {
       sexos={sexos} 
       state={stateMexico}
       />
-  );
+  )
 }
 
-export default ModalPaciente;
+export default ModalPaciente

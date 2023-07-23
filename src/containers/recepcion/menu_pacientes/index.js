@@ -1,64 +1,64 @@
-import React, { useState, Fragment } from "react";
-import { MenuContainer } from "./menu";
-import { Snackbar } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
-import { useNavigate } from "react-router-dom";
+import React, { useState, Fragment } from "react"
+import { MenuContainer } from "./menu"
+import { Snackbar } from "@material-ui/core"
+import MuiAlert from '@material-ui/lab/Alert'
+import { useNavigate } from "react-router-dom"
 
 const Alert = (props) => {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
+    return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const MenuPatient = (props) => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const [pacienteAgendado, setPacienteAgendado] = useState({});
-    const [consultaAgendada, setConsultaAgendada] = useState({});
-    const [value, setValue] = useState(0);
-    const [open, setOpen] = useState(false);
-    const [openAlert, setOpenAlert] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('success');
+    const [pacienteAgendado, setPacienteAgendado] = useState({})
+    const [consultaAgendada, setConsultaAgendada] = useState({})
+    const [value, setValue] = useState(0)
+    const [open, setOpen] = useState(false)
+    const [openAlert, setOpenAlert] = useState(false)
+    const [message, setMessage] = useState('')
+    const [severity, setSeverity] = useState('success')
 
     const {
         sucursal,
         empleado,
         colorBase,
         turno,
-    } = props;
+    } = props
 
     const handleChangeTab = (event, newValue) => {
-        setValue(newValue);
-    };
+        setValue(newValue)
+    }
 
     const handleAgendarFaciales = (event, rowData) => {
-        setPacienteAgendado(rowData);
-        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_FACIALES));
+        setPacienteAgendado(rowData)
+        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_FACIALES))
     }
 
     const handleAgendarAparatologia = (event, rowData) => {
-        setPacienteAgendado(rowData);
-        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_APARATOLOGIA));
+        setPacienteAgendado(rowData)
+        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_APARATOLOGIA))
     }
 
     const handleAgendarDermapen = (event, rowData) => {
-        setConsultaAgendada(rowData);
-        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_DERMAPEN));
+        setConsultaAgendada(rowData)
+        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_DERMAPEN))
     }
 
     const handleClickAgendarConsulta = (event, rowData) => {
-        setPacienteAgendado(rowData);
-        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_CONSULTA));
+        setPacienteAgendado(rowData)
+        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_CONSULTA))
     }
 
     const handleClickAgendarCuracion = (event, rowData) => {
-        setConsultaAgendada(rowData);
-        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_CURACION));
+        setConsultaAgendada(rowData)
+        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_CURACION))
     }
 
     const handleClickAgendarEstetica = (event, rowData) => {
-        setConsultaAgendada(rowData);
-        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_ESTETICA));
+        setConsultaAgendada(rowData)
+        setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_ESTETICA))
     }
 
     const handleLogout = () => {
@@ -67,24 +67,24 @@ const MenuPatient = (props) => {
                 empleado: {},
                 sucursal: {},
             }
-        });
+        })
     }
 
     const handleClickCambioPassword = () => {
-        setOpen(true);
+        setOpen(true)
     }
 
     const handleOpen = () => {
-        setOpen(true);
+        setOpen(true)
     }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpen(false)
     }
 
     const handleCloseAlert = () => {
-        setOpenAlert(false);
-    };
+        setOpenAlert(false)
+    }
 
     return (
         <Fragment>
@@ -119,7 +119,7 @@ const MenuPatient = (props) => {
                 </Alert>
             </Snackbar>
         </Fragment>
-    );
+    )
 }
 
-export default MenuPatient;
+export default MenuPatient

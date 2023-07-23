@@ -1,25 +1,23 @@
-import 'date-fns';
-import React, { Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { Paper, TextField } from '@material-ui/core';
-import TableComponent from '../../../components/table/TableComponent';
-import { Multiselect } from 'multiselect-react-dropdown';
-import ModalPagos from '../../../components/modales/modal_pagos';
-import { toFormatterCurrency } from '../../../utils/utils';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalProximaCita from '../../../components/modales/modal_proxima_cita';
-import ModalDermapen from '../../../components/modales/modal_dermapen';
-import ModalImprimirDermapen from '../../../components/modales/imprimir/dermapen';
-import myStyles from '../../../css';
-import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio';
-import ModalProximaDermapen from '../../../components/modales/modal_proxima_dermapen';
+import 'date-fns'
+import React, { Fragment } from 'react'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import { Paper, TextField } from '@material-ui/core'
+import TableComponent from '../../../components/table/TableComponent'
+import { Multiselect } from 'multiselect-react-dropdown'
+import ModalPagos from '../../../components/modales/modal_pagos'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalDermapen from '../../../components/modales/modal_dermapen'
+import ModalImprimirDermapen from '../../../components/modales/imprimir/dermapen'
+import myStyles from '../../../css'
+import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
+import ModalProximaDermapen from '../../../components/modales/modal_proxima_dermapen'
 
 export const AgendarDermapenContainer = (props) => {
 
@@ -54,13 +52,9 @@ export const AgendarDermapenContainer = (props) => {
 		onChangeCosmetologa,
 		onChangeMedio,
 		medios,
-		materiales,
-		onChangeMateriales,
-		onChangeItemPrecio,
 		onChangeTotal,
 		onChangeFrecuencia,
 		frecuencias,
-		onChangeCosto,
 		onChangePaymentMethod,
 		formasPago,
 		colorBase,
@@ -95,9 +89,9 @@ export const AgendarDermapenContainer = (props) => {
 		// MODAL TRASPASOS
 		openModalTraspaso,
 		onCloseTraspasos,
-	} = props;
+	} = props
 
-	const classes = myStyles(colorBase)();
+	const classes = myStyles(colorBase)()
 
 	return (
 		<Fragment>
@@ -377,7 +371,7 @@ export const AgendarDermapenContainer = (props) => {
 							type='Number'
 							onChange={onChangeTotal}
 							onInput={(e) => {
-								e.target.value = e.target.value < 0 ? 0 : e.target.value;
+								e.target.value = e.target.value < 0 ? 0 : e.target.value
 								e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 6)
 							}}
 							variant="outlined" />
@@ -415,5 +409,5 @@ export const AgendarDermapenContainer = (props) => {
 				components={components} />
 
 		</Fragment>
-	);
+	)
 }

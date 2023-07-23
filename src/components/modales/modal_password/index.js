@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ModalFormPassword from './ModalFormPassword';
-import { updateEmployee } from "../../../services/empleados";
+import React, { useState } from 'react'
+import ModalFormPassword from './ModalFormPassword'
+import { updateEmployee } from "../../../services/empleados"
 
 const ModalPassword = (props) => {
   const {
@@ -10,50 +10,50 @@ const ModalPassword = (props) => {
     setMessage,
     setSeverity,
     setOpenAlert,
-  } = props;
+  } = props
 
   const [values, setValues] = useState ({
     showOldPassword: false,
     showNewPassword: false,
     passwordActual: '',
     passwordNuevo: ''
-  });
+  })
 
-  const dataComplete = !values.passwordActual || !values.passwordNuevo;
+  const dataComplete = !values.passwordActual || !values.passwordNuevo
 
   const handleChangeOldPassword = e => {
-    setValues({ ...values, passwordActual: e.target.value });
+    setValues({ ...values, passwordActual: e.target.value })
   }
 
   const handleChangeNewPassword = e => {
-    setValues({ ...values, passwordNuevo: e.target.value });
+    setValues({ ...values, passwordNuevo: e.target.value })
   }
 
   const handleClickShowOldPassword = () => {
-    setValues({ ...values, showOldPassword: !values.showOldPassword });
-  };
+    setValues({ ...values, showOldPassword: !values.showOldPassword })
+  }
 
   const handleClickShowNewPassword = () => {
-    setValues({ ...values, showNewPassword: !values.showNewPassword });
-  };
+    setValues({ ...values, showNewPassword: !values.showNewPassword })
+  }
 
   const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   const handleActualizarPassword = async() => {
-    setOpenAlert(true);
+    setOpenAlert(true)
     if (empleado.password === values.passwordActual) {
       const data = {
         password: values.passwordNuevo
       }
-      await updateEmployee(empleado._id, data, empleado.access_token);
-      setSeverity('success');
-      setMessage('CONSTRASEÑA CAMBIADA CORRECTAMENTE');
-      onClose();
+      await updateEmployee(empleado._id, data, empleado.access_token)
+      setSeverity('success')
+      setMessage('CONSTRASEÑA CAMBIADA CORRECTAMENTE')
+      onClose()
     } else {
-      setSeverity('warning');
-      setMessage('CONTRASEÑA INCORRECTA');
+      setSeverity('warning')
+      setMessage('CONTRASEÑA INCORRECTA')
     }
   }
 
@@ -72,7 +72,7 @@ const ModalPassword = (props) => {
         handleChangeOldPassword={handleChangeOldPassword}
         handleChangeNewPassword={handleChangeNewPassword}
         {...props} />
-  );
+  )
 }
 
-export default ModalPassword;
+export default ModalPassword

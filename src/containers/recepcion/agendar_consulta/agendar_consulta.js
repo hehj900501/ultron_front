@@ -1,43 +1,36 @@
-import 'date-fns';
-import React, { Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import { Paper, TextField, Checkbox, Select } from '@material-ui/core';
-import TableComponent from '../../../components/table/TableComponent';
-import ModalConsulta from '../../../components/modales/modal_consulta';
-import ModalPagos from '../../../components/modales/modal_pagos';
-import ModalImprimirConsulta from '../../../components/modales/imprimir/consulta';
-import { optionSelect, optionSelect2, toFormatterCurrency } from '../../../utils/utils';
-import ModalCuracion from '../../../components/modales/modal_curacion';
-import ModalEstetica from '../../../components/modales/modal_estetica';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalProximaConsulta from '../../../components/modales/modal_proxima_consulta';
-import ModalTraspasoConsulta from '../../../components/modales/traspaso_consulta';
-import myStyles from '../../../css';
-import { CheckCustom } from '../../../components/basic/CheckCustom';
-import { ComboCustom } from '../../../components/basic/ComboCustom';
+import 'date-fns'
+import React, { Fragment } from 'react'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import { Paper, TextField, Select } from '@material-ui/core'
+import TableComponent from '../../../components/table/TableComponent'
+import ModalConsulta from '../../../components/modales/modal_consulta'
+import ModalPagos from '../../../components/modales/modal_pagos'
+import ModalImprimirConsulta from '../../../components/modales/imprimir/consulta'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalProximaConsulta from '../../../components/modales/modal_proxima_consulta'
+import ModalTraspasoConsulta from '../../../components/modales/traspaso_consulta'
+import myStyles from '../../../css'
+import { CheckCustom } from '../../../components/basic/CheckCustom'
+import { ComboCustom } from '../../../components/basic/ComboCustom'
 import { 
   formaPagoTarjetaId,
   sucursalFederalismoId,
-  sucursalManuelAcunaId,
   sucursalOccidentalId,
-  sucursalRubenDarioId,
-  rolRecepcionistaId
-} from '../../../utils/constants';
-//import Select from 'react-select';
+} from '../../../utils/constants'
+//import Select from 'react-select'
 
 export const AgendarConsultaContainer = (props) => {
 
   const {
     values,
     isHoliDay,
-    cambioTurno,
     onChangeHoliDay,
-    onChangeCambioTurno,
     servicios,
     tratamientos,
     productos,
@@ -64,7 +57,6 @@ export const AgendarConsultaContainer = (props) => {
     onChangeFrecuencia,
     onChangePaymentMethod,
     dataComplete,
-    frecuenciaPrimeraVezId,
     frecuenciaReconsultaId,
     colorBase,
     // TABLE DATES PROPERTIES
@@ -102,14 +94,14 @@ export const AgendarConsultaContainer = (props) => {
     onChangeCardType,
     tiposTarjeta,
     onChangeDigitos,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   const showPromovendedores = [
     ...promovendedores,
     ...recepcionistas,
-  ];
+  ]
 
   return (
     <Fragment>
@@ -223,19 +215,6 @@ export const AgendarConsultaContainer = (props) => {
               label="ES FESTIVO"
             />
           </Grid>
-          {/* {
-            sucursal._id === process.env.REACT_APP_SUCURSAL_OCCI_ID ||
-              sucursal._id === process.env.REACT_APP_SUCURSAL_FEDE_ID ?
-              <Grid item xs={12} sm={true} className={classes.grid_center}>
-                <CheckCustom
-                  checked={cambioTurno}
-                  onChange={onChangeCambioTurno}
-                  name="checkedCT"
-                  label="CAMBIO TURNO"
-                />
-              </Grid>
-              : ''
-          } */}
 
           <Grid item xs={12} sm={true} className={classes.grid_center}>
             <ButtonCustom
@@ -465,5 +444,5 @@ export const AgendarConsultaContainer = (props) => {
         components={components} />
 
     </Fragment>
-  );
+  )
 }

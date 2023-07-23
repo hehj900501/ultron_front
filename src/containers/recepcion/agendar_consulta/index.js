@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { AgendarConsultaContainer } from "./agendar_consulta";
+import React, { useState, useEffect, Fragment } from "react"
+import { makeStyles } from '@material-ui/core/styles'
+import { AgendarConsultaContainer } from "./agendar_consulta"
 import {
 	showAllTipoCitas,
 	showAllMedios,
@@ -9,47 +9,47 @@ import {
 	showAllMetodoPago,
 	showAllTipoTarjeta,
 	showAllBanco,
-} from "../../../services";
+} from "../../../services"
 import {
 	createConsult,
 	findConsultsByDateAndSucursal,
 	updateConsult
-} from "../../../services/consultas";
+} from "../../../services/consultas"
 import {
 	findCuracionByConsultaId,
-} from "../../../services/curaciones";
+} from "../../../services/curaciones"
 import {
 	findEsteticaByConsultaId,
-} from "../../../services/esteticas";
-import { Backdrop, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TablePagination } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
-import EditIcon from '@material-ui/icons/Edit';
-import { toFormatterCurrency, addZero, generateFolio, dateToString } from "../../../utils/utils";
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import PrintIcon from '@material-ui/icons/Print';
-import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-import FaceIcon from '@material-ui/icons/Face';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import { findProductoByServicio } from "../../../services/productos";
-import { findEmployeesByRolIdAvailable } from "../../../services/empleados";
-import { createFactura } from "../../../services/facturas";
+} from "../../../services/esteticas"
+import { Backdrop, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TablePagination } from "@material-ui/core"
+import MuiAlert from '@material-ui/lab/Alert'
+import EditIcon from '@material-ui/icons/Edit'
+import { toFormatterCurrency, addZero, generateFolio, dateToString } from "../../../utils/utils"
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import PrintIcon from '@material-ui/icons/Print'
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
+import FaceIcon from '@material-ui/icons/Face'
+import EventAvailableIcon from '@material-ui/icons/EventAvailable'
+import { findProductoByServicio } from "../../../services/productos"
+import { findEmployeesByRolIdAvailable } from "../../../services/empleados"
+import { createFactura } from "../../../services/facturas"
 import {
 	findConsecutivoBySucursal,
 	createConsecutivo,
-} from "../../../services/consecutivos";
-import { updateSesionAnticipada } from "../../../services/sesiones_anticipadas";
-import { createEntrada, updateEntrada } from "../../../services/entradas";
-import { createPago } from "../../../services/pagos";
-import { findTurnoActualBySucursal } from "../../../services/corte";
+} from "../../../services/consecutivos"
+import { updateSesionAnticipada } from "../../../services/sesiones_anticipadas"
+import { createEntrada, updateEntrada } from "../../../services/entradas"
+import { createPago } from "../../../services/pagos"
+import { findTurnoActualBySucursal } from "../../../services/corte"
 import {
 	frecuenciaPrimeraVezObj,
 	productoConsultaObj,
 	rolRecepcionistaId
-} from "../../../utils/constants";
-import { useNavigate } from "react-router-dom";
+} from "../../../utils/constants"
+import { useNavigate } from "react-router-dom"
 
 function Alert(props) {
-	return <MuiAlert elevation={6} variant="filled" {...props} />;
+	return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const useStyles = makeStyles(theme => ({
@@ -63,13 +63,13 @@ const useStyles = makeStyles(theme => ({
 	no_pagago: {
 		color: '#DC3132',
 	},
-}));
+}))
 
 const AgendarConsulta = (props) => {
 
-	const classes = useStyles();
+	const classes = useStyles()
 
-	const navigate = useNavigate();
+	const navigate = useNavigate()
 
 	const {
 		paciente,
@@ -83,46 +83,46 @@ const AgendarConsulta = (props) => {
 		onClickAgendarAparatologia,
 		colorBase,
 		turno,
-	} = props;
+	} = props
 
-	const token = empleado.access_token;
+	const token = empleado.access_token
 
-	const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID;
-	const promovendedorRolId = process.env.REACT_APP_PROMOVENDEDOR_ROL_ID;
-	const pendienteStatusId = process.env.REACT_APP_PENDIENTE_STATUS_ID;
-	const asistioStatusId = process.env.REACT_APP_ASISTIO_STATUS_ID;
-	const confirmadoStatusId = process.env.REACT_APP_CONFIRMADO_STATUS_ID;
-	const enProcedimientoStatusId = process.env.REACT_APP_EN_PROCEDIMIENTO_STATUS_ID;
-	const enConsultorioStatusId = process.env.REACT_APP_EN_CONSULTORIO_STATUS_ID;
-	const enCabinaStatusId = process.env.REACT_APP_EN_CABINA_STATUS_ID;
-	const atendidoStatusId = process.env.REACT_APP_ATENDIDO_STATUS_ID;
-	const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID;
-	const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID;
-	const canceladoCPStatusId = process.env.REACT_APP_CANCELO_CP_STATUS_ID;
-	const canceladoSPStatusId = process.env.REACT_APP_CANCELO_SP_STATUS_ID;
-	const consultaServicioId = process.env.REACT_APP_CONSULTA_SERVICIO_ID;
-	const sucursalManuelAcunaId = process.env.REACT_APP_SUCURSAL_MANUEL_ACUNA_ID;
-	const sucursalRubenDarioId = process.env.REACT_APP_SUCURSAL_RUBEN_DARIO_ID;
-	const dermatologoDirectoId = process.env.REACT_APP_DERMATOLOGO_DIRECTO_ID;
-	const promovendedorSinPromovendedorId = process.env.REACT_APP_PROMOVENDEDOR_SIN_PROMOVENDEDOR_ID;
-	const frecuenciaPrimeraVezId = process.env.REACT_APP_FRECUENCIA_PRIMERA_VEZ_ID;
-	const frecuenciaReconsultaId = process.env.REACT_APP_FRECUENCIA_RECONSULTA_ID;
-	const tipoCitaRevisionId = process.env.REACT_APP_TIPO_CITA_REVISADO_ID;
-	const tipoCitaDerivadaId = process.env.REACT_APP_TIPO_CITA_DERIVADO_ID;
-	const medioSinCitaId = process.env.REACT_APP_MEDIO_SIN_CITA_ID;
-	const productoConsultaId = process.env.REACT_APP_PRODUCTO_CONSULTA_ID;
-	const efectivoFormaPagoId = process.env.REACT_APP_FORMA_PAGO_EFECTIVO;
-	const tarjetaFormaPagoId = process.env.REACT_APP_FORMA_PAGO_TARJETA;
-	const noPagaFormaPagoId = process.env.REACT_APP_FORMA_PAGO_NO_PAGA;
-	const sesionAnticipadaFormaPagoId = process.env.REACT_APP_FORMA_PAGO_SESION_ANTICIPADA;
-	const fisicoMedioId = process.env.REACT_APP_MEDIO_FISICO_ID;
-	const sucursalOccidentalId = process.env.REACT_APP_SUCURSAL_OCCI_ID;
-	const sucursalFederalismoId = process.env.REACT_APP_SUCURSAL_FEDE_ID;
-	const tipoEntradaConsultaId = process.env.REACT_APP_TIPO_ENTRADA_CONSULTA_ID;
-	const servicioConsultaId = process.env.REACT_APP_CONSULTA_SERVICIO_ID;
-	const tratamientoConsultaId = process.env.REACT_APP_CONSULTA_TRATAMIENTO_ID;
+	const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID
+	const promovendedorRolId = process.env.REACT_APP_PROMOVENDEDOR_ROL_ID
+	const pendienteStatusId = process.env.REACT_APP_PENDIENTE_STATUS_ID
+	const asistioStatusId = process.env.REACT_APP_ASISTIO_STATUS_ID
+	const confirmadoStatusId = process.env.REACT_APP_CONFIRMADO_STATUS_ID
+	const enProcedimientoStatusId = process.env.REACT_APP_EN_PROCEDIMIENTO_STATUS_ID
+	const enConsultorioStatusId = process.env.REACT_APP_EN_CONSULTORIO_STATUS_ID
+	const enCabinaStatusId = process.env.REACT_APP_EN_CABINA_STATUS_ID
+	const atendidoStatusId = process.env.REACT_APP_ATENDIDO_STATUS_ID
+	const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID
+	const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID
+	const canceladoCPStatusId = process.env.REACT_APP_CANCELO_CP_STATUS_ID
+	const canceladoSPStatusId = process.env.REACT_APP_CANCELO_SP_STATUS_ID
+	const consultaServicioId = process.env.REACT_APP_CONSULTA_SERVICIO_ID
+	const sucursalManuelAcunaId = process.env.REACT_APP_SUCURSAL_MANUEL_ACUNA_ID
+	const sucursalRubenDarioId = process.env.REACT_APP_SUCURSAL_RUBEN_DARIO_ID
+	const dermatologoDirectoId = process.env.REACT_APP_DERMATOLOGO_DIRECTO_ID
+	const promovendedorSinPromovendedorId = process.env.REACT_APP_PROMOVENDEDOR_SIN_PROMOVENDEDOR_ID
+	const frecuenciaPrimeraVezId = process.env.REACT_APP_FRECUENCIA_PRIMERA_VEZ_ID
+	const frecuenciaReconsultaId = process.env.REACT_APP_FRECUENCIA_RECONSULTA_ID
+	const tipoCitaRevisionId = process.env.REACT_APP_TIPO_CITA_REVISADO_ID
+	const tipoCitaDerivadaId = process.env.REACT_APP_TIPO_CITA_DERIVADO_ID
+	const medioSinCitaId = process.env.REACT_APP_MEDIO_SIN_CITA_ID
+	const productoConsultaId = process.env.REACT_APP_PRODUCTO_CONSULTA_ID
+	const efectivoFormaPagoId = process.env.REACT_APP_FORMA_PAGO_EFECTIVO
+	const tarjetaFormaPagoId = process.env.REACT_APP_FORMA_PAGO_TARJETA
+	const noPagaFormaPagoId = process.env.REACT_APP_FORMA_PAGO_NO_PAGA
+	const sesionAnticipadaFormaPagoId = process.env.REACT_APP_FORMA_PAGO_SESION_ANTICIPADA
+	const fisicoMedioId = process.env.REACT_APP_MEDIO_FISICO_ID
+	const sucursalOccidentalId = process.env.REACT_APP_SUCURSAL_OCCI_ID
+	const sucursalFederalismoId = process.env.REACT_APP_SUCURSAL_FEDE_ID
+	const tipoEntradaConsultaId = process.env.REACT_APP_TIPO_ENTRADA_CONSULTA_ID
+	const servicioConsultaId = process.env.REACT_APP_CONSULTA_SERVICIO_ID
+	const tratamientoConsultaId = process.env.REACT_APP_CONSULTA_TRATAMIENTO_ID
 
-	const date = new Date();
+	const date = new Date()
 
 	const getPrecio = () => {
 		return isHoliDay ? sucursal.precio_festivo : // DÍA FESTIVO
@@ -130,21 +130,21 @@ const AgendarConsulta = (props) => {
 				: (date.getHours() >= 14 ? sucursal.precio_vespertino : sucursal.precio_matutino) // L-V
 	}
 
-	const [openAlert, setOpenAlert] = useState(false);
-	const [message, setMessage] = useState('');
-	const [severity, setSeverity] = useState('success');
-	const [horarios, setHorarios] = useState([]);
-	const [recepcionistas, setRecepcionistas] = useState([]);
-	const [dermatologos, setDermatologos] = useState([]);
-	const [frecuencias, setFrecuencias] = useState([]);
-	const [productos, setProductos] = useState([]);
-	const [tipoCitas, setTipoCitas] = useState([]);
-	const [medios, setMedios] = useState([]);
-	const [promovendedores, setPromovendedores] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [disableDate, setDisableDate] = useState(true);
-	const [isHoliDay, setIsHoliDay] = useState(false);
-	const [cambioTurno, setCambioTurno] = useState(false);
+	const [openAlert, setOpenAlert] = useState(false)
+	const [message, setMessage] = useState('')
+	const [severity, setSeverity] = useState('success')
+	const [horarios, setHorarios] = useState([])
+	const [recepcionistas, setRecepcionistas] = useState([])
+	const [dermatologos, setDermatologos] = useState([])
+	const [frecuencias, setFrecuencias] = useState([])
+	const [productos, setProductos] = useState([])
+	const [tipoCitas, setTipoCitas] = useState([])
+	const [medios, setMedios] = useState([])
+	const [promovendedores, setPromovendedores] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
+	const [disableDate, setDisableDate] = useState(true)
+	const [isHoliDay, setIsHoliDay] = useState(false)
+	const [cambioTurno, setCambioTurno] = useState(false)
 	const [values, setValues] = useState({
 		hora: '',
 		fecha_hora: new Date(),
@@ -159,36 +159,36 @@ const AgendarConsulta = (props) => {
 		promovendedor: promovendedorSinPromovendedorId,
 		dermatologo: dermatologoDirectoId,
 		medio: fisicoMedioId,
-	});
+	})
 
-	const [consultas, setConsultas] = useState([]);
-	const [formasPago, setFormasPago] = useState([]);
-	const [bancos, setBancos] = useState([]);
-	const [tiposTarjeta, setTiposTarjeta] = useState([]);
-	const [openModal, setOpenModal] = useState(false);
-	const [openModalProxima, setOpenModalProxima] = useState(false);
-	const [openModalPagos, setOpenModalPagos] = useState(false);
-	const [openModalCuraciones, setOpenModalCuraciones] = useState(false);
-	const [openModalTraspaso, setOpenModalTraspaso] = useState(false);
-	const [openModalEstetica, setOpenModalEstetica] = useState(false);
-	const [consulta, setConsulta] = useState();
-	const [openModalImprimirConsultas, setOpenModalImprimirConsultas] = useState(false);
-	const [datosImpresion, setDatosImpresion] = useState();
+	const [consultas, setConsultas] = useState([])
+	const [formasPago, setFormasPago] = useState([])
+	const [bancos, setBancos] = useState([])
+	const [tiposTarjeta, setTiposTarjeta] = useState([])
+	const [openModal, setOpenModal] = useState(false)
+	const [openModalProxima, setOpenModalProxima] = useState(false)
+	const [openModalPagos, setOpenModalPagos] = useState(false)
+	const [openModalCuraciones, setOpenModalCuraciones] = useState(false)
+	const [openModalTraspaso, setOpenModalTraspaso] = useState(false)
+	const [openModalEstetica, setOpenModalEstetica] = useState(false)
+	const [consulta, setConsulta] = useState()
+	const [openModalImprimirConsultas, setOpenModalImprimirConsultas] = useState(false)
+	const [datosImpresion, setDatosImpresion] = useState()
 	const [curacion, setCuracion] = useState({
 		materiales: []
-	});
+	})
 	const [estetica, setEstetica] = useState({
 		materiales: []
-	});
+	})
 
-	const dia = addZero(date.getDate());
-	const mes = addZero(date.getMonth() + 1);
-	const anio = date.getFullYear();
+	const dia = addZero(date.getDate())
+	const mes = addZero(date.getMonth() + 1)
+	const anio = date.getFullYear()
 
 	const [filterDate, setFilterDate] = useState({
 		fecha_show: date,
 		fecha: `${dia}/${mes}/${anio}`,
-	});
+	})
 
 	const columns = [
 		{ title: 'FOLIO', field: 'consecutivo' },
@@ -210,18 +210,18 @@ const AgendarConsulta = (props) => {
 		{ title: 'HORA LLEGADA', field: 'hora_llegada' },
 		{ title: 'HORA ATENDIDO', field: 'hora_atencion' },
 		{ title: 'HORA SALIDA', field: 'hora_salida' },
-	];
+	]
 
 	const dataComplete = !paciente.nombres || !values.precio || !values.dermatologo
 		|| !values.promovendedor || (sucursal._id === sucursalManuelAcunaId ? (!values.fecha_hora || !values.medio) : false)
-		|| (sucursal._id === sucursalRubenDarioId ? (!values.fecha_hora || !values.medio) : false);
+		|| (sucursal._id === sucursalRubenDarioId ? (!values.fecha_hora || !values.medio) : false)
 
 	const options = {
 		rowStyle: rowData => {
 			return {
 				color: rowData.status.color,
 				backgroundColor: rowData.pagado ? process.env.REACT_APP_PAGADO_COLOR : ''
-			};
+			}
 		},
 		headerStyle: {
 			backgroundColor: colorBase,
@@ -239,93 +239,80 @@ const AgendarConsulta = (props) => {
 	}
 
 	const loadHorarios = async (date) => {
-		const dia = date ? date.getDate() : values.fecha_show.getDate();
-		const mes = Number(date ? date.getMonth() : values.fecha_show.getMonth());
-		const anio = date ? date.getFullYear() : values.fecha_show.getFullYear();
-		const response = await findScheduleByDateAndSucursalAndService(dia, mes, anio, sucursal._id, consultaServicioId);
+		const dia = date ? date.getDate() : values.fecha_show.getDate()
+		const mes = Number(date ? date.getMonth() : values.fecha_show.getMonth())
+		const anio = date ? date.getFullYear() : values.fecha_show.getFullYear()
+		const response = await findScheduleByDateAndSucursalAndService(dia, mes, anio, sucursal._id, consultaServicioId)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setHorarios(response.data);
+			setHorarios(response.data)
 		}
 	}
 
 	const handleChangeFecha = async (date) => {
-		setIsLoading(true);
+		setIsLoading(true)
 		await setValues({
 			...values,
 			fecha_hora: date,
-		});
-		await loadHorarios(date);
-		await handleChangeFilterDate(date);
-		setIsLoading(false);
-	};
+		})
+		await loadHorarios(date)
+		await handleChangeFilterDate(date)
+		setIsLoading(false)
+	}
 
 	const handleChangeHora = e => {
-		setIsLoading(true);
-		const hora = (e.target.value).split(':');
-		const date = values.fecha_hora;
-		date.setHours(Number(hora[0]));
-		date.setMinutes(hora[1]);
-		date.setSeconds(0);
+		setIsLoading(true)
+		const hora = (e.target.value).split(':')
+		const date = values.fecha_hora
+		date.setHours(Number(hora[0]))
+		date.setMinutes(hora[1])
+		date.setSeconds(0)
 		setValues({
 			...values,
 			hora: e.target.value,
 			fecha_hora: date
-		});
-		setIsLoading(false);
-	};
+		})
+		setIsLoading(false)
+	}
 
 	const handleChangeFilterDate = async (date) => {
-		setIsLoading(true);
-		const dia = addZero(date.getDate());
-		const mes = addZero(date.getMonth() + 1);
-		const anio = date.getFullYear();
+		setIsLoading(true)
+		const dia = addZero(date.getDate())
+		const mes = addZero(date.getMonth() + 1)
+		const anio = date.getFullYear()
 		setFilterDate({
 			fecha_show: date,
 			fecha: `${dia}/${mes}/${anio}`
-		});
-		await loadConsultas(date);
-		setIsLoading(false);
-	};
+		})
+		await loadConsultas(date)
+		setIsLoading(false)
+	}
 
 	const loadConsultas = async (filterDate) => {
-		const response = await findConsultsByDateAndSucursal(filterDate.getDate(), filterDate.getMonth(), filterDate.getFullYear(), sucursal._id, token);
+		const response = await findConsultsByDateAndSucursal(filterDate.getDate(), filterDate.getMonth(), filterDate.getFullYear(), sucursal._id, token)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
 			response.data.forEach(item => {
-				const fecha = new Date(item.fecha_hora);
-				item.folio = generateFolio(item);
-				item.hora = `${addZero(fecha.getHours())}:${addZero(fecha.getMinutes())}`;
-				item.precio_moneda = toFormatterCurrency(item.precio);
-				item.total_moneda = toFormatterCurrency(item.total);
-				item.paciente_nombre = `${item.paciente.nombres} ${item.paciente.apellidos}`;
-				item.promovendedor_nombre = item.promovendedor ? item.promovendedor.nombre : 'SIN ASIGNAR';
-				item.dermatologo_nombre = item.dermatologo ? item.dermatologo.nombre : 'DIRECTO';
-				item.show_tratamientos = item.producto.nombre;
-				item.forma_pago_show = `${item.forma_pago.nombre}${item.factura ? ' (FACTURA)' : ''}`;
-			});
+				const fecha = new Date(item.fecha_hora)
+				item.folio = generateFolio(item)
+				item.hora = `${addZero(fecha.getHours())}:${addZero(fecha.getMinutes())}`
+				item.precio_moneda = toFormatterCurrency(item.precio)
+				item.total_moneda = toFormatterCurrency(item.total)
+				item.paciente_nombre = `${item.paciente.nombres} ${item.paciente.apellidos}`
+				item.promovendedor_nombre = item.promovendedor ? item.promovendedor.nombre : 'SIN ASIGNAR'
+				item.dermatologo_nombre = item.dermatologo ? item.dermatologo.nombre : 'DIRECTO'
+				item.show_tratamientos = item.producto.nombre
+				item.forma_pago_show = `${item.forma_pago.nombre}${item.factura ? ' (FACTURA)' : ''}`
+			})
 			response.data.sort((a, b) => a.hora - b.hora)
-			setConsultas(response.data);
+			setConsultas(response.data)
 		}
 	}
 
-	const getTimeToTratamiento = (tratamientos) => {
-		tratamientos.sort((a, b) => {
-			if (a.tiempo < b.tiempo) return 1;
-			if (a.tiempo > b.tiempo) return -1;
-			return 0;
-		});
-		let tiempo = 0;
-		tratamientos.forEach((item, index) => {
-			tiempo += Number(index === 0 ? item.tiempo : (item.tiempo - (item.servicio !== 'APARATOLOGÍA' ? 20 : 0)));
-		});
-		return tiempo;
-	}
-
 	const handleChangeTipoCita = (e) => {
-		setValues({ ...values, tipo_cita: e.target.value });
+		setValues({ ...values, tipo_cita: e.target.value })
 	}
 
 	const handleChangeMedio = (e) => {
-		setValues({ ...values, medio: e.target.value });
+		setValues({ ...values, medio: e.target.value })
 	}
 
 	const handleChangeProductos = (e, newValue) => {
@@ -336,7 +323,7 @@ const AgendarConsulta = (props) => {
 			precio: newValue && newValue._id === productoConsultaId ? getPrecio() : '0',
 			porcentaje_descuento_clinica: newValue && newValue._id === productoConsultaId ? '0' : '100',
 			descuento_clinica: newValue && newValue._id === productoConsultaId ? 0 : getPrecio(),
-		});
+		})
 	}
 
 	const fechaCitaEsCitado = (fechaCita) => {
@@ -344,32 +331,32 @@ const AgendarConsulta = (props) => {
 	}
 
 	const handleClickAgendar = async (data) => {
-		setIsLoading(true);
-		const create_date = new Date();
-		data.quien_agenda = empleado._id;
-		data.sucursal = sucursal._id;
-		data.status = pendienteStatusId;
-		data.hora_llegada = '--:--';
-		data.hora_atencion = '--:--';
-		data.hora_salida = '--:--';
-		data.total = data.precio;
-		data.servicio = consultaServicioId;
-		data.tipo_cita = data.frecuencia._id === frecuenciaPrimeraVezId ? tipoCitaRevisionId : tipoCitaDerivadaId;
+		setIsLoading(true)
+		const create_date = new Date()
+		data.quien_agenda = empleado._id
+		data.sucursal = sucursal._id
+		data.status = pendienteStatusId
+		data.hora_llegada = '--:--'
+		data.hora_atencion = '--:--'
+		data.hora_salida = '--:--'
+		data.total = data.precio
+		data.servicio = consultaServicioId
+		data.tipo_cita = data.frecuencia._id === frecuenciaPrimeraVezId ? tipoCitaRevisionId : tipoCitaDerivadaId
 
 		if ((sucursal._id === sucursalOccidentalId || sucursal._id === sucursalFederalismoId) && !fechaCitaEsCitado(data.fecha_hora)) {
-			const fecha_hora = new Date();
-			fecha_hora.setMinutes(0);
-			fecha_hora.setSeconds(0);
-			data.hora_llegada = `${addZero(create_date.getHours())}:${addZero(create_date.getMinutes())}`;
-			data.fecha_hora = fecha_hora;
-			data.status = asistioStatusId;
-			data.hora_aplicacion = create_date;
-			// data.quien_confirma_asistencia = empleado._id;
+			const fecha_hora = new Date()
+			fecha_hora.setMinutes(0)
+			fecha_hora.setSeconds(0)
+			data.hora_llegada = `${addZero(create_date.getHours())}:${addZero(create_date.getMinutes())}`
+			data.fecha_hora = fecha_hora
+			data.status = asistioStatusId
+			data.hora_aplicacion = create_date
+			// data.quien_confirma_asistencia = empleado._id
 		}
 
-		const response = await createConsult(data, token);
+		const response = await createConsult(data, token)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-			const resConsult = response.data;
+			const resConsult = response.data
 			if ((sucursal._id === sucursalOccidentalId || sucursal._id === sucursalFederalismoId) && !fechaCitaEsCitado(data.fecha_hora)) {
 				const entrada = {
 					create_date: create_date,
@@ -381,11 +368,11 @@ const AgendarConsulta = (props) => {
 					sucursal: sucursal,
 					forma_pago: data.forma_pago,
 					pago_anticipado: false,
-				};
+				}
 
-				const entradaResponse = await createEntrada(entrada, token);
+				const entradaResponse = await createEntrada(entrada, token)
 				if (`${entradaResponse.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-					const resEntrada = entradaResponse.data;
+					const resEntrada = entradaResponse.data
 					const pago = {
 						create_date: create_date,
 						fecha_pago: create_date,
@@ -410,21 +397,21 @@ const AgendarConsulta = (props) => {
 						pago_anticipado: false,
 						entrada: resEntrada._id,
 						turno: turno,
-					};
+					}
 
-					const pagoResponse = await createPago(pago, token);
+					const pagoResponse = await createPago(pago, token)
 					if (`${pagoResponse.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-						const resPago = pagoResponse.data;
-						resEntrada.pago = resPago._id;
-						await updateEntrada(resEntrada._id, resEntrada, token);
-						resConsult.pagos = [resPago];
-						handleGuardarModalPagos(resConsult);
+						const resPago = pagoResponse.data
+						resEntrada.pago = resPago._id
+						await updateEntrada(resEntrada._id, resEntrada, token)
+						resConsult.pagos = [resPago]
+						handleGuardarModalPagos(resConsult)
 					}
 				}
 			}
-			setOpenAlert(true);
-			setSeverity('success');
-			setMessage('LA CONSULTA SE AGENDO CORRECTAMENTE');
+			setOpenAlert(true)
+			setSeverity('success')
+			setMessage('LA CONSULTA SE AGENDO CORRECTAMENTE')
 			setValues({
 				servicio: '',
 				tratamiento: '',
@@ -436,36 +423,36 @@ const AgendarConsulta = (props) => {
 				tipo_cita: '',
 				citado: '',
 				pagado: false,
-			});
-			setDisableDate(true);
-			setPacienteAgendado({});
-			loadConsultas(new Date());
+			})
+			setDisableDate(true)
+			setPacienteAgendado({})
+			loadConsultas(new Date())
 		}
-		setIsLoading(false);
-	};
+		setIsLoading(false)
+	}
 
 	const handleChangeBank = (event) => {
-		setValues({ ...values, banco: event.target.value });
+		setValues({ ...values, banco: event.target.value })
 	}
 
 	const handleChangeCardType = (event) => {
-		setValues({ ...values, tipo_tarjeta: event.target.value });
+		setValues({ ...values, tipo_tarjeta: event.target.value })
 	}
 
 	const handleChangeDigitos = (event) => {
-		setValues({ ...values, digitos: event.target.value });
+		setValues({ ...values, digitos: event.target.value })
 	}
 
 	const handleChangePrecio = (e) => {
-		setValues({ ...values, precio: e.target.value });
+		setValues({ ...values, precio: e.target.value })
 	}
 
 	const handleChangeTiempo = (e) => {
-		setValues({ ...values, tiempo: e.target.value });
+		setValues({ ...values, tiempo: e.target.value })
 	}
 
 	const handleChangeDermatologos = (e) => {
-		setValues({ ...values, dermatologo: e.target.value });
+		setValues({ ...values, dermatologo: e.target.value })
 	}
 
 	const handleChangeHoliDay = (e) => {
@@ -475,106 +462,106 @@ const AgendarConsulta = (props) => {
 				date.getDay() === 6 ? (date.getHours() >= 13 ? sucursal.precio_sabado_vespertino : sucursal.precio_sabado_matutino) // SABADO
 					: (date.getHours() >= 14 ? sucursal.precio_vespertino : sucursal.precio_matutino), // L-V
 		})
-		setIsHoliDay(!isHoliDay);
+		setIsHoliDay(!isHoliDay)
 	}
 
 	const handleChangeCambioTurno = (e) => {
-		setIsHoliDay(false);
+		setIsHoliDay(false)
 		setValues({
 			...values,
 			precio: date.getDay() === 6 ? (values.precio === sucursal.precio_sabado_matutino ? sucursal.precio_sabado_vespertino : sucursal.precio_sabado_matutino) // SABADO
 				: (values.precio === sucursal.precio_matutino ? sucursal.precio_vespertino : sucursal.precio_matutino) // L-V
 		})
-		setCambioTurno(!cambioTurno);
+		setCambioTurno(!cambioTurno)
 	}
 
 	const handleChangeObservaciones = e => {
-		setValues({ ...values, observaciones: e.target.value.toUpperCase() });
+		setValues({ ...values, observaciones: e.target.value.toUpperCase() })
 	}
 
 	const handleChangePromovendedor = (e) => {
-		setValues({ ...values, promovendedor: e.target.value });
+		setValues({ ...values, promovendedor: e.target.value })
 	}
 
 	const handleChangeFrecuencia = (e, newValue) => {
-		const frecuencia = newValue;
+		const frecuencia = newValue
 
 		const dermatologo = dermatologos.find(item => {
-			return item._id === dermatologoDirectoId;
-		});
+			return item._id === dermatologoDirectoId
+		})
 		const promovendedor = promovendedores.find(item => {
-			return item._id === promovendedorSinPromovendedorId;
-		});
+			return item._id === promovendedorSinPromovendedorId
+		})
 		setValues({
 			...values,
 			frecuencia: frecuencia,
 			dermatologo: frecuencia && frecuencia._id === frecuenciaPrimeraVezId ? dermatologo._id : dermatologoDirectoId,
 			promovendedor: frecuencia && frecuencia._id === frecuenciaReconsultaId ? promovendedor : promovendedorSinPromovendedorId,
 			producto: frecuencia && frecuencia._id === frecuenciaPrimeraVezId ? productoConsultaId : values.producto,
-		});
+		})
 	}
 
 	const handleCloseAlert = () => {
-		setOpenAlert(false);
-	};
+		setOpenAlert(false)
+	}
 
 	const handleCloseModal = () => {
-		setOpenModal(false);
-		setOpenModalProxima(false);
-		setOpenModalTraspaso(false);
-	};
+		setOpenModal(false)
+		setOpenModalProxima(false)
+		setOpenModalTraspaso(false)
+	}
 
 	const handleOnClickEditarConsulta = async (event, rowData) => {
-		setIsLoading(true);
-		setConsulta(rowData);
-		await loadHorarios(new Date(rowData.fecha_hora));
-		setOpenModal(true);
-		setIsLoading(false);
+		setIsLoading(true)
+		setConsulta(rowData)
+		await loadHorarios(new Date(rowData.fecha_hora))
+		setOpenModal(true)
+		setIsLoading(false)
 	}
 
 	const handleOnClickNuevaConsulta = async (event, rowData) => {
-		setIsLoading(true);
-		setConsulta(rowData);
-		// await loadTratamientos(rowData.servicio);
-		await loadHorarios(new Date(rowData.fecha_hora));
-		setOpenModalProxima(true);
-		setIsLoading(false);
+		setIsLoading(true)
+		setConsulta(rowData)
+		// await loadTratamientos(rowData.servicio)
+		await loadHorarios(new Date(rowData.fecha_hora))
+		setOpenModalProxima(true)
+		setIsLoading(false)
 	}
 
 	const handleClickVerPagos = (event, rowData) => {
-		setConsulta(rowData);
-		setOpenModalPagos(true);
+		setConsulta(rowData)
+		setOpenModalPagos(true)
 	}
 
 	const handleClickTraspaso = (event, rowData) => {
-		setConsulta(rowData);
-		setOpenModalTraspaso(true);
+		setConsulta(rowData)
+		setOpenModalTraspaso(true)
 	}
 
 	const handleCloseVerPagos = () => {
-		setOpenModalPagos(false);
+		setOpenModalPagos(false)
 	}
 
 	const handleCloseCuracion = () => {
 		setCuracion({
 			materiales: [],
-		});
-		setOpenModalCuraciones(false);
+		})
+		setOpenModalCuraciones(false)
 	}
 
 	const handleCloseEstetica = () => {
 		setEstetica({
 			materiales: [],
-		});
-		setOpenModalEstetica(false);
+		})
+		setOpenModalEstetica(false)
 	}
 
 	const handleCloseImprimirConsulta = () => {
-		setOpenModalImprimirConsultas(false);
+		setOpenModalImprimirConsultas(false)
 	}
 
 	const handlePrint = async (event, rowData) => {
-		setDatosImpresion(rowData);
+		setDatosImpresion(rowData)
 		navigate('/imprimir/ticket/consulta',
 			{
 				state: {
@@ -585,21 +572,21 @@ const AgendarConsulta = (props) => {
 					colorBase: colorBase,
 				}
 
-			});
+			})
 	}
 
 	const handleGuardarModalPagos = async (servicio) => {
-		servicio.pagado = servicio.pagos.length > 0;
-		setIsLoading(true);
+		servicio.pagado = servicio.pagos.length > 0
+		setIsLoading(true)
 		if (!servicio.consecutivo) {
-			const response = await findConsecutivoBySucursal(sucursal._id, token);
+			const response = await findConsecutivoBySucursal(sucursal._id, token)
 			if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-				const resConsecutivo = response.data;
-				servicio.consecutivo = resConsecutivo;
+				const resConsecutivo = response.data
+				servicio.consecutivo = resConsecutivo
 
 				if (servicio.forma_pago._id === sesionAnticipadaFormaPagoId) {
-					servicio.sesion_anticipada.consecutivo = servicio.consecutivo;
-					await updateSesionAnticipada(servicio.sesion_anticipada._id, servicio.sesion_anticipada, token);
+					servicio.sesion_anticipada.consecutivo = servicio.consecutivo
+					await updateSesionAnticipada(servicio.sesion_anticipada._id, servicio.sesion_anticipada, token)
 				}
 
 				const consecutivo = {
@@ -610,20 +597,20 @@ const AgendarConsulta = (props) => {
 					fecha_hora: new Date(),
 					status: servicio.status,
 				}
-				await createConsecutivo(consecutivo, token);
+				await createConsecutivo(consecutivo, token)
 			}
 		} else {
 			if (servicio.forma_pago._id === sesionAnticipadaFormaPagoId) {
-				servicio.sesion_anticipada.consecutivo = servicio.consecutivo;
-				await updateSesionAnticipada(servicio.sesion_anticipada._id, servicio.sesion_anticipada, token);
+				servicio.sesion_anticipada.consecutivo = servicio.consecutivo
+				await updateSesionAnticipada(servicio.sesion_anticipada._id, servicio.sesion_anticipada, token)
 			}
 		}
 
-		servicio.turno = servicio.turno ? servicio.turno : servicio.pagos[0].turno === 'm' ? 'M' : 'V';
+		servicio.turno = servicio.turno ? servicio.turno : servicio.pagos[0].turno === 'm' ? 'M' : 'V'
 		if (servicio.factura) {
 			if (servicio.factura._id) {
-				await updateConsult(servicio._id, servicio, token);
-				await loadConsultas(new Date(servicio.fecha_hora));
+				await updateConsult(servicio._id, servicio, token)
+				await loadConsultas(new Date(servicio.fecha_hora))
 			} else {
 				const factura = {
 					fecha_hora: new Date(),
@@ -633,21 +620,21 @@ const AgendarConsulta = (props) => {
 					tipo_servicio: servicio.factura.tipo_servicio._id,
 					sucursal: servicio.factura.sucursal._id,
 					uso_cfdi: servicio.factura.uso_cfdi._id,
-				};
-				const response = await createFactura(factura, token);
+				}
+				const response = await createFactura(factura, token)
 				if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-					servicio.factura = response.data;
-					await updateConsult(servicio._id, servicio, token);
-					await loadConsultas(new Date(servicio.fecha_hora));
+					servicio.factura = response.data
+					await updateConsult(servicio._id, servicio, token)
+					await loadConsultas(new Date(servicio.fecha_hora))
 				}
 			}
 		} else {
-			await updateConsult(servicio._id, servicio, token);
-			await loadConsultas(new Date(servicio.fecha_hora));
+			await updateConsult(servicio._id, servicio, token)
+			await loadConsultas(new Date(servicio.fecha_hora))
 		}
 
-		setOpenModalPagos(false);
-		setIsLoading(false);
+		setOpenModalPagos(false)
+		setIsLoading(false)
 	}
 
 	const actions = [
@@ -701,74 +688,41 @@ const AgendarConsulta = (props) => {
 			tooltip: 'TRASPASO',
 			onClick: handleClickTraspaso
 		},
-		//: ''
-		/*rowData => {
-			return (rowData.status._id === enProcedimientoStatusId || rowData.status._id === enConsultorioStatusId
-				|| rowData.status._id === enCabinaStatusId || rowData.status._id === atendidoStatusId)
-				? {
-					icon: LocalHospitalIcon,
-					tooltip: 'AGREGAR CURACIÓN',
-					onClick: onClickAgendarCuracion
-				} : ''
-		},
-		rowData => {
-			return (rowData.status._id === enProcedimientoStatusId || rowData.status._id === enConsultorioStatusId
-				|| rowData.status._id === enCabinaStatusId || rowData.status._id === atendidoStatusId)
-				? {
-					icon: FaceIcon,
-					tooltip: 'AGREGAR ESTÉTICA',
-					onClick: onClickAgendarEstetica
-				} : ''
-		},
-		rowData => (
-			rowData.status._id !== pendienteStatusId ? {
-				icon: AttachMoneyIcon,
-				tooltip: rowData.pagado ? 'VER PAGO' : 'PAGAR',
-				onClick: handleClickVerPagos
-			} : ''
-		),
-		rowData => (
-			rowData.status._id === atendidoStatusId ? {
-				icon: EventAvailableIcon,
-				tooltip: 'NUEVA CITA',
-				onClick: handleOnClickNuevaConsulta
-			} : ''
-		),*/
-	];
+	]
 
 	const onChangeActions = (e, rowData) => {
-		const action = e.target.value;
+		const action = e.target.value
 		switch (action) {
 			case 'IMPRIMIR':
-				handlePrint(e, rowData);
-				break;
+				handlePrint(e, rowData)
+				break
 			case 'EDITAR':
-				handleOnClickEditarConsulta(e, rowData);
-				break;
+				handleOnClickEditarConsulta(e, rowData)
+				break
 			case 'AGREGAR CURACIÓN':
-				onClickAgendarCuracion(e, rowData);
-				break;
+				onClickAgendarCuracion(e, rowData)
+				break
 			case 'AGREGAR ESTÉTICA':
-				onClickAgendarEstetica(e, rowData);
-				break;
+				onClickAgendarEstetica(e, rowData)
+				break
 			case 'AGREGAR DERMAPEN':
-				onClickAgendarDermapen(e, rowData);
-				break;
+				onClickAgendarDermapen(e, rowData)
+				break
 			case 'AGREGAR APARATOLOGÍA':
-				onClickAgendarAparatologia(e, rowData);
-				break;
+				onClickAgendarAparatologia(e, rowData)
+				break
 			case 'AGREGAR FACIAL':
-				onClickAgendarFaciales(e, rowData);
-				break;
+				onClickAgendarFaciales(e, rowData)
+				break
 			case 'NUEVA CITA':
-				handleOnClickNuevaConsulta(e, rowData);
-				break;
+				handleOnClickNuevaConsulta(e, rowData)
+				break
 			case 'PAGOS':
-				handleClickVerPagos(e, rowData);
-				break;
+				handleClickVerPagos(e, rowData)
+				break
 			case 'TRASPASO':
-				handleClickTraspaso(e, rowData);
-				break;
+				handleClickTraspaso(e, rowData)
+				break
 		}
 	}
 
@@ -793,7 +747,7 @@ const AgendarConsulta = (props) => {
 									let menuItem = <MenuItem
 										key={index}
 										value={item.tooltip}
-									>{item.tooltip}</MenuItem>;
+									>{item.tooltip}</MenuItem>
 									switch (item.tooltip) {
 										case 'PAGOS':
 											menuItem = props.data.status._id !== pendienteStatusId && props.data.status._id !== confirmadoStatusId ?
@@ -801,26 +755,26 @@ const AgendarConsulta = (props) => {
 													key={index}
 													value={item.tooltip}
 												>{item.tooltip}</MenuItem>
-												: '';
-											break;
+												: ''
+											break
 										case 'TRASPASO':
 											menuItem = props.data.status._id !== atendidoStatusId && props.data.status._id !== confirmadoStatusId ?
 												<MenuItem
 													key={index}
 													value={item.tooltip}
 												>{item.tooltip}</MenuItem>
-												: '';
-											break;
+												: ''
+											break
 										case 'NUEVA CITA':
 											menuItem = props.data.status._id === atendidoStatusId ?
 												<MenuItem
 													key={index}
 													value={item.tooltip}
 												>{item.tooltip}</MenuItem>
-												: '';
+												: ''
 									}
 									if (menuItem !== '' && props.data.status._id !== reagendoStatusId && props.data.status._id !== noAsistioStatusId) {
-										return menuItem;
+										return menuItem
 									}
 								})
 							}
@@ -832,105 +786,98 @@ const AgendarConsulta = (props) => {
 	}
 
 	const handleChangePaymentMethod = (e) => {
-		const formaPago = e.target.value;
+		const formaPago = e.target.value
 		setValues({
 			...values,
 			forma_pago: formaPago,
 			precio: formaPago !== noPagaFormaPagoId ? getPrecio() : '0',
 			porcentaje_descuento_clinica: formaPago !== noPagaFormaPagoId ? '0' : '100',
 			descuento_clinica: formaPago !== noPagaFormaPagoId ? 0 : getPrecio(),
-		});
+		})
 	}
 
 	const loadFormasPago = async () => {
-		const response = await showAllMetodoPago();
+		const response = await showAllMetodoPago()
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setFormasPago(response.data);
+			setFormasPago(response.data)
 		}
 	}
 
 	const loadDermatologos = async () => {
-		const response = await findEmployeesByRolIdAvailable(dermatologoRolId, token);
+		const response = await findEmployeesByRolIdAvailable(dermatologoRolId, token)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setDermatologos(response.data);
-		}
-	}
-
-	const loadRecepcionistas = async () => {
-		const response = await findEmployeesByRolIdAvailable(rolRecepcionistaId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setRecepcionistas(response.data);
+			setDermatologos(response.data)
 		}
 	}
 
 	const loadPromovendedores = async () => {
-		const response = await findEmployeesByRolIdAvailable(promovendedorRolId, token);
+		const response = await findEmployeesByRolIdAvailable(promovendedorRolId, token)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setPromovendedores(response.data);
+			setPromovendedores(response.data)
 		}
 	}
 
 	const loadTipoCitas = async () => {
-		const response = await showAllTipoCitas();
+		const response = await showAllTipoCitas()
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setTipoCitas(response.data);
+			setTipoCitas(response.data)
 		}
 	}
 
 	const loadMedios = async () => {
-		const response = await showAllMedios();
+		const response = await showAllMedios()
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setMedios(response.data);
+			setMedios(response.data)
 		}
 	}
 
 	const loadFrecuencias = async () => {
-		const response = await showAllFrecuencias();
+		const response = await showAllFrecuencias()
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setFrecuencias(response.data);
+			setFrecuencias(response.data)
 		}
 	}
 
 	const loadProductos = async () => {
-		const response = await findProductoByServicio(consultaServicioId);
+		const response = await findProductoByServicio(consultaServicioId)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setProductos(response.data);
+			setProductos(response.data)
 		}
 	}
 
 	const loadBancos = async () => {
-		const response = await showAllBanco();
+		const response = await showAllBanco()
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setBancos(response.data);
+			setBancos(response.data)
 		}
 	}
 
 	const loadTipoTarjeta = async () => {
-		const response = await showAllTipoTarjeta();
+		const response = await showAllTipoTarjeta()
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setTiposTarjeta(response.data);
+			setTiposTarjeta(response.data)
 		}
 	}
 
 	const loadAll = async () => {
-		setIsLoading(true);
-		await loadConsultas(new Date());
-		await loadProductos();
-		await loadDermatologos();
-		await loadPromovendedores();
-		await loadBancos();
-		await loadTipoTarjeta();
-		await loadTipoCitas();
-		await loadFrecuencias();
-		await loadMedios();
-		await loadFormasPago();
-		await loadHorarios(values.fecha_hora);
-		setIsLoading(false);
+		setIsLoading(true)
+		await loadConsultas(new Date())
+		await loadProductos()
+		await loadDermatologos()
+		await loadPromovendedores()
+		await loadBancos()
+		await loadTipoTarjeta()
+		await loadTipoCitas()
+		await loadFrecuencias()
+		await loadMedios()
+		await loadFormasPago()
+		await loadHorarios(values.fecha_hora)
+		setIsLoading(false)
 	}
 
 	useEffect(() => {
-		loadAll();
-	}, []);
+		loadAll()
+	}, [])
 
 	return (
 		<Fragment>
@@ -1018,7 +965,7 @@ const AgendarConsulta = (props) => {
 				</Alert>
 			</Snackbar>
 		</Fragment>
-	);
+	)
 }
 
-export default AgendarConsulta;
+export default AgendarConsulta

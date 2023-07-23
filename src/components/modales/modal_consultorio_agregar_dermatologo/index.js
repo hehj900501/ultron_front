@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import * as Yup from "yup";
-import { Formik } from 'formik';
-import ModalFormConsultorioAgregarDermatologo from './ModalFormConsultorioAgregarDermatologo';
-import { updateSurgery } from '../../../services/consultorios';
-import { findEmployeesByRolIdAvailable, updateEmployee } from '../../../services/empleados';
+import React, { useState, useEffect } from 'react'
+import * as Yup from "yup"
+import { Formik } from 'formik'
+import ModalFormConsultorioAgregarDermatologo from './ModalFormConsultorioAgregarDermatologo'
+import { updateSurgery } from '../../../services/consultorios'
+import { findEmployeesByRolIdAvailable, updateEmployee } from '../../../services/empleados'
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Ingresa los nombres")
     .required("Los nombres del pacientes son requeridos")
-});
+})
 
 const ModalConsultorioAgregarDermatologo = (props) => {
   const {
@@ -20,46 +20,45 @@ const ModalConsultorioAgregarDermatologo = (props) => {
     loadConsultorios,
     empleado,
     colorBase,
-  } = props;
+  } = props
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [dermatologos, setDermatologos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+  const [dermatologos, setDermatologos] = useState([])
 
   const [values, setValues] = useState({
     _id: consultorio._id,
     nombre: consultorio.nombre
-  });
+  })
 
-  const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID;
+  const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID
 
   useEffect(() => {
     const loadDermatologos = async () => {
-      const response = await findEmployeesByRolIdAvailable(dermatologoRolId, empleado.access_token);
+      const response = await findEmployeesByRolIdAvailable(dermatologoRolId, empleado.access_token)
       if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-        setDermatologos(response.data);
+        setDermatologos(response.data)
       }
-      setIsLoading(false);
+      setIsLoading(false)
     }
 
-    loadDermatologos();
-  }, [dermatologoRolId]);
+    loadDermatologos()
+  }, [dermatologoRolId])
 
   const handleClickGuardar = async (event, rowData) => {
-    values.dermatologo.disponible = false;
-    await updateEmployee(values.dermatologo._id, values.dermatologo, empleado.access_token);
-    values.disponible = true;
-    const response = await updateSurgery(values._id, values);
+    values.dermatologo.disponible = false
+    await updateEmployee(values.dermatologo._id, values.dermatologo, empleado.access_token)
+    values.disponible = true
+    const response = await updateSurgery(values._id, values)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setOpenAlert(true);
-      setMessage('El dermatologo se agrego al consultorio correctamente');
-      onClose();
-      await loadConsultorios();
+      setOpenAlert(true)
+      setMessage('El dermatologo se agrego al consultorio correctamente')
+      onClose()
+      await loadConsultorios()
     }
-
   }
 
   const handleChangeDermatologos = (event) => {
-    setValues({ ...values, dermatologo: event.target.value });
+    setValues({ ...values, dermatologo: event.target.value })
   }
 
   return (
@@ -81,7 +80,7 @@ const ModalConsultorioAgregarDermatologo = (props) => {
           {...props} />
       }
     </Formik>
-  );
+  )
 }
 
-export default ModalConsultorioAgregarDermatologo;
+export default ModalConsultorioAgregarDermatologo

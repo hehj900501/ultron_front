@@ -1,12 +1,12 @@
-import React from 'react';
-import * as Yup from "yup";
-import ModalFormCabina from './ModalFormCabina';
-import { Formik } from 'formik';
+import React from 'react'
+import * as Yup from "yup"
+import ModalFormCabina from './ModalFormCabina'
+import { Formik } from 'formik'
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Ingresa los nombres")
         .required("Los nombres del pacientes son requeridos")
-});
+})
 
 const ModalCabina = (props) => {
   const {
@@ -14,7 +14,7 @@ const ModalCabina = (props) => {
     onClose,
     cabina,
     handleClickGuardar,
-  } = props;
+  } = props
 
   const values = {
     _id: cabina._id,
@@ -36,7 +36,7 @@ const ModalCabina = (props) => {
         {...props} />
       }
     </Formik>
-  );
+  )
 }
 
-export default ModalCabina;
+export default ModalCabina

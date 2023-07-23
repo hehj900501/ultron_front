@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import * as Yup from "yup";
-import { Formik } from 'formik';
-import ModalFormConsultorioAgregarPaciente from './ModalFormConsultorioAgregarPaciente';
+import React, { useState, useEffect } from 'react'
+import * as Yup from "yup"
+import { Formik } from 'formik'
+import ModalFormConsultorioAgregarPaciente from './ModalFormConsultorioAgregarPaciente'
 import {
   findConsultById,
   updateConsult,
-} from '../../../services/consultas';
-import { addZero } from '../../../utils/utils';
-import { findSurgeryBySucursalIdAndFree, updateSurgery } from '../../../services/consultorios';
+} from '../../../services/consultas'
+import { addZero } from '../../../utils/utils'
+import { findSurgeryBySucursalIdAndFree, updateSurgery } from '../../../services/consultorios'
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Ingresa los nombres")
     .required("Los nombres del pacientes son requeridos")
-});
+})
 
 const ModalConsultorioAgregarPaciente = (props) => {
   const {
@@ -28,67 +28,66 @@ const ModalConsultorioAgregarPaciente = (props) => {
     cambio,
     paciente,
     colorBase,
-  } = props;
+  } = props
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [consultorios, setConsultorios] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+  const [consultorios, setConsultorios] = useState([])
 
   const [values, setValues] = useState({
-  });
+  })
 
-  const enConsultorioStatusId = process.env.REACT_APP_EN_CONSULTORIO_STATUS_ID;
-  const consultaServicioId = process.env.REACT_APP_CONSULTA_SERVICIO_ID;
+  const enConsultorioStatusId = process.env.REACT_APP_EN_CONSULTORIO_STATUS_ID
 
   useEffect(() => {
     const loadConsultoriosDisponibles = async () => {
-      const response = await findSurgeryBySucursalIdAndFree(sucursal);
+      const response = await findSurgeryBySucursalIdAndFree(sucursal)
       if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-        setConsultorios(response.data);
+        setConsultorios(response.data)
       }
     }
 
-    loadConsultoriosDisponibles();
-    setIsLoading(false);
+    loadConsultoriosDisponibles()
+    setIsLoading(false)
 
-  }, [sucursal]);
+  }, [sucursal])
 
   const handleClickGuardar = async (event, rowData) => {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    const responseServicio = await findConsultById(servicio, empleado.access_token);
+    const responseServicio = await findConsultById(servicio, empleado.access_token)
     if (`${responseServicio.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      const consulta = responseServicio.data;
-      const dateNow = new Date();
-      let updateConsulta = consulta;
-      updateConsulta.status = enConsultorioStatusId;
+      const consulta = responseServicio.data
+      const dateNow = new Date()
+      let updateConsulta = consulta
+      updateConsulta.status = enConsultorioStatusId
       if (!cambio) {
-        updateConsulta.hora_atencion = `${addZero(dateNow.getHours())}:${addZero(dateNow.getMinutes())}`;
+        updateConsulta.hora_atencion = `${addZero(dateNow.getHours())}:${addZero(dateNow.getMinutes())}`
       }
-      updateConsulta.dermatologo = values.consultorio.dermatologo;
-      await updateConsult(consulta._id, updateConsulta, empleado.access_token);
+      updateConsulta.dermatologo = values.consultorio.dermatologo
+      await updateConsult(consulta._id, updateConsulta, empleado.access_token)
 
-      setValues({ consultorio: { paciente: consulta.paciente._id } });
-      let consul = values.consultorio;
-      consul.consultaId = consulta._id;
-      consul.paciente = paciente._id;
-      consul.tipo_servicio = tipo_servicio;
-      consul.servicio = servicio;
-      consul.disponible = false;
+      setValues({ consultorio: { paciente: consulta.paciente._id } })
+      let consul = values.consultorio
+      consul.consultaId = consulta._id
+      consul.paciente = paciente._id
+      consul.tipo_servicio = tipo_servicio
+      consul.servicio = servicio
+      consul.disponible = false
 
-      const response = await updateSurgery(consul._id, consul);
+      const response = await updateSurgery(consul._id, consul)
       if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-        setOpenAlert(true);
-        setMessage('EL PACIENTE ENTRO AL CONSULTORIO');
+        setOpenAlert(true)
+        setMessage('EL PACIENTE ENTRO AL CONSULTORIO')
       }
     }
 
-    onClose();
-    await loadAll();
-    setIsLoading(false);
+    onClose()
+    await loadAll()
+    setIsLoading(false)
   }
 
   const handleChangeConsultorio = (event) => {
-    setValues({ consultorio: event.target.value });
+    setValues({ consultorio: event.target.value })
   }
 
   return (
@@ -112,7 +111,7 @@ const ModalConsultorioAgregarPaciente = (props) => {
           {...props} />
       }
     </Formik>
-  );
+  )
 }
 
-export default ModalConsultorioAgregarPaciente;
+export default ModalConsultorioAgregarPaciente

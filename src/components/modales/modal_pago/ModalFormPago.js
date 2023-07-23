@@ -1,15 +1,13 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { ButtonCustom } from "../../basic/ButtonCustom";
-import { CheckCustom } from '../../basic/CheckCustom';
-import { toFormatterCurrency } from '../../../utils/utils';
-import myStyles from '../../../css';
+import React, { Fragment } from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { ButtonCustom } from "../../basic/ButtonCustom"
+import { toFormatterCurrency } from '../../../utils/utils'
+import myStyles from '../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -17,42 +15,13 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
     height: '90%',
-  };
-}
-
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    minWidth: 120,
-    width: '100%',
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  textField: {
-    width: '100%',
-  },
-  button: {
-    width: '100%',
-    color: '#FFFFFF',
-  },
-  label: {
-    marginTop: '0px',
-    marginBottom: '0px',
   }
-}));
+}
 
 const ModalFormPago = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
@@ -67,18 +36,14 @@ const ModalFormPago = (props) => {
     onChangeBank,
     onChangeCardType,
     onChangeCantidad,
-    onChangeDescuento,
-    onChangeConfirmado,
     onChangeObservaciones,
     onChangeDigitos,
-    onChangePagoAnticipado,
-    onChangDescuentoDermatologo,
     onChangeSesionAnticipada,
     open,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -219,22 +184,13 @@ const ModalFormPago = (props) => {
                   disabled={isLoading}
                   text='GUARDAR' />
               </Grid>
-              {/*
-                <Grid item xs={12}>
-                  <CheckCustom
-                    checked={values.pago_anticipado}
-                    onChange={onChangePagoAnticipado}
-                    name="checkedC"
-                    label="PAGO ANTICIPADO" />
-              </Grid>
-              */}
             </Grid>
 
           </form>
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormPago;
+export default ModalFormPago

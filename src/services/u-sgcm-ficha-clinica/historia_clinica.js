@@ -40,3 +40,16 @@ export const updateHistoriaClinica = async (idHistoriaClinica, historiaClinica) 
         console.log('updateHistoriaClinica', error)
     }
 }
+
+export const findHistoriaClinicasByRangeDateAndSucursal = async (diai, mesi, anioi, diaf, mesf, aniof, sucursalId) => {
+    try {
+        const response = await axios({
+            url: `${baseUrl}/historiaclinica/fecha_inicio/${diai}/${mesi}/${anioi}/fecha_fin/${diaf}/${mesf}/${aniof}/sucursal/${sucursalId}`,
+            method: 'GET',
+        });
+        return response;
+    } catch (error) {
+        console.log('findHistoriaClinicasByRangeDateAndSucursal', error);
+        return error;
+    }
+}

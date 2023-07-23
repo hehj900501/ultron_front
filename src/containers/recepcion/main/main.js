@@ -1,58 +1,57 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { useTheme } from '@material-ui/core/styles';
-import MenuPatient from '../menu_pacientes/index';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Box from '@material-ui/core/Box';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import People from '@material-ui/icons/People';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import AirlineSeatReclineNormalIcon from '@material-ui/icons/AirlineSeatReclineNormal';
-import AndroidIcon from '@material-ui/icons/Android';
-import { Button, Grid, makeStyles } from '@material-ui/core';
-import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import ModalPassword from '../../../components/modales/modal_password';
-import Dermatologos from '../menu_dermatologos';
-import Consultorios from '../consultorios';
-import Corte from '../menu_corte';
-import ListaEspera from '../lista_espera';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import MenuReports from '../../basicos/menu_reportes';
-import Description from '@material-ui/icons/Description';
-import MenuRazonSocial from '../menu_razon_social';
+import React, { Fragment, useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import clsx from 'clsx'
+import { useTheme } from '@material-ui/core/styles'
+import MenuPatient from '../menu_pacientes/index'
+import Drawer from '@material-ui/core/Drawer'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Box from '@material-ui/core/Box'
+import List from '@material-ui/core/List'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import People from '@material-ui/icons/People'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import ListAltIcon from '@material-ui/icons/ListAlt'
+import AirlineSeatReclineNormalIcon from '@material-ui/icons/AirlineSeatReclineNormal'
+import AndroidIcon from '@material-ui/icons/Android'
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew'
+import ModalPassword from '../../../components/modales/modal_password'
+import Dermatologos from '../menu_dermatologos'
+import Consultorios from '../consultorios'
+import Corte from '../menu_corte'
+import ListaEspera from '../lista_espera'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import MenuReports from '../../basicos/menu_reportes'
+import Description from '@material-ui/icons/Description'
+import MenuRazonSocial from '../menu_razon_social'
 import {
 	createCorte,
 	showCorteTodayBySucursalAndTurno
-} from '../../../services/corte';
-import myStyles from '../../../css';
-import MenuSuperAdmin from '../../basicos/menu_super_admin';
-import DashboardForm from '../../basicos/dashboard';
-import InventariosForm from '../../basicos/inventarios';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import PieChartIcon from '@material-ui/icons/PieChart';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
+} from '../../../services/corte'
+import myStyles from '../../../css'
+import MenuSuperAdmin from '../../basicos/menu_super_admin'
+import DashboardForm from '../../basicos/dashboard'
+import InventariosForm from '../../basicos/inventarios'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import PieChartIcon from '@material-ui/icons/PieChart'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural'
 import {
 	rolRecepcionistaId,
 	rolJulioId,
-} from '../../../utils/constants';
+} from '../../../utils/constants'
 
 const TabPanel = (props) => {
-	const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props
 
 	return (
 		<Typography
@@ -65,14 +64,14 @@ const TabPanel = (props) => {
 		>
 			{value === index && <Box>{children}</Box>}
 		</Typography>
-	);
+	)
 }
 
 TabPanel.propTypes = {
 	children: PropTypes.node,
 	index: PropTypes.any.isRequired,
 	value: PropTypes.any.isRequired,
-};
+}
 
 export const MainContainer = props => {
 
@@ -91,24 +90,24 @@ export const MainContainer = props => {
 		setSeverity,
 		setOpenAlert,
 		turno,
-	} = props;
+	} = props
 
-	const colorBase = sucursal.color;
+	const colorBase = sucursal.color
 
-	const classes = myStyles(colorBase)();
-	const theme = useTheme();
-	const [openDrawer, setOpenDrawer] = useState(false);
+	const classes = myStyles(colorBase)()
+	const theme = useTheme()
+	const [openDrawer, setOpenDrawer] = useState(false)
 
 	const handleDrawerOpen = () => {
-		setOpenDrawer(true);
-	};
+		setOpenDrawer(true)
+	}
 
 	const handleDrawerClose = () => {
-		setOpenDrawer(false);
-	};
+		setOpenDrawer(false)
+	}
 
 	const generateCorteMatutino = async () => {
-		const create_date = new Date();
+		const create_date = new Date()
 		const newCorte = {
 			recepcionista: empleado._id,
 			create_date: create_date,
@@ -116,32 +115,32 @@ export const MainContainer = props => {
 			turno: 'm',
 			sucursal: sucursal,
 		}
-		const response = await createCorte(newCorte);
+		const response = await createCorte(newCorte)
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-			setMessage("CORTE MATUTINO ABIERTO.");
-			setOpenAlert(true);
+			setMessage("CORTE MATUTINO ABIERTO.")
+			setOpenAlert(true)
 		}
 	}
 
 	const findCorte = async () => {
-		const response = await showCorteTodayBySucursalAndTurno(sucursal._id, 'm');
+		const response = await showCorteTodayBySucursalAndTurno(sucursal._id, 'm')
 		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			const corte = response.data;
+			const corte = response.data
 			if (!corte) {
-				generateCorteMatutino();
+				generateCorteMatutino()
 			}
 		}
 	}
 
 	useEffect(() => {
-		findCorte();
-	}, []);
+		findCorte()
+	}, [])
 
 	const getInventarios = () => {
 		const permiso = empleado.rol.permisos.find(item => {
-			return item === "INVENTARIOS";
-		});
-		return permiso;
+			return item === "INVENTARIOS"
+		})
+		return permiso
 	}
 
 	return (
@@ -363,5 +362,5 @@ export const MainContainer = props => {
 				</Fragment>
 			</main>
 		</div>
-	);
+	)
 }

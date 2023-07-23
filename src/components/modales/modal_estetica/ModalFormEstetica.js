@@ -1,88 +1,34 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { Multiselect } from 'multiselect-react-dropdown';
-import { toFormatterCurrency } from '../../../utils/utils';
-import { ButtonCustom } from '../../basic/ButtonCustom';
-import ModalPagos from '../modal_pagos';
-import { CheckCustom } from '../../basic/CheckCustom';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import myStyles from '../../../css';
+import React, { Fragment } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Modal from '@material-ui/core/Modal'
+import { TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { Multiselect } from 'multiselect-react-dropdown'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../basic/ButtonCustom'
+import ModalPagos from '../modal_pagos'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import myStyles from '../../../css'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
-  };
+  }
 }
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 700,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    height: '90%',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  textField: {
-    width: '100%',
-  },
-  formControl: {
-    minWidth: 120,
-    width: '100%',
-  },
-  button: {
-    width: '100%',
-    color: '#FFFFFF',
-  },
-  label: {
-    marginTop: '0px',
-    marginBottom: '0px',
-  },
-  labelItemLeft: {
-    height: '100%',
-    marginTop: '0px',
-    marginBottom: '0px',
-    textAlign: 'left',
-    display: "flex",
-    alignItems: "center",
-  },
-  labelItemRight: {
-    height: '100%',
-    marginTop: '0px',
-    marginBottom: '0px',
-    textAlign: 'right',
-    alignSelf: 'center',
-    display: "flex",
-    alignItems: "center",
-  },
-  labelItemCenter: {
-    height: '100%',
-    marginTop: '0px',
-    marginBottom: '0px',
-    alignSelf: 'center',
-    textAlign: 'center',
-    display: "flex",
-    alignItems: "center",
-  },
-}));
-
-const canceloStatusId = process.env.REACT_APP_CANCELO_STATUS_ID;
-const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID;
-const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID;
+const canceloStatusId = process.env.REACT_APP_CANCELO_STATUS_ID
+const noAsistioStatusId = process.env.REACT_APP_NO_ASISTIO_STATUS_ID
+const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID
 
 const ModalFormEstetica = (props) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
@@ -91,7 +37,6 @@ const ModalFormEstetica = (props) => {
     onClickCrearEstetica,
     open,
     onChangeTotal,
-    onChangePagado,
     sucursal,
     toxinasRellenos,
     materiales,
@@ -123,14 +68,13 @@ const ModalFormEstetica = (props) => {
     onChangeMinutos,
     onChangeMotivos,
     formasPago,
-    consulta,
     empleado,
     tipoServicioId,
     estetica,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -207,7 +151,7 @@ const ModalFormEstetica = (props) => {
                         type='Text'
                         onChange={onChangeHora}
                         onInput={(e) => {
-                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value);
+                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value)
                           e.target.value = (e.target.value).toString().slice(0, 2)
                         }}
                         variant="outlined" />
@@ -222,7 +166,7 @@ const ModalFormEstetica = (props) => {
                         type='Text'
                         onChange={onChangeMinutos}
                         onInput={(e) => {
-                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value);
+                          e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value)
                           e.target.value = (e.target.value).toString().slice(0, 2)
                         }}
                         variant="outlined" />
@@ -356,7 +300,7 @@ const ModalFormEstetica = (props) => {
                   type='Number'
                   onChange={onChangeTotal}
                   onInput={(e) => {
-                    e.target.value = e.target.value < 0 ? 0 : e.target.value;
+                    e.target.value = e.target.value < 0 ? 0 : e.target.value
                     e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 6)
                   }}
                   variant="outlined" />
@@ -389,7 +333,7 @@ const ModalFormEstetica = (props) => {
                           type='Number'
                           onChange={(e) => onChangeItemUnidades(e, index)}
                           onInput={(e) => {
-                            e.target.value = e.target.value < 0 ? 0 : e.target.value;
+                            e.target.value = e.target.value < 0 ? 0 : e.target.value
                             e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 3)
                           }}
                           variant="outlined" />
@@ -446,7 +390,7 @@ const ModalFormEstetica = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormEstetica;
+export default ModalFormEstetica

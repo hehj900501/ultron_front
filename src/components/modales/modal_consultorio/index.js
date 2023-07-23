@@ -1,12 +1,12 @@
-import React from 'react';
-import * as Yup from "yup";
-import ModalFormConsultorio from './ModalFormConsultorio';
-import { Formik } from 'formik';
+import React from 'react'
+import * as Yup from "yup"
+import ModalFormConsultorio from './ModalFormConsultorio'
+import { Formik } from 'formik'
 
 const validationSchema = Yup.object({
   nombre: Yup.string("Ingresa los nombres")
         .required("Los nombres del pacientes son requeridos")
-});
+})
 
 const ModalConsultorio = (props) => {
   const {
@@ -14,7 +14,7 @@ const ModalConsultorio = (props) => {
     onClose,
     consultorio,
     handleClickGuardar,
-  } = props;
+  } = props
 
   const values = {
     _id: consultorio._id,
@@ -36,7 +36,7 @@ const ModalConsultorio = (props) => {
         {...props} />
       }
     </Formik>
-  );
+  )
 }
 
-export default ModalConsultorio;
+export default ModalConsultorio

@@ -1,16 +1,16 @@
-import React, { Fragment } from 'react';
-import Modal from '@material-ui/core/Modal';
-import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { ButtonCustom } from '../../../basic/ButtonCustom';
-import { toFormatterCurrency } from '../../../../utils/utils';
-import myStyles from '../../../../css';
-import { statusReagendoId } from '../../../../utils/constants';
+import React, { Fragment } from 'react'
+import Modal from '@material-ui/core/Modal'
+import { TextField, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { ButtonCustom } from '../../../basic/ButtonCustom'
+import { toFormatterCurrency } from '../../../../utils/utils'
+import myStyles from '../../../../css'
+import { statusReagendoId } from '../../../../utils/constants'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -18,13 +18,13 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
     overflow: 'scroll',
     height: '90%',
-  };
+  }
 }
 
 const ModalFormCita = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     values,
@@ -43,9 +43,9 @@ const ModalFormCita = (props) => {
     statements,
     onChangeObservaciones,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -189,7 +189,7 @@ const ModalFormCita = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalFormCita;
+export default ModalFormCita

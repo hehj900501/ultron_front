@@ -1,11 +1,11 @@
-import React from "react";
-import { createMuiTheme, Button, ThemeProvider } from "@material-ui/core";
+import React from "react"
+import { createMuiTheme, Button, ThemeProvider } from "@material-ui/core"
 
 const theme = createMuiTheme({
 	palette: {
 		primary: { main: process.env.REACT_APP_TOP_BAR_COLOR },
 	}
-});
+})
 
 export const ButtonCustom = (props) => {
 
@@ -17,7 +17,7 @@ export const ButtonCustom = (props) => {
         onClick,
         disabled,
         text
-    } = props;
+    } = props
 
     return (
         <ThemeProvider theme={theme}>
