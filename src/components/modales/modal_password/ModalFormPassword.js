@@ -86,7 +86,7 @@ const ModalFormPassword = (props) => {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <FormControl className={classes.margin, classes.textField} variant="outlined">
+            <FormControl className={`${classes.margin}, ${classes.textField}`} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Nueva Contraseña</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
