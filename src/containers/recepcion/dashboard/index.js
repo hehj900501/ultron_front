@@ -57,99 +57,21 @@ const DashboardForm = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDirecto, setIsDirecto] = useState(false);
 
-  const [consultasOcci, setConsultasOcci] = useState([])
-  const [consultasFede, setConsultasFede] = useState([])
-  const [consultoriosOcci, setConsultoriosOcci] = useState([])
-  const [consultoriosFede, setConsultoriosFede] = useState([])
-  const [aparatologiasOcci, setAparatologiasOcci] = useState([])
-  const [curacionesOcci, setCuracionesOcci] = useState([])
-  const [facialesOcci, setFacialesOcci] = useState([])
-
-  const [openAlert, setOpenAlert] = useState(false);
-  const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('success');
-
-  const sucursalOcciId = process.env.REACT_APP_SUCURSAL_OCCI_ID
-  const sucursalFedeId = process.env.REACT_APP_SUCURSAL_FEDE_ID
-
-  const date = new Date()
-  const dia = date.getDate()
-  const mes = date.getMonth()
-  const anio = date.getFullYear()
+  const [openAlert, setOpenAlert] = useState(false)
+  const [message, setMessage] = useState('')
+  const [severity, setSeverity] = useState('success')
 
   const loadSucursales = async () => {
     const response = await showAllOffices();
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
+      setSucursales(response.data)
       setIsLoading(false)
-    }
-  }
-
-  const loadTipoServicios = async () => {
-    const response = await getAllServices();
-    if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      await loadSucursales(response.data);
-    }
-  }
-
-  const loadConsultasOcci = async () => {
-		const response = await findConsultsByDateAndSucursal(dia, mes, anio, sucursalOcciId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setConsultasOcci(response.data);
-		}
-	}
-
-  const loadConsultasFede = async () => {
-		const response = await findConsultsByDateAndSucursal(dia, mes, anio, sucursalFedeId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setConsultasFede(response.data);
-		}
-	}
-
-  const loadConsultoriosOcci = async () => {
-		const response = await findSurgeryBySucursalIdWaitingList(sucursalOcciId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setConsultoriosOcci(response.data);
-		}
-	}
-
-  const loadConsultoriosFede = async () => {
-		const response = await findSurgeryBySucursalIdWaitingList(sucursalFedeId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setConsultoriosFede(response.data);
-		}
-	}
-
-  const loadAparatologiaOcci = async () => {
-		const response = await findAparatologiaByDateAndSucursal(dia, mes, anio, sucursalOcciId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setAparatologiasOcci(response.data);
-		}
-	}
-
-  const loadCuracionesOcci = async () => {
-		const response = await findCuracionByDateAndSucursal(dia, mes, anio, sucursalOcciId, token);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			setCuracionesOcci(response.data)
-		}
-	}
-
-  const loadFacialesOcci = async () => {
-    const response = await findFacialByDateAndSucursal(dia, mes, anio, sucursalOcciId, token);
-    if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      setFacialesOcci(response.data);
     }
   }
 
   const loadAll = async () => {
     setIsLoading(true)
-    await loadConsultasOcci()
-    await loadConsultasFede()
-    await loadConsultoriosOcci()
-    await loadConsultoriosFede()
-    await loadAparatologiaOcci()
-    await loadCuracionesOcci()
-    await loadFacialesOcci()
-    await loadTipoServicios()
+    await loadSucursales()
   }
 
   useEffect(() => {
@@ -162,13 +84,8 @@ const DashboardForm = (props) => {
         !isLoading ?
           <DashboardContainer
             sucursales={sucursales}
-            consultasOcci={consultasOcci}
-            consultasFede={consultasFede}
-            consultoriosOcci={consultoriosOcci}
-            consultoriosFede={consultoriosFede}
-            aparatologiasOcci={aparatologiasOcci}
-            curacionesOcci={curacionesOcci}
-            facialesOcci={facialesOcci}
+            token={token}
+            colorBase={colorBase}
             {...props} />
           : <Backdrop className={classes.backdrop} open={isLoading} >
             <CircularProgress color="inherit" />

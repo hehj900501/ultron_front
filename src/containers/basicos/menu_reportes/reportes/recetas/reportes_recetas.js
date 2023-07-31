@@ -3,11 +3,10 @@ import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { Paper, Button } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import TableComponent from '../../../../../components/table/TableComponent';
 import { ButtonCustom } from '../../../../../components/basic/ButtonCustom';
 import myStyles from '../../../../../css';
-import ImprimirDatosFacturacion from '../../../../../components/modales/imprimir/datos_facturacion';
 
 export const ReportesRecetasContainer = (props) => {
 
@@ -25,23 +24,12 @@ export const ReportesRecetasContainer = (props) => {
 		recetas,
 		actions,
 		options,
-		datosImpresion,
-		openModalImprimirDatosFacturacion,
-		handleCloseImprimirDatosFacturacion,
 	} = props;
 
 	const classes = myStyles(colorBase)();
 
 	return (
 		<Fragment>
-			{
-				openModalImprimirDatosFacturacion ?
-					<ImprimirDatosFacturacion
-						open={openModalImprimirDatosFacturacion}
-						onClose={handleCloseImprimirDatosFacturacion}
-						datos={datosImpresion}
-						colorBase={colorBase} /> : ''
-			}
 			<Paper>
 				<Grid container spacing={3} justify="center">
 					<Grid item xs={12} sm={2}>

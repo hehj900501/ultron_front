@@ -1,38 +1,38 @@
-import React, { useState, Fragment, useEffect } from "react";
-import { MainContainer } from "./main";
-import { Snackbar } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState, Fragment, useEffect } from "react"
+import { MainContainer } from "./main"
+import { Snackbar } from "@material-ui/core"
+import MuiAlert from '@material-ui/lab/Alert'
+import { useLocation, useNavigate } from "react-router-dom"
 
 const Alert = (props) => {
-	return <MuiAlert elevation={6} variant="filled" {...props} />;
+	return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const MenuMainCosmetologas = (props) => {
 
-	const location = useLocation();
-	const navigate = useNavigate();
+	const location = useLocation()
+	const navigate = useNavigate()
 
-	const [pacienteAgendado, setPacienteAgendado] = useState({});
-	const [value, setValue] = useState(0);
-	const [openModalPassword, setOpenModalPassword] = useState(false);
-	const [openAlert, setOpenAlert] = useState(false);
-	const [message, setMessage] = useState('');
-	const [severity, setSeverity] = useState('success');
+	const [pacienteAgendado, setPacienteAgendado] = useState({})
+	const [value, setValue] = useState(0)
+	const [openModalPassword, setOpenModalPassword] = useState(false)
+	const [openAlert, setOpenAlert] = useState(false)
+	const [message, setMessage] = useState('')
+	const [severity, setSeverity] = useState('success')
 
 	const {
 		empleado,
 		sucursal,
-	} = location.state;
+	} = location.state
 
 	const handleChangeTab = (event, newValue, close) => {
-		setValue(newValue);
-		close();
-	};
+		setValue(newValue)
+		close()
+	}
 
 	const handleAgendar = (event, rowData) => {
-		setPacienteAgendado(rowData);
-		setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_CONSULTA));
+		setPacienteAgendado(rowData)
+		setValue(Number(process.env.REACT_APP_PAGE_AGENDAR_CONSULTA))
 	}
 
 	const handleLogout = () => {
@@ -41,24 +41,24 @@ const MenuMainCosmetologas = (props) => {
                 empleado: {},
                 sucursal: {},
             }
-        });
+        })
 	}
 
 	const handleClickCambioPassword = () => {
-		setOpenModalPassword(true);
+		setOpenModalPassword(true)
 	}
 
 	const handleOpen = () => {
-		setOpenModalPassword(true);
+		setOpenModalPassword(true)
 	}
 
 	const handleClose = () => {
-		setOpenModalPassword(false);
+		setOpenModalPassword(false)
 	}
 
 	const handleCloseAlert = () => {
-		setOpenAlert(false);
-	};
+		setOpenAlert(false)
+	}
 
 	let fragment = <Fragment>
 		<MainContainer
@@ -89,7 +89,7 @@ const MenuMainCosmetologas = (props) => {
 				</Alert>
 			</Snackbar>
 		</Fragment>
-	);
+	)
 }
 
-export default MenuMainCosmetologas;
+export default MenuMainCosmetologas

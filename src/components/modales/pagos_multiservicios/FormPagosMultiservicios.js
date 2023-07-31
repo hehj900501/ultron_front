@@ -1,40 +1,35 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { TextField, Button, Grid } from '@material-ui/core';
-import { ButtonCustom } from "../../basic/ButtonCustom";
-import { CheckCustom } from '../../basic/CheckCustom';
-import TableComponent from '../../table/TableComponent';
-import ModalPago from '../modal_pago';
-import ModalBuscarRazonSocial from '../modal_buscar_razon_social';
-import { toFormatterCurrency } from '../../../utils/utils';
-import myStyles from '../../../css';
-import PagoMultiservicio from '../pago_multiservicios';
-import ImprimirDatosFacturacion from '../imprimir/datos_facturacion';
+import React from 'react'
+import Modal from '@material-ui/core/Modal'
+import { Grid } from '@material-ui/core'
+import { ButtonCustom } from "../../basic/ButtonCustom"
+import { CheckCustom } from '../../basic/CheckCustom'
+import TableComponent from '../../table/TableComponent'
+import ModalBuscarRazonSocial from '../modal_buscar_razon_social'
+import { toFormatterCurrency } from '../../../utils/utils'
+import myStyles from '../../../css'
+import PagoMultiservicio from '../pago_multiservicios'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const FormPagosMultiservicios = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = React.useState(getModalStyle)
 
   const {
     pago,
     pagos,
     titulo,
-    isValid,
     onClickCancel,
-    onClickGuardar,
     isLoading,
     open,
     columns,
@@ -43,10 +38,7 @@ const FormPagosMultiservicios = (props) => {
     onClickNewPago,
     onClickCancelPago,
     loadPagos,
-    datosImpresion,
     handlePrint,
-    openModalImprimirDatosFacturacion,
-    handleCloseImprimirDatosFacturacion,
     pagoAnticipado,
     empleado,
     sucursal,
@@ -59,9 +51,9 @@ const FormPagosMultiservicios = (props) => {
     onChangeFactura,
     values,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = myStyles(colorBase)();
+  const classes = myStyles(colorBase)()
 
   return (
     <div>
@@ -89,15 +81,6 @@ const FormPagosMultiservicios = (props) => {
             colorBase={colorBase}
             servicio={pagoAnticipado}
           /> : ''
-      }
-      {
-        openModalImprimirDatosFacturacion ?
-          <ImprimirDatosFacturacion
-            open={openModalImprimirDatosFacturacion}
-            onClose={handleCloseImprimirDatosFacturacion}
-            datos={datosImpresion}
-            colorBase={colorBase}
-            sucursal={sucursal} /> : ''
       }
       <Modal
         aria-labelledby="simple-modal-title"
@@ -186,7 +169,7 @@ const FormPagosMultiservicios = (props) => {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default FormPagosMultiservicios;
+export default FormPagosMultiservicios

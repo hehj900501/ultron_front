@@ -25,7 +25,6 @@ const InicioDermatologos = (props) => {
   const [severity, setSeverity] = useState('success');
   const [openModalPacienteDomicilio, setOpenModalPacienteDomicilio] = useState(false);
   const [openModalItemReceta, setOpenModalItemReceta] = useState(false);
-  const [openModalImprimirReceta, setOpenModalImprimirReceta] = useState(false);
   const [productosNormales, setProductosNormales] = useState([]);
   const [productosAntibioticos, setProductosAntibioticos] = useState([]);
   const [productosControlados, setProductosControlados] = useState([]);
@@ -401,10 +400,6 @@ const InicioDermatologos = (props) => {
     setOpenModalItemEstudio(false)
   }
 
-  const handleCloseImprimirRecetar = () => {
-    setOpenModalImprimirReceta(false);
-  }
-
   const handleAgregarProducto = async (event, newItem) => {
     const item = {
       nombre_laboratorio: newItem.laboratorio._id.nombre,
@@ -488,10 +483,7 @@ const InicioDermatologos = (props) => {
               actionsEstudios={actionsEstudios}
               actions_controlados={actions_controlados}
               options={options}
-              components={components}
-              openModalImprimirReceta={openModalImprimirReceta}
-              onCloseImprimirRecetar={handleCloseImprimirRecetar}
-            />
+              components={components} />
             <Snackbar open={openAlert} autoHideDuration={5000} onClose={handleCloseAlert}>
               <Alert onClose={handleCloseAlert} severity={severity}>
                 {message}

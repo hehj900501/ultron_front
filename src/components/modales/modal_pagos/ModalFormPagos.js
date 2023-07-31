@@ -8,7 +8,6 @@ import ModalPago from '../modal_pago'
 import ModalBuscarRazonSocial from '../modal_buscar_razon_social'
 import { toFormatterCurrency } from '../../../utils/utils'
 import myStyles from '../../../css'
-import ImprimirDatosFacturacion from '../imprimir/datos_facturacion'
 
 function getModalStyle() {
   const top = 50
@@ -45,11 +44,8 @@ const ModalFormPagos = (props) => {
     onGuardarModalPagos,
     openModalFactura,
     onCloseBuscarRazonSocial,
-    datosImpresion,
     handlePrint,
     handleEliminarFactura,
-    openModalImprimirDatosFacturacion,
-    handleCloseImprimirDatosFacturacion,
     actions,
     restante,
     tipoServicioId,
@@ -89,15 +85,6 @@ const ModalFormPagos = (props) => {
             sucursal={sucursal}
             servicio={servicio}
           /> : ''
-      }
-      {
-        openModalImprimirDatosFacturacion ?
-          <ImprimirDatosFacturacion
-            open={openModalImprimirDatosFacturacion}
-            onClose={handleCloseImprimirDatosFacturacion}
-            datos={datosImpresion}
-            colorBase={colorBase}
-            sucursal={sucursal} /> : ''
       }
       <Modal
         aria-labelledby="simple-modal-title"

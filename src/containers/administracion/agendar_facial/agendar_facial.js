@@ -1,24 +1,22 @@
-import 'date-fns';
-import React, { Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { Paper, TextField } from '@material-ui/core';
-import TableComponent from '../../../components/table/TableComponent';
-import ModalCita from '../../../components/modales/modal_cita';
-import { Multiselect } from 'multiselect-react-dropdown';
-import ModalPagos from '../../../components/modales/modal_pagos';
-import { toFormatterCurrency } from '../../../utils/utils';
-import ModalImprimirTratamiento from '../../../components/modales/imprimir/tratamiento';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalProximaCita from '../../../components/modales/modal_proxima_cita';
-import myStyles from '../../../css';
-import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio';
+import 'date-fns'
+import React, { Fragment } from 'react'
+import Grid from '@material-ui/core/Grid'
+import InputLabel from '@material-ui/core/InputLabel'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import { Paper, TextField } from '@material-ui/core'
+import TableComponent from '../../../components/table/TableComponent'
+import ModalCita from '../../../components/modales/modal_cita'
+import { Multiselect } from 'multiselect-react-dropdown'
+import ModalPagos from '../../../components/modales/modal_pagos'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalProximaCita from '../../../components/modales/modal_proxima_cita'
+import myStyles from '../../../css'
+import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
 
 export const AgendarFacialContainer = (props) => {
 
@@ -26,7 +24,6 @@ export const AgendarFacialContainer = (props) => {
 		values,
 		servicios,
 		tratamientos,
-		areas,
 		horarios,
 		tipoCitas,
 		onChangeServicio,
@@ -85,16 +82,12 @@ export const AgendarFacialContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASO
 		openModalTraspaso,
 		onCloseTraspasos,
-	} = props;
+	} = props
 
-	const classes = myStyles(colorBase)();
+	const classes = myStyles(colorBase)()
 
 	return (
 		<Fragment>
@@ -161,15 +154,6 @@ export const AgendarFacialContainer = (props) => {
 						onGuardarModalPagos={onGuardarModalPagos}
 						colorBase={colorBase}
 						tipoServicioId={facial.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirTratamiento
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{
@@ -437,5 +421,5 @@ export const AgendarFacialContainer = (props) => {
 				components={components} />
 
 		</Fragment>
-	);
+	)
 }

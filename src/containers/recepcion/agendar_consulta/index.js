@@ -172,7 +172,6 @@ const AgendarConsulta = (props) => {
 	const [openModalTraspaso, setOpenModalTraspaso] = useState(false)
 	const [openModalEstetica, setOpenModalEstetica] = useState(false)
 	const [consulta, setConsulta] = useState()
-	const [openModalImprimirConsultas, setOpenModalImprimirConsultas] = useState(false)
 	const [datosImpresion, setDatosImpresion] = useState()
 	const [curacion, setCuracion] = useState({
 		materiales: []
@@ -556,10 +555,6 @@ const AgendarConsulta = (props) => {
 		setOpenModalEstetica(false)
 	}
 
-	const handleCloseImprimirConsulta = () => {
-		setOpenModalImprimirConsultas(false)
-	}
-
 	const handlePrint = async (event, rowData) => {
 		setDatosImpresion(rowData)
 		navigate('/imprimir/ticket/consulta',
@@ -937,9 +932,7 @@ const AgendarConsulta = (props) => {
 						openModalEstetica={openModalEstetica}
 						openModalProxima={openModalProxima}
 						openModalTraspaso={openModalTraspaso}
-						openModalImprimirConsultas={openModalImprimirConsultas}
 						datosImpresion={datosImpresion}
-						onCloseImprimirConsulta={handleCloseImprimirConsulta}
 						frecuencias={frecuencias}
 						productos={productos}
 						onChangeFrecuencia={handleChangeFrecuencia}

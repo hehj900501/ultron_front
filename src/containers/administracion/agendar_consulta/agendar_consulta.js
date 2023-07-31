@@ -6,12 +6,11 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import { Paper, TextField, Checkbox, Select } from '@material-ui/core';
+import { Paper, TextField, Select } from '@material-ui/core';
 import TableComponent from '../../../components/table/TableComponent';
 import ModalConsulta from '../../../components/modales/modal_consulta';
 import ModalPagos from '../../../components/modales/modal_pagos';
-import ModalImprimirConsulta from '../../../components/modales/imprimir/consulta';
-import { optionSelect, optionSelect2, toFormatterCurrency } from '../../../utils/utils';
+import { toFormatterCurrency } from '../../../utils/utils';
 import { ButtonCustom } from '../../../components/basic/ButtonCustom';
 import ModalProximaConsulta from '../../../components/modales/modal_proxima_consulta';
 import ModalTraspasoConsulta from '../../../components/modales/traspaso_consulta';
@@ -50,7 +49,6 @@ export const AgendarConsultaContainer = (props) => {
     onChangeFrecuencia,
     onChangePaymentMethod,
     dataComplete,
-    frecuenciaPrimeraVezId,
     frecuenciaReconsultaId,
     colorBase,
     // TABLE DATES PROPERTIES
@@ -76,16 +74,7 @@ export const AgendarConsultaContainer = (props) => {
     setFilterDate,
     OnCloseVerPagos,
     openModalPagos,
-    openModalImprimirConsultas,
-    datosImpresion,
-    onCloseImprimirConsulta,
-    openModalCuraciones,
-    onCloseCuracion,
-    curacion,
-    estetica,
     tipoServicioId,
-    openModalEstetica,
-    onCloseEstetica,
     onGuardarModalPagos,
     openModalProxima,
     openModalTraspaso,
@@ -176,16 +165,6 @@ export const AgendarConsultaContainer = (props) => {
             tipoServicioId={tipoServicioId}
             colorBase={colorBase}
             loadConsultas={loadConsultas} />
-          : ''
-      }
-      {
-        openModalImprimirConsultas ?
-          <ModalImprimirConsulta
-            open={openModalImprimirConsultas}
-            onClose={onCloseImprimirConsulta}
-            servicio="CONSULTA"
-            colorBase={colorBase}
-            datos={datosImpresion} />
           : ''
       }
       <Paper>

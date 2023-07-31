@@ -1,7 +1,5 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import {
-	makeStyles,
 	Paper,
 	Grid,
 } from "@material-ui/core";
@@ -12,7 +10,6 @@ import { ButtonCustom } from "../../../components/basic/ButtonCustom";
 import ModalPacienteDomicilio from "../../../components/modales/modal_paciente_domicilio";
 import TableComponent from "../../../components/table/TableComponent";
 import ModalItemReceta from "../../../components/modales/item_receta";
-import ModalImprimirReceta from "../../../components/modales/imprimir/receta";
 
 export const MenuBiopsiasContainer = (props) => {
 
@@ -78,16 +75,6 @@ export const MenuBiopsiasContainer = (props) => {
 						setMessage={setMessage}
 						setSeverity={setSeverity}
 						setOpenAlert={setOpenAlert} />
-					: ''
-			}
-			{
-				openModalImprimirReceta ?
-					<ModalImprimirReceta
-						open={openModalImprimirReceta}
-						onClose={onCloseImprimirRecetar}
-						sucursal={sucursal}
-						consultorio={consultorio}
-						receta={receta} />
 					: ''
 			}
 			<Grid container spacing={1} className={classes.container_main}>

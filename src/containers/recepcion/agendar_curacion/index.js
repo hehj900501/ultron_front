@@ -131,7 +131,6 @@ const AgendarCuracion = (props) => {
 	const [openModalProxima, setOpenModalProxima] = useState(false)
 	const [curacion, setCuracion] = useState()
 	const [openModalPagos, setOpenModalPagos] = useState(false)
-	const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
 	const [datosImpresion, setDatosImpresion] = useState()
 	const [materiales, setMateriales] = useState([])
 	const [medios, setMedios] = useState([])
@@ -366,10 +365,6 @@ const AgendarCuracion = (props) => {
 
 	const handleCloseVerPagos = (event, rowData) => {
 		setOpenModalPagos(false)
-	}
-
-	const handleCloseImprimirConsulta = (event, rowData) => {
-		setOpenModalImprimirCita(false)
 	}
 
 	const handlePrint = async (event, rowData) => {
@@ -715,10 +710,8 @@ const AgendarCuracion = (props) => {
 								onCloseVerPagos={handleCloseVerPagos}
 								openModalPagos={openModalPagos}
 								openModalProxima={openModalProxima}
-								openModalImprimirCita={openModalImprimirCita}
 								openModalTraspaso={openModalTraspaso}
 								datosImpresion={datosImpresion}
-								onCloseImprimirConsulta={handleCloseImprimirConsulta}
 								onCloseTraspasos={handleCloseTraspasos}
 								sucursal={sucursal}
 								setOpenAlert={setOpenAlert}

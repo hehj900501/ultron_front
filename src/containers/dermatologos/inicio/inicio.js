@@ -15,7 +15,6 @@ import ModalPacienteDomicilio from "../../../components/modales/modal_paciente_d
 import TableComponent from "../../../components/table/TableComponent";
 import ModalItemReceta from "../../../components/modales/item_receta";
 import ModalItemEstudio from "../../../components/modales/item_estudio";
-import ModalImprimirReceta from "../../../components/modales/imprimir/receta";
 
 export const InicioContainer = (props) => {
 
@@ -44,12 +43,9 @@ export const InicioContainer = (props) => {
 		onCloseItemEstudio,
 		onClickAgregarEstudios,
 		// MODAL IMPRIMIR RECETA
-		openModalImprimirReceta,
-		onCloseImprimirRecetar,
 		onClickImprimirRecetaAntibioticos,
 		onClickImprimirRecetaControlados,
 		onClickImprimirEstudios,
-		datos,
 		receta,
 		sucursal,
 		// TABLE DATA
@@ -110,16 +106,6 @@ export const InicioContainer = (props) => {
 						setMessage={setMessage}
 						setSeverity={setSeverity}
 						setOpenAlert={setOpenAlert} />
-					: ''
-			}
-			{
-				openModalImprimirReceta ?
-					<ModalImprimirReceta
-						open={openModalImprimirReceta}
-						onClose={onCloseImprimirRecetar}
-						sucursal={sucursal}
-						consultorio={consultorio}
-						receta={receta} />
 					: ''
 			}
 			<Grid container spacing={1} className={classes.container_main}>

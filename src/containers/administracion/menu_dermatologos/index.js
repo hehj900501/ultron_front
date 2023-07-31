@@ -38,13 +38,10 @@ const Dermatologos = (props) => {
 	const classes = useStyles();
 
 	const {
-		sucursal,
 		empleado,
 		colorBase,
 	} = props;
 
-	const [openPagoDermatologo, setOpenPagoDermatologo] = useState(false);
-	const [openPagoPatologo, setOpenPagoPatologo] = useState(false);
 	const [openHistoric, setOpenHistoric] = useState(false);
 	const [openAlert, setOpenAlert] = useState(false);
 	const [dermatologos, setDermatologos] = useState([]);
@@ -99,8 +96,6 @@ const Dermatologos = (props) => {
 	const handleClose = () => {
 		setDermatologo({});
 		setPatologo({});
-		setOpenPagoDermatologo(false);
-		setOpenPagoPatologo(false);
 		setOpenHistoric(false);
 	};
 
@@ -116,12 +111,10 @@ const Dermatologos = (props) => {
 
 	const handleClickGenerarPagoDermatologo = (event, rowData) => {
 		setDermatologo(rowData);
-		setOpenPagoDermatologo(true);
 	}
 
 	const handleClickGenerarPagoPatologo = (event, rowData) => {
 		setPatologo(rowData);
-		setOpenPagoPatologo(true);
 	}
 
 
@@ -204,15 +197,11 @@ const Dermatologos = (props) => {
 						tituloPatologos='PATÓLOGOS'
 						actionsDermatologo={actionsDermatologo}
 						optionsDermatologos={optionsDermatologos}
-						openPagoDermatologo={openPagoDermatologo}
 						columnsPatologos={columnsPatologos}
 						actionsPatologos={actionsPatologos}
 						optionsPatologos={optionsPatologos}
 						openHistoric={openHistoric}
 						dermatologo={dermatologo}
-						sucursal={sucursal}
-						empleado={empleado}
-						openPagoPatologo={openPagoPatologo}
 						patologo={patologo}
 						colorBase={colorBase}
 						handleClose={handleClose} /> :

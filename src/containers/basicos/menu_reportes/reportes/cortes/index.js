@@ -30,8 +30,6 @@ const ReporteCortes = (props) => {
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [pagosDermatologos, setPagosDermatologos] = useState([]);
-	const [openModalImprimirPago, setOpenModalImprimirPago] = useState(false);
-	const [datosImpresion, setDatosImpresion] = useState();
 
 	const [datos, setDatos] = useState([]);
 
@@ -59,12 +57,6 @@ const ReporteCortes = (props) => {
 	];
 
 	const options = {
-		/*rowStyle: rowData => {
-			return { 
-				color: rowData.status.color,
-				backgroundColor: rowData.pagado ? '#10CC88' : ''
-			};
-		},*/
 		headerStyle: {
 			backgroundColor: colorBase,
 			color: '#FFF',
@@ -74,16 +66,6 @@ const ReporteCortes = (props) => {
 		exportAllData: true,
 		exportButton: true,
 		exportDelimiter: ';'
-	}
-
-	const handleClose = () => {
-		setOpenModalImprimirPago(false);
-	};
-
-	const handlePrint = async (event, rowData) => {
-		setDatosImpresion(rowData);
-		setOpenModalImprimirPago(true);
-
 	}
 
 	const handleOpenImprimir = (event, rowData) => {
@@ -195,10 +177,7 @@ const ReporteCortes = (props) => {
 						datos={datos}
 						actions={actions}
 						empleado={empleado}
-						openModalImprimirPago={openModalImprimirPago}
-						datosImpresion={datosImpresion}
 						onClickReportes={handleReportes}
-						handleClose={handleClose}
 						{...props} />
 					: <Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />

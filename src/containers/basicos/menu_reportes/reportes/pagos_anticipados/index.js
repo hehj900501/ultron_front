@@ -37,8 +37,6 @@ const ReportesPagosAnticipados = (props) => {
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [sesionesAnticipadas, setSesionesAnticipadas] = useState([]);
-	const [datosImpresion, setDatosImpresion] = useState();
-	const [openModalImprimirDatosFacturacion, setOpenModalImprimirDatosFacturacion] = useState(false);
 
 	const date = new Date();
 	const dia = addZero(date.getDate());
@@ -79,15 +77,6 @@ const ReportesPagosAnticipados = (props) => {
 		exportAllData: true,
 		exportButton: true,
 		exportDelimiter: ';'
-	}
-
-	const handleCloseImprimirDatosFacturacion = (event, rowData) => {
-		setOpenModalImprimirDatosFacturacion(false);
-	}
-
-	const handlePrint = async (event, rowData) => {
-		setDatosImpresion(rowData);
-		setOpenModalImprimirDatosFacturacion(true);
 	}
 
 	const actions = [
@@ -182,9 +171,6 @@ const ReportesPagosAnticipados = (props) => {
 						actions={actions}
 						colorBase={colorBase}
 						onClickReportes={handleReportes}
-						datosImpresion={datosImpresion}
-						openModalImprimirDatosFacturacion={openModalImprimirDatosFacturacion}
-						handleCloseImprimirDatosFacturacion={handleCloseImprimirDatosFacturacion}
 						{...props} />
 					: <Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />

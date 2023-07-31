@@ -14,7 +14,6 @@ import ModalCita from '../../../components/modales/modal_cita';
 import { Multiselect } from 'multiselect-react-dropdown';
 import ModalPagos from '../../../components/modales/modal_pagos';
 import { toFormatterCurrency } from '../../../utils/utils';
-import ModalImprimirTratamiento from '../../../components/modales/imprimir/tratamiento';
 import { ButtonCustom } from '../../../components/basic/ButtonCustom';
 import ModalProximaCita from '../../../components/modales/modal_proxima_cita';
 import myStyles from '../../../css';
@@ -28,7 +27,6 @@ export const AgendarAparatologiaContainer = (props) => {
 		errors,
 		servicios,
 		tratamientos,
-		areas,
 		horarios,
 		tipoCitas,
 		formasPago,
@@ -86,10 +84,6 @@ export const AgendarAparatologiaContainer = (props) => {
 		setSeverity,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL APARATOLOGIA
 		openModalTraspaso,
 		onCloseTraspasos,
@@ -165,15 +159,6 @@ export const AgendarAparatologiaContainer = (props) => {
 						colorBase={colorBase}
 						tipoServicioId={aparatologia.servicio._id}
 						onGuardarModalPagos={onGuardarModalPagos} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirTratamiento
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{

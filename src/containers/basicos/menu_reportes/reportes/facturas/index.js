@@ -1,25 +1,9 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import { Backdrop, CircularProgress } from "@material-ui/core";
-import { toFormatterCurrency, addZero, dateToString } from "../../../../../utils/utils";
+import { addZero, dateToString } from "../../../../../utils/utils";
 import { ReportesFacturasContainer } from "./reportes_facturas";
-import { findAparatologiaById } from "../../../../../services/aparatolgia";
-import { findFacialById } from "../../../../../services/faciales";
-import { findConsultById } from "../../../../../services/consultas";
-import { findCuracionById } from "../../../../../services/curaciones";
-import { findBiopsiaById } from "../../../../../services/biopsias";
-import { findEsteticaById } from "../../../../../services/esteticas";
-import { findDermapenById } from "../../../../../services/dermapens";
 import { findFacturasByRangeDateAndSucursal } from "../../../../../services/facturas";
 import myStyles from "../../../../../css";
-import PrintIcon from '@material-ui/icons/Print';
-
-const useStyles = makeStyles(theme => ({
-	backdrop: {
-		zIndex: theme.zIndex.drawer + 1,
-		color: '#fff',
-	},
-}));
 
 const ReportesFacturas = (props) => {
 
@@ -33,18 +17,8 @@ const ReportesFacturas = (props) => {
 
 	const classes = myStyles(colorBase)();
 
-	const servicioFacialId = process.env.REACT_APP_FACIAL_SERVICIO_ID
-	const servicioAparatologiaId = process.env.REACT_APP_APARATOLOGIA_SERVICIO_ID
-	const servicioConsultaId = process.env.REACT_APP_CONSULTA_SERVICIO_ID
-	const servicioCuracionId = process.env.REACT_APP_CURACION_SERVICIO_ID
-	const servicioBiopsiaId = process.env.REACT_APP_BIOPSIA_SERVICIO_ID
-	const servicioEsteticaId = process.env.REACT_APP_ESTETICA_SERVICIO_ID
-	const servicioDermapenId = process.env.REACT_APP_DERMAPEN_SERVICIO_ID
-
 	const [isLoading, setIsLoading] = useState(true);
 	const [facturas, setFacturas] = useState([]);
-	const [datosImpresion, setDatosImpresion] = useState();
-	const [openModalImprimirDatosFacturacion, setOpenModalImprimirDatosFacturacion] = useState(false);
 
 	const date = new Date();
 	const dia = addZero(date.getDate());
@@ -88,15 +62,6 @@ const ReportesFacturas = (props) => {
 		exportDelimiter: ';'
 	}
 
-	const handleCloseImprimirDatosFacturacion = (event, rowData) => {
-		setOpenModalImprimirDatosFacturacion(false);
-	}
-
-	const handlePrint = async (event, rowData) => {
-		setDatosImpresion(rowData);
-		setOpenModalImprimirDatosFacturacion(true);
-	}
-
 	const actions = [
 		/*{
 			icon: PrintIcon,
@@ -116,51 +81,6 @@ const ReportesFacturas = (props) => {
 				factura.domicilio_completo = `${factura.razon_social.domicilio} #${factura.razon_social.numero_exterior} ${factura.razon_social.numero_interior ? '- ' + factura.razon_social.numero_interior : ''}`;
 				factura.uso_cfdi.nombre = `${factura.uso_cfdi.clave}: ${factura.uso_cfdi.descripcion}`;
 			});
-			// resData.forEach(async (item) => {
-			// 	let servicioResponse = { data: '' };
-			// 	switch (item.tipo_servicio._id) {
-			// 		case servicioAparatologiaId:
-			// 			servicioResponse = await findAparatologiaById(item.servicio, token);
-			// 			break;
-			// 		case servicioFacialId:
-			// 			servicioResponse = await findFacialById(item.servicio, token);
-			// 			break;
-			// 		case servicioConsultaId:
-			// 			servicioResponse = await findConsultById(item.servicio, token);
-			// 			break;
-			// 		case servicioCuracionId:
-			// 			servicioResponse = await findCuracionById(item.servicio, token);
-			// 			break;
-			// 		case servicioBiopsiaId:
-			// 			servicioResponse = await findBiopsiaById(item.servicio, token);
-			// 			break;
-			// 		case servicioEsteticaId:
-			// 			servicioResponse = await findEsteticaById(item.servicio, token);
-			// 			break;
-			// 		case servicioDermapenId:
-			// 			servicioResponse = await findDermapenById(item.servicio, token);
-			// 			break;
-			// 	}
-
-			// 	if (`${servicioResponse.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-
-			// 		item.servicio = servicioResponse.data;
-
-			// 		let cantidad = 0;
-			// 		item.servicio.pagos.forEach(pago => {
-			// 			cantidad += Number(pago.total);
-			// 		});
-			// 		const fecha = new Date(item.fecha_hora);
-			// 		item.hora = `${addZero(fecha.getHours())}:${addZero(fecha.getMinutes())}`;
-			// 		item.fecha_show = `${addZero(fecha.getDate())}/${addZero(fecha.getMonth() + 1)}/${fecha.getFullYear()}`;
-
-			// 		item.cantidad_moneda = toFormatterCurrency(cantidad);
-			// 		item.paciente_nombre = `${item.paciente.nombres} ${item.paciente.apellidos}`;
-
-			// 		item.uso_cfdi.nombre = `${item.uso_cfdi.clave}: ${item.uso_cfdi.descripcion}`;
-
-			// 	}
-			// });
 			setFacturas(resData);
 		}
 	}
@@ -220,9 +140,6 @@ const ReportesFacturas = (props) => {
 						actions={actions}
 						colorBase={colorBase}
 						onClickReportes={handleReportes}
-						datosImpresion={datosImpresion}
-						openModalImprimirDatosFacturacion={openModalImprimirDatosFacturacion}
-						handleCloseImprimirDatosFacturacion={handleCloseImprimirDatosFacturacion}
 						{...props} />
 					: <Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />

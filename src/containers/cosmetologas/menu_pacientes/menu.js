@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Pacientes from '../pacientes/index';
-import AgendarFacial from '../agendar_facial';
-import GeneralCitas from '../general_citas';
-import AgendarAparatologia from '../agendar_aparatologia';
-import myStyles from '../../../css';
-import Calendario from '../calendario';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Pacientes from '../pacientes/index'
+import AgendarFacial from '../agendar_facial'
+import GeneralCitas from '../general_citas'
+import AgendarAparatologia from '../agendar_aparatologia'
+import myStyles from '../../../css'
+import Calendario from '../calendario'
 
 function TabPanel(props) {
-	const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props
 
 	return (
 		<Typography
@@ -27,20 +27,20 @@ function TabPanel(props) {
 		>
 			{value === index && <Box p={3}>{children}</Box>}
 		</Typography>
-	);
+	)
 }
 
 TabPanel.propTypes = {
 	children: PropTypes.node,
 	index: PropTypes.any.isRequired,
 	value: PropTypes.any.isRequired,
-};
+}
 
 function a11yProps(index) {
 	return {
 		id: `simple-tab-${index}`,
 		'aria-controls': `simple-tabpanel-${index}`,
-	};
+	}
 }
 
 export const MenuContainer = props => {
@@ -55,17 +55,17 @@ export const MenuContainer = props => {
 		empleado,
 		sucursal,
 		colorBase,
-	} = props;
+	} = props
 
 	const useStyles = makeStyles(theme => ({
 		root: {
 			flexGrow: 1,
 			backgroundColor: theme.palette.background.paper,
 		}		
-	}));
+	}))
 
-	const classes = myStyles(colorBase)();
-	const classess = useStyles();
+	const classes = myStyles(colorBase)()
+	const classess = useStyles()
 	
 	return (
 		<div className={classess.root}>
@@ -89,6 +89,8 @@ export const MenuContainer = props => {
 				<Pacientes
 					empleado={empleado}
 					sucursal={sucursal}
+					onClickAgendarFaciales={onClickAgendarFaciales}
+					onClickAgendarAparatologia={onClickAgendarAparatologia}
 					colorBase={colorBase}
 					onChangeTab={onChangeTab} />
 			</TabPanel>
@@ -122,5 +124,5 @@ export const MenuContainer = props => {
 					sucursal={sucursal._id} />
 			</TabPanel>
 		</div>
-	);
+	)
 }

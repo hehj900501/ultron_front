@@ -131,7 +131,6 @@ const AgendarDermapen = (props) => {
 	const [openModalProxima, setOpenModalProxima] = useState(false)
 	const [dermapen, setDermapen] = useState()
 	const [openModalPagos, setOpenModalPagos] = useState(false)
-	const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
 	const [datosImpresion, setDatosImpresion] = useState()
 	const [materiales, setMateriales] = useState([])
 
@@ -383,13 +382,8 @@ const AgendarDermapen = (props) => {
 		setOpenModalPagos(false)
 	}
 
-	const handleCloseImprimirConsulta = (event, rowData) => {
-		setOpenModalImprimirCita(false)
-	}
-
 	const handlePrint = async (event, rowData) => {
 		setDatosImpresion(rowData)
-		setOpenModalImprimirCita(true)
 	}
 
 	const handleClickTraspaso = (event, rowData) => {
@@ -769,12 +763,10 @@ const AgendarDermapen = (props) => {
 								onCloseVerPagos={handleCloseVerPagos}
 								openModalPagos={openModalPagos}
 								openModalProxima={openModalProxima}
-								openModalImprimirCita={openModalImprimirCita}
 								openModalTraspaso={openModalTraspaso}
 								datosImpresion={datosImpresion}
 								onChangeTotal={handleChangeTotal}
 								onChangeCosto={handleChangeCosto}
-								onCloseImprimirConsulta={handleCloseImprimirConsulta}
 								onCloseTraspasos={handleCloseTraspasos}
 								sucursal={sucursal}
 								setOpenAlert={setOpenAlert}

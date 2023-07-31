@@ -17,7 +17,6 @@ import ModalEstetica from '../../../components/modales/modal_estetica'
 import myStyles from '../../../css'
 import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
 import ModalProximaEstetica from '../../../components/modales/modal_proxima_estetica'
-import ModalImprimirEstetica from '../../../components/modales/imprimir/estetica'
 
 export const AgendarEsteticaContainer = (props) => {
 
@@ -82,10 +81,6 @@ export const AgendarEsteticaContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASOS
 		openModalTraspaso,
 		onCloseTraspasos,
@@ -159,17 +154,6 @@ export const AgendarEsteticaContainer = (props) => {
 						setOpenAlert={setOpenAlert}
 						onGuardarModalPagos={onGuardarModalPagos}
 						tipoServicioId={estetica.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirEstetica
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						servicio="TOXINAS Y RELLENOS"
-						sucursal={sucursal}
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{

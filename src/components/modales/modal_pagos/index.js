@@ -49,7 +49,6 @@ const ModalPagos = (props) => {
   const [openModalPago, setOpenModalPago] = useState(false)
   const [openModalFactura, setOpenModalFactura] = useState(false)
   const [datosImpresion, setDatosImpresion] = useState()
-  const [openModalImprimirDatosFacturacion, setOpenModalImprimirDatosFacturacion] = useState(false)
   const [restante, setRestante] = useState(0)
   const [values, setValues] = useState({
     ...servicio,
@@ -152,13 +151,8 @@ const ModalPagos = (props) => {
     setOpenModalPago(false)
   }
 
-  const handleCloseImprimirDatosFacturacion = (event, rowData) => {
-    setOpenModalImprimirDatosFacturacion(false)
-  }
-
   const handlePrint = async (event, rowData) => {
     setDatosImpresion(rowData)
-    setOpenModalImprimirDatosFacturacion(true)
   }
 
   const handleEliminarFactura = async (event, rowData) => {
@@ -339,8 +333,6 @@ const ModalPagos = (props) => {
             servicio={servicio}
             empleado={empleado}
             datosImpresion={datosImpresion}
-            openModalImprimirDatosFacturacion={openModalImprimirDatosFacturacion}
-            handleCloseImprimirDatosFacturacion={handleCloseImprimirDatosFacturacion}
             handlePrint={handlePrint}
             handleEliminarFactura={handleEliminarFactura}
             sucursal={sucursal}

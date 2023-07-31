@@ -18,9 +18,7 @@ const MenuBiopsias = (props) => {
   const [openAlert, setOpenAlert] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
-  const [openModalPacienteDomicilio, setOpenModalPacienteDomicilio] = useState(false);
   const [openModalItemReceta, setOpenModalItemReceta] = useState(false);
-  const [openModalImprimirReceta, setOpenModalImprimirReceta] = useState(false);
   const [productos, setProductos] = useState([]);
   const [producto, setProducto] = useState({});
   const [receta, setReceta] = useState({});
@@ -116,30 +114,6 @@ const MenuBiopsias = (props) => {
     setOpenAlert(false);
   };
 
-  const handleClickCompletarDatos = (i) => {
-    setOpenModalPacienteDomicilio(true);
-  }
-
-  const handleClickItemReceta = () => {
-    setOpenModalItemReceta(true);
-  }
-
-  const handleClickImprimirReceta = () => {
-    setOpenModalImprimirReceta(true);
-  }
-
-  const handleClosePacienteDomicilio = () => {
-    setOpenModalPacienteDomicilio(false);
-  }
-
-  const handleCloseItemReceta = () => {
-    setOpenModalItemReceta(false);
-  }
-
-  const handleCloseImprimirRecetar = () => {
-    setOpenModalImprimirReceta(false);
-  }
-
   useEffect(() => {
   }, []);
 
@@ -164,8 +138,6 @@ const MenuBiopsias = (props) => {
               actions={actions}
               options={options}
               components={components}
-              openModalImprimirReceta={openModalImprimirReceta}
-              onCloseImprimirRecetar={handleCloseImprimirRecetar}
             />
             <Snackbar open={openAlert} autoHideDuration={5000} onClose={handleCloseAlert}>
               <Alert onClose={handleCloseAlert} severity={severity}>

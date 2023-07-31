@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react'
 
-import TableComponent from '../../../components/table/TableComponent';
-import { makeStyles } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalNuevoEntrada from '../../../components/modales/modal_nuevo_entrada';
-import ModalNuevoSalida from '../../../components/modales/modal_nuevo_salida';
-import ModalImprimirCorte from '../../../components/modales/imprimir/corte';
-import { toFormatterCurrency } from '../../../utils/utils';
+import TableComponent from '../../../components/table/TableComponent'
+import { makeStyles } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalNuevoEntrada from '../../../components/modales/modal_nuevo_entrada'
+import ModalNuevoSalida from '../../../components/modales/modal_nuevo_salida'
+import { toFormatterCurrency } from '../../../utils/utils'
 
 export const CorteContainer = (props) => {
 
@@ -21,8 +20,6 @@ export const CorteContainer = (props) => {
     dataPagosAnticipados,
     dataSalidas,
     options,
-    openModal,
-    handleOpen,
     handleClose,
     handleClickGuardar,
     turno,
@@ -31,7 +28,6 @@ export const CorteContainer = (props) => {
     onGenerarCorte,
     openModalNuevoEntrada,
     openModalNuevoSalida,
-    openModalImprimir,
     handleOpenImprimir,
     handleOpenNuevoEntrada,
     handleOpenNuevoSalida,
@@ -45,7 +41,7 @@ export const CorteContainer = (props) => {
     handleCerrarCorte,
     corte,
     colorBase,
-  } = props;
+  } = props
 
   const useStyles = makeStyles(theme => ({
     button: {
@@ -62,24 +58,24 @@ export const CorteContainer = (props) => {
       color: '#E13838',
       fontSize: '45px',
     },
-  }));
+  }))
 
-  const classes = useStyles();
+  const classes = useStyles()
 
-  let totalEntradas = 0;
-  let totalSalidas = 0;
-  let totalEfectivo = 0;
+  let totalEntradas = 0
+  let totalSalidas = 0
+  let totalEfectivo = 0
 
   dataEntradas.forEach(data => {
     if (data.forma_pago === 'EFECTIVO') {
-      totalEfectivo = data.total;
+      totalEfectivo = data.total
     }
-    totalEntradas += data.forma_pago !== 'NO PAGA' ? Number(data.total) : 0;
-  });
+    totalEntradas += data.forma_pago !== 'NO PAGA' ? Number(data.total) : 0
+  })
 
   dataSalidas.forEach(data => {
-    totalSalidas += Number(data.total);
-  });
+    totalSalidas += Number(data.total)
+  })
 
   return (
     <Fragment>
@@ -109,23 +105,6 @@ export const CorteContainer = (props) => {
             empleado={empleado}
             corte={corte}
             onObtenerInformacion={onObtenerInformacion}
-            setOpenAlert={setOpenAlert}
-            colorBase={colorBase}
-            setMessage={setMessage}
-            setSeverity={setSeverity} /> : ''
-      }
-
-      {
-        openModalImprimir ?
-          <ModalImprimirCorte
-            open={openModalImprimir}
-            onClose={handleClose}
-            corte={corte}
-            sucursal={sucursal}
-            empleado={empleado}
-            dataEntradas={dataEntradas}
-            dataPagosAnticipados={dataPagosAnticipados}
-            dataSalidas={dataSalidas}
             setOpenAlert={setOpenAlert}
             colorBase={colorBase}
             setMessage={setMessage}
@@ -253,5 +232,5 @@ export const CorteContainer = (props) => {
       </Grid>
 
     </Fragment>
-  );
+  )
 }

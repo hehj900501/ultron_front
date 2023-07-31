@@ -5,7 +5,6 @@ import { ButtonCustom } from '../../basic/ButtonCustom'
 import ModalUsoCfdi from '../modal_uso_cfdi'
 import ModalRazonSocial from '../modal_razon_social'
 import myStyles from '../../../css'
-import ImprimirDatosFacturacion from '../imprimir/datos_facturacion'
 
 function getModalStyle() {
   const top = 50
@@ -31,9 +30,6 @@ const ModalFormBuscarRazonSocial = (props) => {
     actions,
     options,
     factura,
-    datosImpresion,
-    openModalImprimirCita,
-    handleCloseImprimirConsulta,
     openModalUsoCfdi,
     onCloseUsoCfdi,
     pago,
@@ -43,7 +39,6 @@ const ModalFormBuscarRazonSocial = (props) => {
     loadRazonSocial,
     handleCloseNuevaRazonSocial,
     colorBase,
-    sucursal,
   } = props
 
   const classes = myStyles(colorBase)()
@@ -74,16 +69,6 @@ const ModalFormBuscarRazonSocial = (props) => {
                 onClose={handleCloseNuevaRazonSocial}
                 razonSocial={{}}
                 colorBase={colorBase}
-                loadRazonSocial={loadRazonSocial} /> : ''
-          }
-          {
-            openModalImprimirCita ?
-            <ImprimirDatosFacturacion
-                open={openModalImprimirCita}
-                onClose={handleCloseImprimirConsulta}
-                datos={datosImpresion}
-                colorBase={colorBase}
-                sucursal={sucursal}
                 loadRazonSocial={loadRazonSocial} /> : ''
           }
           <ButtonCustom

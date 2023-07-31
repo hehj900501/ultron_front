@@ -165,7 +165,6 @@ const AgendarFacial = (props) => {
   const [facial, setFacial] = useState()
   const [openModalPagos, setOpenModalPagos] = useState(false)
   const [esHoy, setEsHoy] = useState(false)
-  const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
   const [datosImpresion, setDatosImpresion] = useState()
   const [bancos, setBancos] = useState([])
   const [tiposTarjeta, setTiposTarjeta] = useState([])
@@ -593,10 +592,6 @@ const AgendarFacial = (props) => {
     setOpenModalTraspaso(false)
   }
 
-  const handleCloseImprimirConsulta = (event, rowData) => {
-    setOpenModalImprimirCita(false)
-  }
-
   const handlePrint = async (event, rowData) => {
     navigate('/imprimir/ticket/tratamiento',
       {
@@ -979,12 +974,10 @@ const AgendarFacial = (props) => {
                 onCloseVerPagos={handleCloseVerPagos}
                 openModalPagos={openModalPagos}
                 openModalProxima={openModalProxima}
-                openModalImprimirCita={openModalImprimirCita}
                 datosImpresion={datosImpresion}
                 openModalTraspaso={openModalTraspaso}
                 esHoy={esHoy}
                 onChangeEsHoy={(e) => handleChangeEsHoy(e)}
-                onCloseImprimirConsulta={handleCloseImprimirConsulta}
                 onCloseTraspasos={handleCloseTraspasos}
                 sucursal={sucursal}
                 onChangeItemPrecio={handleChangeItemPrecio}

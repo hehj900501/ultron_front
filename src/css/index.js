@@ -44,6 +44,12 @@ const myStyles = (colorBase) => makeStyles( (theme) => {
             backgroundColor: theme.palette.background.paper,
             padding: theme.spacing(2, 4, 3),
         },
+        paper_sucursal: {
+            height: "98%",
+            padding: 25,
+            backgroundColor: "#EEEEFF",
+            boxShadow: theme.shadows[10],
+        },
         textField: {
             width: '100%',
         },
@@ -72,6 +78,13 @@ const myStyles = (colorBase) => makeStyles( (theme) => {
             marginTop: '0px',
             marginBottom: '0px',
             textAlign: 'center',
+        },
+        label_sucursal: {
+            marginTop: '0px',
+            marginBottom: '0px',
+            textAlign: 'center',
+            backgroundColor: colorBase,
+            color: "#FFFFFF"
         },
         label_left: {
             marginTop: '0px',

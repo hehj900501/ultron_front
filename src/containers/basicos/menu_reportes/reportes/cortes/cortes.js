@@ -7,9 +7,6 @@ import { Paper } from '@material-ui/core';
 import TableComponent from '../../../../../components/table/TableComponent';
 import { ButtonCustom } from '../../../../../components/basic/ButtonCustom';
 import myStyles from '../../../../../css';
-import ModalImprimirPagoDermatologo from '../../../../../components/modales/imprimir/pago_dermatologo';
-import ReporteImprimirPagoDermatologo from '../../../../../components/modales/imprimir/reporte_pago_dermatologo';
-import ImprimirCorte from '../../../../imprimir/corte';
 
 export const ReportesCortesContainer = (props) => {
 
@@ -20,11 +17,6 @@ export const ReportesCortesContainer = (props) => {
 		endDate,
 		onClickReportes,
 		colorBase,
-		// MODAL PROPERTIES
-		empleado,
-		openModalImprimirPago,
-		datosImpresion,
-		handleClose,
 		// TABLE DATES PROPERTIES
 		titulo,
 		columns,
@@ -37,15 +29,6 @@ export const ReportesCortesContainer = (props) => {
 
 	return (
 		<Fragment>
-			{
-				openModalImprimirPago ?
-					<ImprimirCorte
-						open={openModalImprimirPago}
-						onClose={handleClose}
-						datosImpresion={datosImpresion}
-						colorBase={colorBase}
-						empleado={empleado} /> : ''
-			}
 			<Paper>
 				<Grid container spacing={3} justify="center">
 					<Grid item xs={12} sm={2}>

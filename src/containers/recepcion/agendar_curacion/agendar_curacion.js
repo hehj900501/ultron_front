@@ -13,7 +13,6 @@ import ModalPagos from '../../../components/modales/modal_pagos'
 import { toFormatterCurrency } from '../../../utils/utils'
 import { ButtonCustom } from '../../../components/basic/ButtonCustom'
 import ModalCuracion from '../../../components/modales/modal_curacion'
-import ModalImprimirCuracion from '../../../components/modales/imprimir/curacion'
 import myStyles from '../../../css'
 import ModalProximaCuracion from '../../../components/modales/modal_proxima_curacion'
 import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
@@ -78,10 +77,6 @@ export const AgendarCuracionContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASO
 		openModalTraspaso,
 		onCloseTraspasos,
@@ -155,16 +150,6 @@ export const AgendarCuracionContainer = (props) => {
 						colorBase={colorBase}
 						onGuardarModalPagos={onGuardarModalPagos}
 						tipoServicioId={curacion.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirCuracion
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						servicio="CURACIÓN"
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{

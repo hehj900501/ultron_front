@@ -34,8 +34,6 @@ const ModalBuscarRazonSocial = (props) => {
   const [factura, setFactura] = useState()
   const [openModalUsoCfdi, setOpenModalUsoCfdi] = useState(false)
   const [openNuevaRazonSocial, setOpenNuevaRazonSocial] = useState(false)
-  const [datosImpresion, setDatosImpresion] = useState()
-  const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
 
   const {
     open,
@@ -78,10 +76,6 @@ const ModalBuscarRazonSocial = (props) => {
     }
     setFactura(factura)
     setOpenModalUsoCfdi(true)
-  }
-
-  const handleCloseImprimirConsulta = (event, rowData) => {
-    setOpenModalImprimirCita(false)
   }
 
   const actions = [
@@ -141,12 +135,9 @@ const ModalBuscarRazonSocial = (props) => {
             servicio={servicio}
             sucursal={sucursal}
             openModalUsoCfdi={openModalUsoCfdi}
-            datosImpresion={datosImpresion}
-            openModalImprimirCita={openModalImprimirCita}
             onCloseUsoCfdi={handleCloseUsoCfdi}
             handleOpenNuevaRazonSocial={handleOpenNuevaRazonSocial}
             handleCloseNuevaRazonSocial={handleCloseNuevaRazonSocial}
-            handleCloseImprimirConsulta={handleCloseImprimirConsulta}
             openNuevaRazonSocial={openNuevaRazonSocial}
             pago={pago}
             colorBase={colorBase}

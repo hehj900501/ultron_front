@@ -1,24 +1,23 @@
-import 'date-fns';
-import React, { Fragment } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { Paper, TextField } from '@material-ui/core';
-import TableComponent from '../../../components/table/TableComponent';
-import { Multiselect } from 'multiselect-react-dropdown';
-import ModalPagos from '../../../components/modales/modal_pagos';
-import { toFormatterCurrency } from '../../../utils/utils';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import ModalEstetica from '../../../components/modales/modal_estetica';
-import ModalImprimirCuracion from '../../../components/modales/imprimir/curacion';
-import myStyles from '../../../css';
-import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio';
-import ModalProximaEstetica from '../../../components/modales/modal_proxima_estetica';
+import 'date-fns'
+import React, { Fragment } from 'react'
+import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import InputLabel from '@material-ui/core/InputLabel'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import { Paper, TextField } from '@material-ui/core'
+import TableComponent from '../../../components/table/TableComponent'
+import { Multiselect } from 'multiselect-react-dropdown'
+import ModalPagos from '../../../components/modales/modal_pagos'
+import { toFormatterCurrency } from '../../../utils/utils'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import ModalEstetica from '../../../components/modales/modal_estetica'
+import myStyles from '../../../css'
+import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
+import ModalProximaEstetica from '../../../components/modales/modal_proxima_estetica'
 
 export const AgendarEsteticaContainer = (props) => {
 
@@ -27,12 +26,9 @@ export const AgendarEsteticaContainer = (props) => {
 		errors,
 		servicios,
 		tratamientos,
-		areas,
 		horarios,
-		tipoCitas,
 		onChangeServicio,
 		onChangeTratamientos,
-		onChangeAreas,
 		onChangeFecha,
 		onChangeHora,
 		onChangeMinutos,
@@ -42,31 +38,23 @@ export const AgendarEsteticaContainer = (props) => {
 		onClickAgendar,
 		isValid,
 		isSubmitting,
-		onChangeTiempo,
 		onChangeObservaciones,
 		empleado,
 		disableDate,
 		dermatologos,
 		promovendedores,
 		cosmetologas,
-		onChangeToxinasRellenos,
 		onChangeDermatologos,
 		onChangeTipoCita,
 		onChangeTotal,
 		onChangePromovendedor,
 		onChangeCosmetologa,
-		onChangeItemUnidades,
 		onChangeMedio,
 		medios,
-		materiales,
-		onChangeMateriales,
-		onChangeItemPrecio,
 		productos,
 		frecuencias,
 		onChangeProductos,
 		onChangeFrecuencia,
-		frecuenciaPrimeraVezId,
-		frecuenciaReconsultaId,
 		onChangePaymentMethod,
 		formasPago,
 		colorBase,
@@ -94,16 +82,12 @@ export const AgendarEsteticaContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASOS
 		openModalTraspaso,
 		onCloseTraspasos,
-	} = props;
+	} = props
 
-	const classes = myStyles(colorBase)();
+	const classes = myStyles(colorBase)()
 
 	return (
 		<Fragment>
@@ -171,16 +155,6 @@ export const AgendarEsteticaContainer = (props) => {
 						setOpenAlert={setOpenAlert}
 						onGuardarModalPagos={onGuardarModalPagos}
 						tipoServicioId={estetica.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirCuracion
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						servicio="TOXINAS Y RELLENOS"
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{
@@ -354,7 +328,7 @@ export const AgendarEsteticaContainer = (props) => {
 								type='Text'
 								onChange={onChangeHora}
 								onInput={(e) => {
-									e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value);
+									e.target.value = e.target.value < 0 ? 0 : (e.target.value > 24 ? 24 : e.target.value)
 									e.target.value = (e.target.value).toString().slice(0, 2)
 								}}
 								variant="outlined" />
@@ -369,7 +343,7 @@ export const AgendarEsteticaContainer = (props) => {
 								type='Text'
 								onChange={onChangeMinutos}
 								onInput={(e) => {
-									e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value);
+									e.target.value = e.target.value < 0 ? 0 : (e.target.value > 60 ? 60 : e.target.value)
 									e.target.value = (e.target.value).toString().slice(0, 2)
 								}}
 								variant="outlined" />
@@ -383,7 +357,7 @@ export const AgendarEsteticaContainer = (props) => {
 								type='Number'
 								onChange={onChangeTotal}
 								onInput={(e) => {
-									e.target.value = e.target.value < 0 ? 0 : e.target.value;
+									e.target.value = e.target.value < 0 ? 0 : e.target.value
 									e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 6)
 								}}
 								variant="outlined" />
@@ -419,7 +393,7 @@ export const AgendarEsteticaContainer = (props) => {
 												type='Number'
 												onChange={(e) => onChangeItemUnidades(e, index)}
 												onInput={(e) => {
-													e.target.value = e.target.value < 0 ? 0 : e.target.value;
+													e.target.value = e.target.value < 0 ? 0 : e.target.value
 													e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 3)
 												}}
 												variant="outlined" />
@@ -468,5 +442,5 @@ export const AgendarEsteticaContainer = (props) => {
 				components={components} />
 
 		</Fragment>
-	);
+	)
 }

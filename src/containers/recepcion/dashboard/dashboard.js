@@ -12,6 +12,7 @@ import { Fragment } from "react";
 import myStyles from "../../../css";
 import { toFormatterCurrency } from "../../../utils/utils";
 import { CheckCustom } from "../../../components/basic/CheckCustom";
+import DashboardComponent from "../../../components/dashboard/DashboardComponent";
 
 
 export const DashboardContainer = (props) => {
@@ -19,14 +20,8 @@ export const DashboardContainer = (props) => {
   const {
     sucursales,
     colorBase,
+    token,
   } = props;
-  // console.table(props);
-  /*
-  const change = (name, e) => {
-    e.persist();
-    handleChange(e);
-    setFieldTouched(name, true, false);
-  };*/
 
   const classes = myStyles(colorBase)();
 
@@ -45,13 +40,15 @@ export const DashboardContainer = (props) => {
       </Paper>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={12}>
-          <Grid container spacing={2}>
-           
-          </Grid>
-        </Grid>
-
-
+        {
+          sucursales.map(sucursal => {
+            return <Grid item xs={6} sm={6}>
+              <DashboardComponent 
+                sucursal={sucursal}
+                token={token} />
+            </Grid>
+          })
+        }
       </Grid>
 
 

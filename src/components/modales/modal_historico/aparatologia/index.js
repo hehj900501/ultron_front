@@ -55,7 +55,7 @@ const TabAparatologia = (props) => {
     },
 		exportAllData: true,
 		exportButton: true,
-		exportDelimiter: ''
+		exportDelimiter: ';'
   }
 
   useEffect(() => {

@@ -135,7 +135,6 @@ const AgendarConsulta = (props) => {
 	const [openModalTraspaso, setOpenModalTraspaso] = useState(false);
 	const [openModalEstetica, setOpenModalEstetica] = useState(false);
 	const [consulta, setConsulta] = useState();
-	const [openModalImprimirConsultas, setOpenModalImprimirConsultas] = useState(false);
 	const [datosImpresion, setDatosImpresion] = useState();
 	const [curacion, setCuracion] = useState({
 		materiales: []
@@ -264,19 +263,6 @@ const AgendarConsulta = (props) => {
 			});
 			setConsultas(response.data);
 		}
-	}
-
-	const getTimeToTratamiento = (tratamientos) => {
-		tratamientos.sort((a, b) => {
-			if (a.tiempo < b.tiempo) return 1;
-			if (a.tiempo > b.tiempo) return -1;
-			return 0;
-		});
-		let tiempo = 0;
-		tratamientos.forEach((item, index) => {
-			tiempo += Number(index === 0 ? item.tiempo : (item.tiempo - (item.servicio !== 'APARATOLOGÍA' ? 20 : 0)));
-		});
-		return tiempo;
 	}
 
 	const handleChangeTipoCita = (e) => {
@@ -421,28 +407,6 @@ const AgendarConsulta = (props) => {
 		setOpenModalTraspaso(true);
 	}
 
-	const handleClickCuracion = async (event, rowData) => {
-		const response = await findCuracionByConsultaId(rowData._id);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			if (response.data !== '') {
-				setCuracion(response.data);
-			}
-		}
-		setConsulta(rowData);
-		setOpenModalCuraciones(true);
-	}
-
-	const handleClickEstetica = async (event, rowData) => {
-		const response = await findEsteticaByConsultaId(rowData._id);
-		if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-			if (response.data !== '') {
-				setEstetica(response.data);
-			}
-		}
-		setConsulta(rowData);
-		setOpenModalEstetica(true);
-	}
-
 	const handleCloseVerPagos = () => {
 		setOpenModalPagos(false);
 	}
@@ -461,13 +425,8 @@ const AgendarConsulta = (props) => {
 		setOpenModalEstetica(false);
 	}
 
-	const handleCloseImprimirConsulta = () => {
-		setOpenModalImprimirConsultas(false);
-	}
-
 	const handlePrint = async (event, rowData) => {
 		setDatosImpresion(rowData);
-		setOpenModalImprimirConsultas(true);
 	}
 
 	const handleGuardarModalPagos = async (servicio) => {
@@ -482,7 +441,7 @@ const AgendarConsulta = (props) => {
 		{
 			icon: PrintIcon,
 			tooltip: 'IMPRIMIR',
-			onClick: handlePrint
+			//onClick: handlePrint
 		},
 		{
 			icon: EditIcon,
@@ -797,9 +756,7 @@ const AgendarConsulta = (props) => {
 						openModalEstetica={openModalEstetica}
 						openModalProxima={openModalProxima}
 						openModalTraspaso={openModalTraspaso}
-						openModalImprimirConsultas={openModalImprimirConsultas}
 						datosImpresion={datosImpresion}
-						onCloseImprimirConsulta={handleCloseImprimirConsulta}
 						frecuencias={frecuencias}
 						productos={productos}
 						onChangeFrecuencia={(e) => handleChangeFrecuencia(e)}

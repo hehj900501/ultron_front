@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import { ButtonCustom } from '../../../components/basic/ButtonCustom';
 import ModalNuevoEntrada from '../../../components/modales/modal_nuevo_entrada';
 import ModalNuevoSalida from '../../../components/modales/modal_nuevo_salida';
-import ModalImprimirCorte from '../../../components/modales/imprimir/corte';
 import { toFormatterCurrency } from '../../../utils/utils';
 import { rolPromovendedorId, rolRecepcionistaId } from '../../../utils/constants';
 
@@ -15,15 +14,12 @@ export const CorteContainer = (props) => {
   const {
     tituloEntrada,
     tituloSalida,
-    tituloPagoAnticipado,
     columnsEntrada,
     columnsSalida,
     dataEntradas,
     dataPagosAnticipados,
     dataSalidas,
     options,
-    openModal,
-    handleOpen,
     handleClose,
     handleClickGuardar,
     turno,
@@ -33,7 +29,6 @@ export const CorteContainer = (props) => {
     onGenerarCorte,
     openModalNuevoEntrada,
     openModalNuevoSalida,
-    openModalImprimir,
     handleOpenImprimir,
     handleOpenNuevoEntrada,
     handleOpenNuevoSalida,
@@ -48,7 +43,7 @@ export const CorteContainer = (props) => {
     handleCerrarCorte,
     corte,
     colorBase,
-  } = props;
+  } = props
 
   const useStyles = makeStyles(theme => ({
     button: {
@@ -114,23 +109,6 @@ export const CorteContainer = (props) => {
             empleado={empleado}
             corte={corte}
             onObtenerInformacion={turnoActual}
-            setOpenAlert={setOpenAlert}
-            colorBase={colorBase}
-            setMessage={setMessage}
-            setSeverity={setSeverity} /> : ''
-      }
-
-      {
-        openModalImprimir ?
-          <ModalImprimirCorte
-            open={openModalImprimir}
-            onClose={handleClose}
-            corte={corte}
-            sucursal={sucursal}
-            empleado={empleado}
-            dataEntradas={newEntradas}
-            dataPagosAnticipados={dataPagosAnticipados}
-            dataSalidas={dataSalidas}
             setOpenAlert={setOpenAlert}
             colorBase={colorBase}
             setMessage={setMessage}

@@ -35,8 +35,6 @@ const ReportesRecetas = (props) => {
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [recetas, setRecetas] = useState([]);
-	const [datosImpresion, setDatosImpresion] = useState();
-	const [openModalImprimirDatosFacturacion, setOpenModalImprimirDatosFacturacion] = useState(false);
 
 	const date = new Date();
 	const dia = addZero(date.getDate());
@@ -76,15 +74,6 @@ const ReportesRecetas = (props) => {
 		exportAllData: true,
 		exportButton: true,
 		exportDelimiter: ';'
-	}
-
-	const handleCloseImprimirDatosFacturacion = (event, rowData) => {
-		setOpenModalImprimirDatosFacturacion(false);
-	}
-
-	const handlePrint = async (event, rowData) => {
-		setDatosImpresion(rowData);
-		setOpenModalImprimirDatosFacturacion(true);
 	}
 
 	const actions = [
@@ -183,9 +172,6 @@ const ReportesRecetas = (props) => {
 						colorBase={colorBase}
 						onClickReportes={handleReportes}
 						onClickExcel={handleClickExcel}
-						datosImpresion={datosImpresion}
-						openModalImprimirDatosFacturacion={openModalImprimirDatosFacturacion}
-						handleCloseImprimirDatosFacturacion={handleCloseImprimirDatosFacturacion}
 						{...props} />
 					: <Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />

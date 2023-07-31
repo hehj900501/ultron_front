@@ -64,7 +64,6 @@ const Corte = (props) => {
 
   const [openModalNuevoEntrada, setOpenModalNuevoEntrada] = useState(false);
   const [openModalNuevoSalida, setOpenModalNuevoSalida] = useState(false);
-  const [openModalImprimir, setOpenModalInmprimir] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [dataEntradas, setDataEntradas] = useState([]);
   const [dataPagosAnticipados, setDataPagosAnticipados] = useState([]);
@@ -447,14 +446,9 @@ const Corte = (props) => {
       });
   }
 
-  // const handleOpenImprimir = () => {
-  //   setOpenModalInmprimir(true);
-  // };
-
   const handleClose = () => {
     setOpenModalNuevoEntrada(false);
     setOpenModalNuevoSalida(false);
-    setOpenModalInmprimir(false);
   };
 
   const handleCloseAlert = () => {
@@ -577,7 +571,6 @@ const Corte = (props) => {
             options={options}
             openModalNuevoEntrada={openModalNuevoEntrada}
             openModalNuevoSalida={openModalNuevoSalida}
-            openModalImprimir={openModalImprimir}
             dataEntradas={dataEntradas}
             dataSalidas={dataSalidas}
             dataPagosAnticipados={dataPagosAnticipados}

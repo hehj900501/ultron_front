@@ -1,7 +1,6 @@
 import 'date-fns';
 import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
@@ -10,12 +9,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Paper, TextField } from '@material-ui/core';
 import TableComponent from '../../../components/table/TableComponent';
-import { Multiselect } from 'multiselect-react-dropdown';
 import ModalPagos from '../../../components/modales/modal_pagos';
 import { toFormatterCurrency } from '../../../utils/utils';
 import { ButtonCustom } from '../../../components/basic/ButtonCustom';
 import ModalCuracion from '../../../components/modales/modal_curacion';
-import ModalImprimirCuracion from '../../../components/modales/imprimir/curacion';
 import myStyles from '../../../css';
 import ModalProximaCuracion from '../../../components/modales/modal_proxima_curacion';
 import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio';
@@ -27,12 +24,9 @@ export const AgendarCuracionContainer = (props) => {
 		errors,
 		servicios,
 		tratamientos,
-		areas,
 		horarios,
-		tipoCitas,
 		onChangeServicio,
 		onChangeTratamientos,
-		onChangeAreas,
 		onChangeFecha,
 		onChangeHora,
 		onChangeMinutos,
@@ -42,23 +36,15 @@ export const AgendarCuracionContainer = (props) => {
 		onClickAgendar,
 		isValid,
 		isSubmitting,
-		onChangeTiempo,
 		onChangeObservaciones,
 		empleado,
 		disableDate,
 		dermatologos,
-		promovendedores,
-		cosmetologas,
 		onChangeDermatologos,
 		onChangeTipoCita,
 		onChangeTotal,
-		onChangeCosmetologa,
 		onChangeMedio,
 		medios,
-		dermatologoDirectoId,
-		materiales,
-		onChangeMateriales,
-		onChangeItemPrecio,
 		onChangeFrecuencia,
 		onChangePaymentMethod,
 		frecuencias,
@@ -91,10 +77,6 @@ export const AgendarCuracionContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASO
 		openModalTraspaso,
 		onCloseTraspasos,
@@ -168,16 +150,6 @@ export const AgendarCuracionContainer = (props) => {
 						colorBase={colorBase}
 						onGuardarModalPagos={onGuardarModalPagos}
 						tipoServicioId={curacion.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirCuracion
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						servicio="CURACIÓN"
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{

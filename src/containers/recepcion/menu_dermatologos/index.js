@@ -46,9 +46,6 @@ const Dermatologos = (props) => {
 		colorBase,
 	} = props;
 
-	const [openPagoDermatologo, setOpenPagoDermatologo] = useState(false);
-	const [openPagoPatologo, setOpenPagoPatologo] = useState(false);
-	const [openHistoric, setOpenHistoric] = useState(false);
 	const [openAlert, setOpenAlert] = useState(false);
 	const [dermatologos, setDermatologos] = useState([]);
 	const [patologos, setPatologos] = useState([]);
@@ -99,23 +96,9 @@ const Dermatologos = (props) => {
 	const dermatologoRolId = process.env.REACT_APP_DERMATOLOGO_ROL_ID;
 	const patologoRolId = process.env.REACT_APP_PATOLOGO_ROL_ID;
 
-	const handleClose = () => {
-		setDermatologo({});
-		setPatologo({});
-		setOpenPagoDermatologo(false);
-		setOpenPagoPatologo(false);
-		setOpenHistoric(false);
-	};
-
 	const handleCloseAlert = () => {
 		setOpenAlert(false);
-	};
-
-	/*
-	const handleClickHistorico = (event, rowData) => {
-		setDermatologo(rowData);
-		setOpenHistoric(true);
-	}*/
+	}
 
 	const handleClickGenerarPagoDermatologo = (event, rowData) => {
 		setDermatologo(rowData);
@@ -227,18 +210,14 @@ const Dermatologos = (props) => {
 						tituloPatologos='PATÓLOGOS'
 						actionsDermatologo={actionsDermatologo}
 						optionsDermatologos={optionsDermatologos}
-						openPagoDermatologo={openPagoDermatologo}
 						columnsPatologos={columnsPatologos}
 						actionsPatologos={actionsPatologos}
 						optionsPatologos={optionsPatologos}
-						openHistoric={openHistoric}
 						dermatologo={dermatologo}
 						sucursal={sucursal}
 						empleado={empleado}
-						openPagoPatologo={openPagoPatologo}
 						patologo={patologo}
-						colorBase={colorBase}
-						handleClose={handleClose} /> :
+						colorBase={colorBase} /> :
 					<Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />
 					</Backdrop>

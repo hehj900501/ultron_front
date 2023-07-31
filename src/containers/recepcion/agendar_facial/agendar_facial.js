@@ -13,7 +13,6 @@ import ModalCita from '../../../components/modales/modal_cita'
 import { Multiselect } from 'multiselect-react-dropdown'
 import ModalPagos from '../../../components/modales/modal_pagos'
 import { toFormatterCurrency } from '../../../utils/utils'
-import ModalImprimirTratamiento from '../../../components/modales/imprimir/tratamiento'
 import { ButtonCustom } from '../../../components/basic/ButtonCustom'
 import ModalProximaCita from '../../../components/modales/modal_proxima_cita'
 import myStyles from '../../../css'
@@ -93,10 +92,6 @@ export const AgendarFacialContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASO
 		openModalTraspaso,
 		onCloseTraspasos,
@@ -175,16 +170,6 @@ export const AgendarFacialContainer = (props) => {
 						onGuardarModalPagos={onGuardarModalPagos}
 						colorBase={colorBase}
 						tipoServicioId={facial.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirTratamiento
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						sucursal={sucursal}
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{

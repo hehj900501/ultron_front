@@ -14,7 +14,6 @@ import ModalPagos from '../../../components/modales/modal_pagos'
 import { toFormatterCurrency } from '../../../utils/utils'
 import { ButtonCustom } from '../../../components/basic/ButtonCustom'
 import ModalDermapen from '../../../components/modales/modal_dermapen'
-import ModalImprimirDermapen from '../../../components/modales/imprimir/dermapen'
 import myStyles from '../../../css'
 import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
 import ModalProximaDermapen from '../../../components/modales/modal_proxima_dermapen'
@@ -82,10 +81,6 @@ export const AgendarDermapenContainer = (props) => {
 		setMessage,
 		setOpenAlert,
 		onGuardarModalPagos,
-		// MODAL IMPRIMIR
-		openModalImprimirCita,
-		datosImpresion,
-		onCloseImprimirConsulta,
 		// MODAL TRASPASOS
 		openModalTraspaso,
 		onCloseTraspasos,
@@ -158,16 +153,6 @@ export const AgendarDermapenContainer = (props) => {
 						colorBase={colorBase}
 						onGuardarModalPagos={onGuardarModalPagos}
 						tipoServicioId={dermapen.servicio._id} />
-					: ''
-			}
-			{
-				openModalImprimirCita ?
-					<ModalImprimirDermapen
-						open={openModalImprimirCita}
-						onClose={onCloseImprimirConsulta}
-						sucursal={sucursal}
-						colorBase={colorBase}
-						datos={datosImpresion} />
 					: ''
 			}
 			{

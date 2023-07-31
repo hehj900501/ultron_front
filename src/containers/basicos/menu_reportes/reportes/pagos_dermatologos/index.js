@@ -23,19 +23,8 @@ const ReportePagosDermatologos = (props) => {
 		colorBase,
 	} = props;
 
-	const servicioAparatologiaId = process.env.REACT_APP_APARATOLOGIA_SERVICIO_ID;
-	const servicioFacialId = process.env.REACT_APP_FACIAL_SERVICIO_ID;
-	const servicioConsultaId = process.env.REACT_APP_CONSULTA_SERVICIO_ID;
-	const servicioCuracionId = process.env.REACT_APP_CURACION_SERVICIO_ID;
-	const servicioEsteticaId = process.env.REACT_APP_ESTETICA_SERVICIO_ID;
-	const servicioDermapenId = process.env.REACT_APP_DERMAPEN_SERVICIO_ID;
-	const formaPagoTarjetaId = process.env.REACT_APP_FORMA_PAGO_TARJETA;
-	const dermatologoDirectoId = process.env.REACT_APP_DERMATOLOGO_DIRECTO_ID;
-	const iva = process.env.REACT_APP_IVA;
-
 	const [isLoading, setIsLoading] = useState(true);
 	const [pagosDermatologos, setPagosDermatologos] = useState([]);
-	const [openModalImprimirPago, setOpenModalImprimirPago] = useState(false);
 	const [datosImpresion, setDatosImpresion] = useState();
 
 	const [datos, setDatos] = useState([]);
@@ -83,13 +72,8 @@ const ReportePagosDermatologos = (props) => {
 		exportDelimiter: ';'
 	}
 
-	const handleClose = () => {
-		setOpenModalImprimirPago(false);
-	};
-
 	const handlePrint = async (event, rowData) => {
 		setDatosImpresion(rowData);
-		setOpenModalImprimirPago(true);
 	}
 
 	const actions = [
@@ -180,11 +164,7 @@ const ReportePagosDermatologos = (props) => {
 						options={options}
 						datos={datos}
 						actions={actions}
-						empleado={empleado}
-						openModalImprimirPago={openModalImprimirPago}
-						datosImpresion={datosImpresion}
 						onClickReportes={handleReportes}
-						handleClose={handleClose}
 						{...props} />
 					: <Backdrop className={classes.backdrop} open={isLoading} >
 						<CircularProgress color="inherit" />

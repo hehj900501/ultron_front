@@ -145,7 +145,6 @@ const AgendarAparatologia = (props) => {
 	const [openModalProxima, setOpenModalProxima] = useState(false)
 	const [aparatologia, setAparatologia] = useState()
 	const [openModalPagos, setOpenModalPagos] = useState(false)
-	const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
 	const [openModalTraspaso, setOpenModalTraspaso] = useState(false)
 	const [datosImpresion, setDatosImpresion] = useState()
 	const [bancos, setBancos] = useState([])
@@ -557,10 +556,6 @@ const AgendarAparatologia = (props) => {
 		setOpenModalPagos(false)
 	}
 
-	const handleCloseImprimirConsulta = (event, rowData) => {
-		setOpenModalImprimirCita(false)
-	}
-
 	const handlePrint = async (event, rowData) => {
 		navigate('/imprimir/ticket/tratamiento',
 			{
@@ -905,9 +900,7 @@ const AgendarAparatologia = (props) => {
 								onChangeTiempo={(e) => handleChangeTiempo(e)}
 								onCloseVerPagos={handleCloseVerPagos}
 								openModalPagos={openModalPagos}
-								openModalImprimirCita={openModalImprimirCita}
 								datosImpresion={datosImpresion}
-								onCloseImprimirConsulta={handleCloseImprimirConsulta}
 								sucursal={sucursal}
 								onChangeItemPrecio={handleChangeItemPrecio}
 								setOpenAlert={setOpenAlert}

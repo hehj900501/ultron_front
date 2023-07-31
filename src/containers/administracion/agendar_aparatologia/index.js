@@ -133,7 +133,6 @@ const AgendarAparatologia = (props) => {
 	const [openModalProxima, setOpenModalProxima] = useState(false);
 	const [aparatologia, setAparatologia] = useState();
 	const [openModalPagos, setOpenModalPagos] = useState(false);
-	const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false);
 	const [openModalTraspaso, setOpenModalTraspaso] = useState(false);
 	const [datosImpresion, setDatosImpresion] = useState();
 
@@ -489,13 +488,8 @@ const AgendarAparatologia = (props) => {
 		setOpenModalPagos(false);
 	}
 
-	const handleCloseImprimirConsulta = (event, rowData) => {
-		setOpenModalImprimirCita(false);
-	}
-
 	const handlePrint = async (event, rowData) => {
 		setDatosImpresion(rowData);
-		setOpenModalImprimirCita(true);
 	}
 
 	const actions = [
@@ -766,9 +760,7 @@ const AgendarAparatologia = (props) => {
 								onChangeTiempo={(e) => handleChangeTiempo(e)}
 								onCloseVerPagos={handleCloseVerPagos}
 								openModalPagos={openModalPagos}
-								openModalImprimirCita={openModalImprimirCita}
 								datosImpresion={datosImpresion}
-								onCloseImprimirConsulta={handleCloseImprimirConsulta}
 								sucursal={sucursal}
 								onChangeItemPrecio={handleChangeItemPrecio}
 								setOpenAlert={setOpenAlert}

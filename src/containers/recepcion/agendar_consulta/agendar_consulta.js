@@ -10,7 +10,6 @@ import { Paper, TextField, Select } from '@material-ui/core'
 import TableComponent from '../../../components/table/TableComponent'
 import ModalConsulta from '../../../components/modales/modal_consulta'
 import ModalPagos from '../../../components/modales/modal_pagos'
-import ModalImprimirConsulta from '../../../components/modales/imprimir/consulta'
 import { toFormatterCurrency } from '../../../utils/utils'
 import { ButtonCustom } from '../../../components/basic/ButtonCustom'
 import ModalProximaConsulta from '../../../components/modales/modal_proxima_consulta'
@@ -82,9 +81,6 @@ export const AgendarConsultaContainer = (props) => {
     setFilterDate,
     OnCloseVerPagos,
     openModalPagos,
-    openModalImprimirConsultas,
-    datosImpresion,
-    onCloseImprimirConsulta,
     tipoServicioId,
     onGuardarModalPagos,
     openModalProxima,
@@ -186,17 +182,6 @@ export const AgendarConsultaContainer = (props) => {
             tipoServicioId={tipoServicioId}
             colorBase={colorBase}
             loadConsultas={loadConsultas} />
-          : ''
-      }
-      {
-        openModalImprimirConsultas ?
-          <ModalImprimirConsulta
-            open={openModalImprimirConsultas}
-            onClose={onCloseImprimirConsulta}
-            servicio="CONSULTA"
-            sucursal={sucursal}
-            colorBase={colorBase}
-            datos={datosImpresion} />
           : ''
       }
       <Paper>

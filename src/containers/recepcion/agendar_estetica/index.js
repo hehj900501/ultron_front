@@ -129,7 +129,6 @@ const AgendarEstetica = (props) => {
 	const [openModalProxima, setOpenModalProxima] = useState(false)
 	const [estetica, setEstetica] = useState()
 	const [openModalPagos, setOpenModalPagos] = useState(false)
-	const [openModalImprimirCita, setOpenModalImprimirCita] = useState(false)
 	const [datosImpresion, setDatosImpresion] = useState()
 	const [materiales, setMateriales] = useState([])
 
@@ -393,13 +392,8 @@ const AgendarEstetica = (props) => {
 		setOpenModalPagos(false)
 	}
 
-	const handleCloseImprimirConsulta = (event, rowData) => {
-		setOpenModalImprimirCita(false)
-	}
-
 	const handlePrint = async (event, rowData) => {
 		setDatosImpresion(rowData)
-		setOpenModalImprimirCita(true)
 	}
 
 	const handleClickTraspaso = (event, rowData) => {
@@ -787,11 +781,9 @@ const AgendarEstetica = (props) => {
 								onCloseVerPagos={handleCloseVerPagos}
 								openModalPagos={openModalPagos}
 								openModalProxima={openModalProxima}
-								openModalImprimirCita={openModalImprimirCita}
 								openModalTraspaso={openModalTraspaso}
 								datosImpresion={datosImpresion}
 								colorBase={colorBase}
-								onCloseImprimirConsulta={handleCloseImprimirConsulta}
 								onCloseTraspasos={handleCloseTraspasos}
 								sucursal={sucursal}
 								setOpenAlert={setOpenAlert}
