@@ -1,21 +1,21 @@
-import { Grid, Paper } from '@material-ui/core';
-import React from 'react';
-import myStyles from '../../css';
-import { findFacialByDateAndSucursal } from '../../services/faciales';
-import { findCuracionByDateAndSucursal } from '../../services/curaciones';
-import { findAparatologiaByDateAndSucursal } from '../../services/aparatolgia';
-import { findSurgeryBySucursalIdWaitingList } from '../../services/consultorios';
-import { findConsultsByDateAndSucursal } from '../../services/consultas';
-import { useState, useEffect } from 'react';
+import { Grid, Paper } from '@material-ui/core'
+import React from 'react'
+import myStyles from '../../css'
+import { findFacialByDateAndSucursal } from '../../services/faciales'
+import { findCuracionByDateAndSucursal } from '../../services/curaciones'
+import { findAparatologiaByDateAndSucursal } from '../../services/aparatolgia'
+import { findSurgeryBySucursalIdWaitingList } from '../../services/consultorios'
+import { findConsultsByDateAndSucursal } from '../../services/consultas'
+import { useState, useEffect } from 'react'
 
 const DashboardComponent = props => {
 
     const {
         sucursal,
         token
-    } = props;
+    } = props
     
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true)
 
     const [consultas, setConsultas] = useState([])
     const [consultorios, setConsultorios] = useState([])
@@ -28,43 +28,42 @@ const DashboardComponent = props => {
     const mes = date.getMonth()
     const anio = date.getFullYear()
 
-    console.log("KAOZ", sucursal);
-
     const classes = myStyles(sucursal.color)()
 
     const loadConsultas = async () => {
-        const response = await findConsultsByDateAndSucursal(dia, mes, anio, sucursal._id, token);
+        const response = await findConsultsByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setConsultas(response.data);
+            console.log("KAOZ", response.data)
+            setConsultas(response.data)
         }
     }
 
     const loadConsultorios = async () => {
-        const response = await findSurgeryBySucursalIdWaitingList(sucursal._id, token);
+        const response = await findSurgeryBySucursalIdWaitingList(sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setConsultorios(response.data);
+            setConsultorios(response.data)
         }
     }
 
 
     const loadAparatologia = async () => {
-        const response = await findAparatologiaByDateAndSucursal(dia, mes, anio, sucursal._id, token);
+        const response = await findAparatologiaByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setAparatologias(response.data);
+            setAparatologias(response.data)
         }
     }
 
     const loadCuraciones = async () => {
-        const response = await findCuracionByDateAndSucursal(dia, mes, anio, sucursal._id, token);
+        const response = await findCuracionByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
             setCuraciones(response.data)
         }
     }
 
     const loadFaciales = async () => {
-        const response = await findFacialByDateAndSucursal(dia, mes, anio, sucursal._id, token);
+        const response = await findFacialByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setFaciales(response.data);
+            setFaciales(response.data)
         }
     }
 
@@ -80,7 +79,7 @@ const DashboardComponent = props => {
     
       useEffect(() => {
         loadAll()
-      }, []);
+      }, [])
 
     return (
         <Paper className={classes.paper_item}>
@@ -155,7 +154,7 @@ const DashboardComponent = props => {
                 </Grid>
             </Grid>
         </Paper>
-    );
+    )
 }
 
-export default DashboardComponent;
+export default DashboardComponent

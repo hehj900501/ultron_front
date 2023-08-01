@@ -1,26 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Formik } from "formik";
-import io from 'socket.io-client';
-import socketIOClient from "socket.io-client";
 import { showAllOffices } from "../../../services";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { DashboardContainer } from "./dashboard";
-import * as Yup from "yup";
-import { Snackbar, Grid, Backdrop, CircularProgress } from "@material-ui/core";
+import { Backdrop, CircularProgress } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
-import bannerMePiel from './../../../bannerMePiel.PNG';
-import { login } from "../../../services/empleados";
-import { addZero } from "../../../utils/utils";
-import { findEntradasByRangeDateAndSucursal } from "../../../services/pagos";
-import { showActivesTipoEntradas } from "../../../services/tipo_entradas";
-import { findPaysByRangeDateAndSucursal } from "../../../services/pagos";
-import { getAllServices } from "../../../services/servicios";
-import { findConsultsByDateAndSucursal } from "../../../services/consultas";
-import { findSurgeryBySucursalIdWaitingList } from "../../../services/consultorios";
-import { findTreatmentByServicio } from "../../../services/tratamientos";
-import { findAparatologiaByDateAndSucursal } from "../../../services/aparatolgia";
-import { findFacialByDateAndSucursal } from "../../../services/faciales";
-import { findCuracionByDateAndSucursal } from "../../../services/curaciones";
 
 const styles = theme => ({
   paper: {

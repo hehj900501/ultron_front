@@ -61,7 +61,7 @@ const Pacientes = (props) => {
 		},
 		exportAllData: true,
 		exportButton: false,
-		exportDelimiter: '',
+		exportDelimiter: ';',
 	}
 
 	const handleOpen = () => {

@@ -1,17 +1,12 @@
 import React from "react";
 import {
-  makeStyles,
   Paper,
   Grid,
 } from "@material-ui/core";
 
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { ButtonCustom } from "../../../components/basic/ButtonCustom";
 import { Fragment } from "react";
 import myStyles from "../../../css";
-import { toFormatterCurrency } from "../../../utils/utils";
-import { CheckCustom } from "../../../components/basic/CheckCustom";
 import DashboardComponent from "../../../components/dashboard/DashboardComponent";
 
 
