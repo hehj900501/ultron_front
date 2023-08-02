@@ -16,6 +16,8 @@ export const DashboardContainer = (props) => {
     sucursales,
     colorBase,
     token,
+    onClickActualizar,
+    setIsLoading,
   } = props;
 
   const classes = myStyles(colorBase)();
@@ -27,6 +29,7 @@ export const DashboardContainer = (props) => {
           <Grid item xs={12} sm={3} className={classes.grid_center}>
             <ButtonCustom
               className={classes.button}
+              onClick={() => onClickActualizar()}
               variant="contained"
               color="primary"
               text="REFRESCAR" />
@@ -37,10 +40,11 @@ export const DashboardContainer = (props) => {
       <Grid container spacing={3}>
         {
           sucursales.map(sucursal => {
-            return <Grid item xs={6} sm={6}>
+            return <Grid item xs={5} sm={5}>
               <DashboardComponent 
                 sucursal={sucursal}
-                token={token} />
+                token={token}
+                setIsLoading={setIsLoading} />
             </Grid>
           })
         }

@@ -1,4 +1,5 @@
-const frecuenciaPrimeraVezId = process.env.REACT_APP_FRECUENCIA_PRIMERA_VEZ_ID;
+export const frecuenciaPrimeraVezId = process.env.REACT_APP_FRECUENCIA_PRIMERA_VEZ_ID;
+export const frecuenciaReconsultaId = process.env.REACT_APP_FRECUENCIA_RECONSULTA_ID;
 
 export const responseCodeOK = process.env.REACT_APP_RESPONSE_CODE_OK;
 export const responseCodeCreate = process.env.REACT_APP_RESPONSE_CODE_CREATED;

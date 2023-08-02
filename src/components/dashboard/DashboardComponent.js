@@ -7,20 +7,30 @@ import { findAparatologiaByDateAndSucursal } from '../../services/aparatolgia'
 import { findSurgeryBySucursalIdWaitingList } from '../../services/consultorios'
 import { findConsultsByDateAndSucursal } from '../../services/consultas'
 import { useState, useEffect } from 'react'
+import { frecuenciaPrimeraVezId, frecuenciaReconsultaId, statusAsistioId, statusAtendidoId, statusEnSalaDeCuracionId } from '../../utils/constants'
 
 const DashboardComponent = props => {
 
     const {
         sucursal,
-        token
+        token,
     } = props
-    
-    const [isLoading, setIsLoading] = useState(true)
 
-    const [consultas, setConsultas] = useState([])
+    const [consultasEnEspera, setConsultasEnEspera] = useState([])
+    const [consultasEnEsperaPV, setConsultasEnEsperaPV] = useState([])
+    const [consultasEnEsperaR, setConsultasEnEsperaR] = useState([])
+
+    const [consultasAtendidas, setConsultasAtendidas] = useState([])
+    const [consultasAtendidasPV, setConsultasAtendidasPV] = useState([])
+    const [consultasAtendidasR, setConsultasAtendidasR] = useState([])
+
     const [consultorios, setConsultorios] = useState([])
+
+    const [curacionesTotales, setCuracionesTotales] = useState([])
+    const [curacionesEnProceso, setCuracionesEnProceso] = useState([])
+    const [curacionesEnEspera, setCuracionesEnEspera] = useState([])
+
     const [aparatologias, setAparatologias] = useState([])
-    const [curaciones, setCuraciones] = useState([])
     const [faciales, setFaciales] = useState([])
 
     const date = new Date()
@@ -33,8 +43,33 @@ const DashboardComponent = props => {
     const loadConsultas = async () => {
         const response = await findConsultsByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            console.log("KAOZ", response.data)
-            setConsultas(response.data)
+            const respConsultasEnEspera = response.data.filter(consulta => {
+                return consulta.status._id === statusAsistioId
+            })
+            const respConsultasEnEsperaPV = respConsultasEnEspera.filter(consulta => {
+                return consulta.frecuencia._id === frecuenciaPrimeraVezId
+            })
+            const respConsultasEnEsperaR = respConsultasEnEspera.filter(consulta => {
+                return consulta.frecuencia._id === frecuenciaReconsultaId
+            })
+
+            setConsultasEnEspera(respConsultasEnEspera)
+            setConsultasEnEsperaPV(respConsultasEnEsperaPV)
+            setConsultasEnEsperaR(respConsultasEnEsperaR)
+
+            const respConsultasAtendidas = response.data.filter(consulta => {
+                return consulta.status._id === statusAtendidoId
+            })
+            const respConsultasAtendidasPV = respConsultasAtendidas.filter(consulta => {
+                return consulta.frecuencia._id === frecuenciaPrimeraVezId
+            })
+            const respConsultasAtendidasR = respConsultasAtendidas.filter(consulta => {
+                return consulta.frecuencia._id === frecuenciaReconsultaId
+            })
+
+            setConsultasAtendidas(respConsultasAtendidas)
+            setConsultasAtendidasPV(respConsultasAtendidasPV)
+            setConsultasAtendidasR(respConsultasAtendidasR)
         }
     }
 
@@ -49,32 +84,47 @@ const DashboardComponent = props => {
     const loadAparatologia = async () => {
         const response = await findAparatologiaByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setAparatologias(response.data)
+            const respAparatologias = response.data.filter(aparatologia => {
+                return aparatologia.status._id === statusAtendidoId
+            })
+            setAparatologias(respAparatologias)
         }
     }
 
     const loadCuraciones = async () => {
         const response = await findCuracionByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setCuraciones(response.data)
+            const respCuracionesTotales = response.data.filter(curacion => {
+                return curacion.status._id === statusAtendidoId
+            })
+            const respCuracionesEnProceso = response.data.filter(curacion => {
+                return curacion.status._id === statusEnSalaDeCuracionId
+            })
+            const respCuracionesEnEspera = response.data.filter(curacion => {
+                return curacion.status._id === statusAsistioId
+            })
+            setCuracionesTotales(respCuracionesTotales)
+            setCuracionesEnProceso(respCuracionesEnProceso)
+            setCuracionesEnEspera(respCuracionesEnEspera)
         }
     }
 
     const loadFaciales = async () => {
         const response = await findFacialByDateAndSucursal(dia, mes, anio, sucursal._id, token)
         if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-            setFaciales(response.data)
+            const respFaciales = response.data.filter(facial => {
+                return facial.status._id === statusAtendidoId
+            })
+            setFaciales(respFaciales)
         }
     }
 
     const loadAll = async () => {
-        setIsLoading(true)
         await loadConsultas()
         await loadConsultorios()
         await loadAparatologia()
         await loadCuraciones()
         await loadFaciales()
-        setIsLoading(false)
       }
     
       useEffect(() => {
@@ -85,72 +135,72 @@ const DashboardComponent = props => {
         <Paper className={classes.paper_item}>
             <Grid container spacing={0}>
                 <Grid item xs={12} sm={12}>
-                    <h1 className={classes.label_sucursal}>{`${sucursal.nombre} (CONSECUTIVO: 25)`}</h1>
+                    <h1 className={classes.label_sucursal}>{`${sucursal.nombre} (CONSECUTIVO: ${consultasEnEspera.length + consultasAtendidas.length})`}</h1>
                 </Grid>
 
-                <Grid item xs={6} sm={6} >
+                <Grid item xs={6} sm={6} className={consultasEnEspera.length < 6 ? classes.semaforo_verde : (consultasEnEspera.length < 10 ? classes.semaforo_amarillo : classes.semaforo_rojo)}>
                     <h2 className={classes.label_left}>CONSULTAS EN ESPERA:</h2>
                 </Grid>
-                <Grid item xs={6} sm={6} >
-                    <h2 className={classes.label_right}>11</h2>
+                <Grid item xs={6} sm={6} className={consultasEnEspera.length < 6 ? classes.semaforo_verde : (consultasEnEspera.length < 10 ? classes.semaforo_amarillo : classes.semaforo_rojo)}>
+                    <h2 className={classes.label_right}>{`${consultasEnEspera.length}`}</h2>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h3 className={classes.label_left}>PRIMERA VEZ: 3</h3>
+                    <h3 className={classes.label_left}>{`PRIMERA VEZ: ${consultasEnEsperaPV.length}`}</h3>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h3 className={classes.label_left}>RECONSULTAS: 8</h3> <br></br>
+                    <h3 className={classes.label_left}>{`RECONSULTAS: ${consultasEnEsperaR.length}`}</h3> <br></br>
                 </Grid>
 
                 <Grid item xs={6} sm={6}>
                     <h2 className={classes.label_left}>CONSULTAS TOTALES:</h2>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h2 className={classes.label_right}>26</h2>
+                    <h2 className={classes.label_right}>{`${consultasAtendidas.length}`}</h2>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h3 className={classes.label_left}>PRIMERA VEZ: 8</h3>
+                    <h3 className={classes.label_left}>{`PRIMERA VEZ: ${consultasAtendidasPV.length}`}</h3>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h3 className={classes.label_left}>RECONSULTAS: 18</h3> <br></br>
+                    <h3 className={classes.label_left}>{`RECONSULTAS: ${consultasAtendidasR.length}`}</h3> <br></br>
                 </Grid>
 
-                <Grid item xs={6} sm={6}>
+                <Grid item xs={6} sm={6} className={consultorios.length < 2 ? classes.semaforo_rojo : (consultorios.length < 4 ? classes.semaforo_amarillo : classes.semaforo_verde)}>
                     <h2 className={classes.label_left}>MÉDICOS DISPONIBLES:</h2>
                 </Grid>
-                <Grid item xs={6} sm={6}>
-                    <h2 className={classes.label_right}>3</h2>
+                <Grid item xs={6} sm={6} className={consultorios.length < 2 ? classes.semaforo_rojo : (consultorios.length < 4 ? classes.semaforo_amarillo : classes.semaforo_verde)}>
+                    <h2 className={classes.label_right}>{`${consultorios.length === 0 ? "SIN MÉDICO" : consultorios.length}`}</h2>
                 </Grid>
                 <Grid item xs={6} sm={6}>
                     <h2 className={classes.label_left}>PACIENTES POR MEDICO:</h2>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h2 className={classes.label_right}>4</h2> <br></br>
+                    <h2 className={classes.label_right}>{`${consultorios.length === 0 ? "SIN MÉDICO" : Math.round(consultasEnEspera.length / consultorios.length)}`}</h2> <br></br>
                 </Grid>
 
                 <Grid item xs={7} sm={7}>
                     <h2 className={classes.label_left}>CURACIONES TOTALES:</h2>
                 </Grid>
                 <Grid item xs={5} sm={5}>
-                    <h2 className={classes.label_right}>13</h2>
+                    <h2 className={classes.label_right}>{`${curacionesTotales.length}`}</h2>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <h3 className={classes.label_left}>CURACIONES EN PROCESO: 3</h3>
+                    <h3 className={classes.label_left}>{`CURACIONES EN PROCESO: ${curacionesEnProceso.length}`}</h3>
                 </Grid>
-                <Grid item xs={6} sm={6}>
-                    <h3 className={classes.label_left}>CURACIONES EN ESPERA: 4</h3> <br></br>
+                <Grid item xs={6} sm={6} className={curacionesEnEspera.length < 2 ? classes.semaforo_verde : (curacionesEnEspera.length < 4 ? classes.semaforo_amarillo : classes.semaforo_rojo)}>
+                    <h3 className={classes.label_left}>{`CURACIONES EN ESPERA: ${curacionesEnEspera.length}`}</h3> <br></br>
                 </Grid>
 
                 <Grid item xs={7} sm={7}>
                     <h2 className={classes.label_left}>FACIALES TOTALES:</h2>
                 </Grid>
                 <Grid item xs={5} sm={5}>
-                    <h2 className={classes.label_right}>17</h2>
+                    <h2 className={classes.label_right}>{`${faciales.length}`}</h2>
                 </Grid>
                 <Grid item xs={7} sm={7}>
                     <h2 className={classes.label_left}>APARATOLOGÍAS TOTALES:</h2>
                 </Grid>
                 <Grid item xs={5} sm={5}>
-                    <h2 className={classes.label_right}> 6</h2>
+                    <h2 className={classes.label_right}>{`${aparatologias.length}`}</h2>
                 </Grid>
             </Grid>
         </Paper>

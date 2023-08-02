@@ -229,6 +229,15 @@ const myStyles = (colorBase) => makeStyles( (theme) => {
         cie11 : {
             float: 'left',
             placeSelf: 'center'
+        },
+        semaforo_verde: {
+            backgroundColor: "#22FF33"
+        },
+        semaforo_amarillo: {
+            backgroundColor: "#DDDD22"
+        },
+        semaforo_rojo: {
+            backgroundColor: "#FF3322"
         }
     }
 }

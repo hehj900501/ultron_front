@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { showAllOffices } from "../../../services";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { DashboardContainer } from "./dashboard";
-import { Backdrop, CircularProgress } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
+import React, { Fragment, useEffect, useState } from "react"
+import { showAllOffices } from "../../../services"
+import withStyles from "@material-ui/core/styles/withStyles"
+import { DashboardContainer } from "./dashboard"
+import { Backdrop, CircularProgress } from "@material-ui/core"
 
 const styles = theme => ({
   paper: {
@@ -19,38 +18,34 @@ const styles = theme => ({
   title: {
     color: "#2BA6C6"
   }
-});
-
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+})
 
 const DashboardForm = (props) => {
 
   const {
     empleado,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = props;
+  const classes = props
 
-  const token = empleado.access_token;
+  const token = empleado.access_token
 
-  const [sucursales, setSucursales] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isDirecto, setIsDirecto] = useState(false);
-
-  const [openAlert, setOpenAlert] = useState(false)
-  const [message, setMessage] = useState('')
-  const [severity, setSeverity] = useState('success')
+  const [sucursales, setSucursales] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const loadSucursales = async () => {
-    const response = await showAllOffices();
+    const response = await showAllOffices()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
       setSucursales(response.data)
       setIsLoading(false)
     }
   }
+
+  const handleClickActualizar = async () => {
+		loadAll()
+	}
+
 
   const loadAll = async () => {
     setIsLoading(true)
@@ -59,7 +54,7 @@ const DashboardForm = (props) => {
 
   useEffect(() => {
     loadAll()
-  }, []);
+  }, [])
 
   return (
     <Fragment>
@@ -69,13 +64,15 @@ const DashboardForm = (props) => {
             sucursales={sucursales}
             token={token}
             colorBase={colorBase}
+            onClickActualizar={handleClickActualizar}
+            setIsLoading={setIsLoading}
             {...props} />
           : <Backdrop className={classes.backdrop} open={isLoading} >
             <CircularProgress color="inherit" />
           </Backdrop>
       }
     </Fragment>
-  );
+  )
 }
 
-export default withStyles(styles)(DashboardForm);
+export default withStyles(styles)(DashboardForm)
