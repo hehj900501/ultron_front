@@ -22,6 +22,21 @@ export const login = async (employeeNumber, password) => {
     }
 }
 
+export const showAllEmployees = async (token) => {
+    try {
+        const response = await axios({
+            url: `${baseUrl}/empleado`,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log('showAllEmployees', error);
+    }
+}
+
 export const findEmployeeByEmployeeNumber = async (employeeNumber) => {
     try {
         const response = await axios({

@@ -18,9 +18,6 @@ function getModalStyle() {
 
 const FormImprimirPagoDermatologo = (props) => {
 
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle)
-
   const frecuenciaPrimeraVezId = process.env.REACT_APP_FRECUENCIA_PRIMERA_VEZ_ID
   const tratamientoLuzpulzadaId = process.env.REACT_APP_LUZ_PULZADA_TRATAMIENTO_ID
 
@@ -41,7 +38,6 @@ const FormImprimirPagoDermatologo = (props) => {
     onClickImprimir,
     onClickPagar,
     onCambioTurno,
-    onObtenerInformacion,
     findCorte,
     show,
     turno,
@@ -191,14 +187,10 @@ const FormImprimirPagoDermatologo = (props) => {
   const noAplicaTipoCitaId = process.env.REACT_APP_TIPO_CITA_NO_APLICA_ID
   const sucursalManuelAcunaId = process.env.REACT_APP_SUCURSAL_MANUEL_ACUNA_ID
   const sucursalRubenDarioId = process.env.REACT_APP_SUCURSAL_RUBEN_DARIO_ID
-  const sucursalOcciId = process.env.REACT_APP_SUCURSAL_OCCI_ID
-  const sucursalFedeId = process.env.REACT_APP_SUCURSAL_FEDE_ID
   const dermatologoDirectoId = process.env.REACT_APP_DERMATOLOGO_DIRECTO_ID
   const servicioAparatologiaId = process.env.REACT_APP_APARATOLOGIA_SERVICIO_ID
   const formaPagoSesionAnticipadaId = process.env.REACT_APP_FORMA_PAGO_SESION_ANTICIPADA
   const tratamientoRadiofrecuencia = process.env.REACT_APP_RADIOFRECUENCIA_TRATAMIENTO_ID
-  const listaFaciales = [...faciales]
-  const listaAparatologias = [...aparatologias]
   const sesionesAnticipadas = []
   pagosAnticipados.forEach((pagoAnticipado) => {
     pagoAnticipado.sesiones_anticipadas.forEach((sesionAnticipada) => {

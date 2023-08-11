@@ -63,6 +63,7 @@ const LoginForm = (props) => {
   const rolAuxiliarAdministrativoId = process.env.REACT_APP_AUXILIAR_ADMINISTRATIVO_ROL_ID
   const rolCallCenterId = process.env.REACT_APP_CALL_CENTER_ROL_ID
   const rolJefaPromocion = process.env.REACT_APP_JEFA_PROMOCION_ROL_ID
+  const rolBiomedicoId = process.env.REACT_APP_BIOMEDICO_ROL_ID
 
   const navigate = useNavigate()
 
@@ -137,6 +138,7 @@ const LoginForm = (props) => {
         || empleado.rol._id === rolSupervisorId
         || empleado.rol._id === rolJulioId
         || empleado.rol._id === rolJefaPromocion
+        || empleado.rol._id === rolBiomedicoId
       ) {
         navigate('/recepcion', {
           state: {

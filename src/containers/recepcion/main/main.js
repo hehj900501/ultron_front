@@ -49,6 +49,8 @@ import {
 	rolRecepcionistaId,
 	rolJulioId,
 } from '../../../utils/constants'
+import TicketsForm from '../../basicos/tickets';
+import PsychologyIcon from '@mui/icons-material/Psychology';
 
 const TabPanel = (props) => {
 	const { children, value, index, ...other } = props
@@ -279,6 +281,14 @@ export const MainContainer = props => {
 							</ListItem>
 							: ''
 					}
+					{
+						empleado.rol._id !== rolRecepcionistaId ?
+							<ListItem button key={'BIOMÉDICO'} onClick={(e) => onChangeTab(e, 11, handleDrawerClose)}>
+								<ListItemIcon> <PsychologyIcon /> </ListItemIcon>
+								<ListItemText primary={'BIOMÉDICO (TICKETS)'} />
+							</ListItem>
+							: ''
+					}
 				</List>
 			</Drawer>
 			<main
@@ -355,6 +365,12 @@ export const MainContainer = props => {
 					</TabPanel>
 					<TabPanel value={value} index={9}>
 						<InventariosForm
+							empleado={empleado}
+							sucursal={sucursal}
+							colorBase={colorBase} />
+					</TabPanel>
+					<TabPanel value={value} index={11}>
+						<TicketsForm
 							empleado={empleado}
 							sucursal={sucursal}
 							colorBase={colorBase} />
