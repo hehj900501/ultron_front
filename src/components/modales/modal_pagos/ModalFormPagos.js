@@ -54,6 +54,7 @@ const ModalFormPagos = (props) => {
     onChangDescuentoDermatologo,
     values,
     colorBase,
+    calcularTotalPagos,
   } = props
 
   const classes = myStyles(colorBase)()
@@ -207,7 +208,7 @@ const ModalFormPagos = (props) => {
                   className={classes.button}
                   color="primary"
                   variant="contained"
-                  onClick={() => onGuardarModalPagos(servicio)}
+                  onClick={calcularTotalPagos}
                   disabled={pagos == ![]}
                   text='GUARDAR' />
               </Grid> //: ''

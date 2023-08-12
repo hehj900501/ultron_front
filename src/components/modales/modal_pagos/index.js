@@ -277,6 +277,16 @@ const ModalPagos = (props) => {
     })
   }
 
+  const calcularTotalPagos = () => {
+    let pagoTotal = 0
+    servicio.pagos.forEach((pago) => {
+      pagoTotal = pago.cantidad
+    })
+    servicio.total = pagoTotal
+    servicio.total_moneda = toFormatterCurrency(pagoTotal)
+    onGuardarModalPagos(servicio)
+  }
+
   const handleChangDescuentoDermatologo = (event) => {
     const datos = {
       ...values,
@@ -345,6 +355,7 @@ const ModalPagos = (props) => {
             restante={restante}
             onChangeDescuento={(e) => handleChangeDescuento(e)}
             onChangDescuentoDermatologo={(e) => handleChangDescuentoDermatologo(e)}
+            calcularTotalPagos={calcularTotalPagos}
             tipoServicioId={tipoServicioId}
             colorBase={colorBase}
             values={values} />
