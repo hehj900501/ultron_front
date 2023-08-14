@@ -105,9 +105,6 @@ const TicketsForm = (props) => {
   }
 
   const loadTickets = async (ingenieros, sucursales, empleados) => {
-    console.log("KAOZ", ingenieros)
-    console.log("KAOZ", sucursales)
-    console.log("KAOZ", empleados)
     const response = await showAlltickets()
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
       await response.data.forEach((ticket) => {

@@ -98,13 +98,6 @@ const FormImprimirReceta = (props) => {
     show,
   } = props;
 
-  const tipoMedicamentoNormalId = process.env.REACT_APP_TIPO_MEDICAMENTO_NORMAL_ID;
-  const sucursalRubenDarioId = process.env.REACT_APP_SUCURSAL_RUBEN_DARIO_ID;
-  const sucursalOcciId = process.env.REACT_APP_SUCURSAL_OCCI_ID;
-  const sucursalFedeId = process.env.REACT_APP_SUCURSAL_FEDE_ID;
-
-  console.log("KAOZ", consultorio)
-  console.log("KAOZ", receta)
   return (
     <Fragment
       aria-labelledby="simple-modal-title"
@@ -114,7 +107,7 @@ const FormImprimirReceta = (props) => {
         {
           productos.map((producto, index) => {
               {
-                if (index%5 === 0) {
+                if ( index%5 === 0 ) {
                   return <Fragment>
                     <Grid container>
                       <Grid item xs={true} className={classes.label_right}>
@@ -125,7 +118,7 @@ const FormImprimirReceta = (props) => {
                     <Grid container>
                       <Grid item xs={5}></Grid>
                       <Grid item xs={true} className={classes.label_right}>
-                        <h3 className={classes.label_h}> {consultorio.dermatologo.has_receta ? <h1><br /></h1> : `${consultorio.dermatologo.dgp}`}</h3>
+                        <h3 className={classes.label_h}> {consultorio.dermatologo.has_receta ? <h3><br /></h3> : `${consultorio.dermatologo.dgp}`}</h3>
                       </Grid>
                       <Grid item xs={true} className={classes.label_right}>
                         <h3 className={classes.label_h}> {consultorio.dermatologo.has_receta ? `` : `${consultorio.dermatologo.ae}`}</h3>
@@ -134,10 +127,6 @@ const FormImprimirReceta = (props) => {
                         <h3 className={classes.label_h}> {consultorio.dermatologo.has_receta ? `` : `${consultorio.dermatologo.dpej}`}</h3>
                       </Grid>
                     </Grid>
-
-                    {
-                      consultorio.dermatologo.has_receta ? <h1><br /><br /></h1> : ''
-                    }
 
                     <Grid container>
                       <Grid item xs={true} className={classes.label_right}>

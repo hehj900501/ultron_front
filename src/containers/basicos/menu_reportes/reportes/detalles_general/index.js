@@ -125,6 +125,7 @@ const ReportesDetallesGeneral = (props) => {
 		{ title: 'FECHA FACTURACIÓN', field: 'fecha_facturacion' },
 		{ title: 'COSMETÓLOGA', field: 'cosmetologa_nombre' },
 		{ title: 'PROMOVENDEDOR (A)', field: 'promovendedor_nombre' },
+		{ title: 'CITADO', field: 'es_cita' },
 		{ title: 'OBSERVACIONES', field: 'observaciones' },
 
 	];
@@ -150,7 +151,7 @@ const ReportesDetallesGeneral = (props) => {
 	const procesarConsulta = (consulta, datos) => {
 		consulta.iva = false;
 		if (consulta.status && consulta.status._id === statusCanceloSPId) {
-			// servicioCancelado(consulta, datos);
+			// servicioCancelado(consulta, datos);	
 		}
 		consulta.pagos.forEach(pago => {
 			const metodoPago = metodosPago.find(metodoPago => {
@@ -207,6 +208,7 @@ const ReportesDetallesGeneral = (props) => {
 				doctor_retencion: toFormatterCurrency(consulta.dermatologo.pago_completo ? 0 : (pagoDermatologo / 2)),
 				total_clinica: toFormatterCurrency(pagoClinica),
 				turno: pago.turno ? (pago.turno === 'm' ? 'MATUTINO' : 'VESPERTINO') : "SIN TURNO",
+				es_cita: consulta.es_cita ? "CON CITA" : "SIN CITA"
 			}
 			datos.push(dato);
 		});

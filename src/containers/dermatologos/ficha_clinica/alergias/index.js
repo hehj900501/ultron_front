@@ -79,7 +79,6 @@ const Alergias = (props) => {
 
 	const handleClickGuardar = async() => {
 		let responseAlergias = {}
-		console.log("KAOZ", alergias);
 		if (!alergias._id) {
 			responseAlergias = await createAlergias(alergias)
 			if (`${responseAlergias.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {

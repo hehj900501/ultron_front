@@ -175,7 +175,6 @@ const ModalPagos = (props) => {
       isFactura: val,
       factura: datosFactura,
     })
-    // TODO: CREATE FACTURA
     setOpenModalFactura(false)
   }
 
@@ -278,12 +277,6 @@ const ModalPagos = (props) => {
   }
 
   const calcularTotalPagos = () => {
-    let pagoTotal = 0
-    servicio.pagos.forEach((pago) => {
-      pagoTotal = pago.cantidad
-    })
-    servicio.total = pagoTotal
-    servicio.total_moneda = toFormatterCurrency(pagoTotal)
     onGuardarModalPagos(servicio)
   }
 

@@ -350,6 +350,7 @@ const AgendarConsulta = (props) => {
 			data.fecha_hora = fecha_hora
 			data.status = asistioStatusId
 			data.hora_aplicacion = create_date
+			data.es_cita = false
 			// data.quien_confirma_asistencia = empleado._id
 		}
 

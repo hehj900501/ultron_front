@@ -257,7 +257,6 @@ const InicioDermatologos = (props) => {
           return producto.tipo_medicamento === tipoMedicamentoControladoId
         })
         setProductosControlados(productosControladosList)
-        // console.log("KAOZ", receta);
 
         // receta.productos.forEach(async (producto) => {
         //   const responseLaboratorio = await findLaboratorioById(producto.laboratorio._id);
