@@ -17,7 +17,7 @@ import { ButtonCustom } from '../../../components/basic/ButtonCustom'
 import ModalProximaCita from '../../../components/modales/modal_proxima_cita'
 import myStyles from '../../../css'
 import ModalTraspasoServicio from '../../../components/modales/traspaso_servicio'
-import { formaPagoTarjetaId, sucursalFederalismoId, sucursalOccidentalId } from '../../../utils/constants'
+import { formaPagoTarjetaId, sucursalFederalismoId, sucursalManuelAcunaId, sucursalOccidentalId } from '../../../utils/constants'
 import { CheckCustom } from '../../../components/basic/CheckCustom'
 
 export const AgendarAparatologiaContainer = (props) => {
@@ -100,10 +100,16 @@ export const AgendarAparatologiaContainer = (props) => {
 
 	const classes = myStyles(colorBase)()
 
-	const showPromovendedores = [
+	let showPromovendedores = [
 		...promovendedores,
-		...recepcionistas,
 	]
+
+	if (sucursal === sucursalManuelAcunaId) {
+		showPromovendedores = [
+			...showPromovendedores,
+			...cosmetologas
+		]
+	}
 
 	return (
 		<Fragment>
