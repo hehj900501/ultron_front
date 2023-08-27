@@ -8,6 +8,7 @@ import ModalConfirmacion from '../modal_confirmacion'
 import { ButtonCustom } from '../../basic/ButtonCustom'
 import { toFormatterCurrency } from '../../../utils/utils'
 import myStyles from '../../../css'
+import { sucursalManuelAcunaId } from '../../../utils/constants'
 
 function getModalStyle() {
   const top = 50
@@ -76,7 +77,19 @@ const ModalFormCita = (props) => {
     dataComplete,
     colorBase,
     isDataComplete,
+    sucursal,
   } = props
+
+  let showPromovendedores = [
+		...promovendedores,
+	]
+
+	if (sucursal === sucursalManuelAcunaId) {
+		showPromovendedores = [
+			...showPromovendedores,
+			...cosmetologas
+		]
+	}
 
   isDataComplete(values)
 
@@ -280,7 +293,7 @@ const ModalFormCita = (props) => {
                         error={Boolean(errors.promovendedor)}
                         onChange={onChangePromovendedor}
                         label="PROMOVENDEDOR (A)" >
-                        {promovendedores.sort().map((item, index) => <MenuItem key={index} value={item._id}>{item.nombre}</MenuItem>)}
+                        {showPromovendedores.sort().map((item, index) => <MenuItem key={index} value={item._id}>{item.nombre}</MenuItem>)}
                       </Select>
                     </FormControl>
                 }

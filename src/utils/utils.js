@@ -228,3 +228,15 @@ export const downloadExcel = (fileName, sheetName, data) => {
   //Download
   XLSX.writeFile(workBook, `${fileName}.xlsx`)
 }
+
+export const restarTiempoAtencion = (horaLlegada, horaAtencion) => {
+  const llegada = horaLlegada.split(':')
+  const atencion = horaAtencion.split(':')
+  let horas = atencion[0] - llegada[0]
+  let minutos = atencion[1] - llegada[1]
+  minutos += (horas * 60)
+  console.log("KAOZ", llegada)
+  console.log("KAOZ", atencion)
+  console.log("KAOZ", minutos)
+  return minutos
+}
