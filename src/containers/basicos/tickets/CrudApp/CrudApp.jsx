@@ -1,10 +1,10 @@
-import React, { Fragment } from "react"
-import { useState } from "react"
-import CrudForm from "../CrudForm/CrudForm"
-import CrudTable from "../CrudTable/CrudTable"
-import { BorderColor, DeleteForever } from "@material-ui/icons"
-import { Paper } from "@material-ui/core"
-import tickets from ".."
+import React, { Fragment } from "react";
+import { useState } from "react";
+import CrudForm from "../CrudForm/CrudForm";
+import CrudTable from "../CrudTable/CrudTable";
+import { BorderColor, DeleteForever } from "@material-ui/icons";
+import { Paper } from "@material-ui/core";
+import tickets from "..";
 
 const CrudApp = (props) => {
   const {
@@ -24,7 +24,7 @@ const CrudApp = (props) => {
     tickets,
     completeData,
     empleado,
-  } = props
+  } = props;
 
   const columns = [
     { title: "INCIDENCIA", field: "incidencia" },
@@ -36,10 +36,9 @@ const CrudApp = (props) => {
     { title: "FECHA DE RESOLUCION", field: "fecha_t" },
     { title: "STATUS", field: "status.nombre" },
     { title: "OBSERVACIONES", field: "observaciones" },
-  ]
+  ];
 
-  const actions = 
-  [
+  const actions = [
     {
       icon: BorderColor,
       tooltip: "EDITAR",
@@ -50,9 +49,15 @@ const CrudApp = (props) => {
       tooltip: "ELIMINAR",
       onClick: handleClickEliminar,
     },
-  ]
+  ];
 
   const options = {
+    rowStyle: (rowData) => {
+      return {
+        color: rowData.status._id === process.env.REACT_APP_BIM_CERRADO_STATUS_ID ? '' : rowData.status.color,
+        backgroundColor: rowData.status._id === process.env.REACT_APP_BIM_CERRADO_STATUS_ID ? rowData.status.color : ''
+      };
+    },
     headerStyle: {
       backgroundColor: colorBase,
       color: "#FFF",
@@ -67,9 +72,9 @@ const CrudApp = (props) => {
     },
     paging: false,
     exportAllData: true,
-		exportButton: true,
-		exportDelimiter: ';'
-  }
+    exportButton: true,
+    exportDelimiter: ";",
+  };
 
   return (
     <Fragment>
@@ -91,12 +96,16 @@ const CrudApp = (props) => {
       <CrudTable
         titulo={"LISTADO DE TICKETS"}
         columns={columns}
-        actions={empleado.rol._id === process.env.REACT_APP_BIOMEDICO_ROL_ID ? actions : []}
+        actions={
+          empleado.rol._id === process.env.REACT_APP_BIOMEDICO_ROL_ID
+            ? actions
+            : []
+        }
         options={options}
         tickets={tickets}
       />
     </Fragment>
-  )
-}
+  );
+};
 
-export default CrudApp
+export default CrudApp;
