@@ -98,7 +98,7 @@ const ReporteGeneralCitas = (props) => {
 		},
 		exportAllData: true,
 		exportButton: true,
-		exportDelimiter: ''
+		exportDelimiter: ';'
 	}
 
 	const procesarDatos = async () => {
