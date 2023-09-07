@@ -125,6 +125,7 @@ const TicketsForm = (props) => {
         }) : sucursales
       })
       setTickets(response.data)
+      setIsLoading(false)
     }
   }
 
@@ -195,7 +196,6 @@ const TicketsForm = (props) => {
     await loadPrioridades()
     await loadStatus()
     await loadIngeniero()
-    setIsLoading(false)
   }
 
   useEffect(() => {

@@ -3,8 +3,6 @@ import { useState } from "react";
 import CrudForm from "../CrudForm/CrudForm";
 import CrudTable from "../CrudTable/CrudTable";
 import { BorderColor, DeleteForever } from "@material-ui/icons";
-import { Paper } from "@material-ui/core";
-import tickets from "..";
 
 const CrudApp = (props) => {
   const {
