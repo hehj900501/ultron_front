@@ -1,76 +1,29 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { Grid } from '@material-ui/core';
-import bannerMePiel from './../../../bannerMePiel.PNG';
-import bannerDermastetic from './../../../bannerDermastetic.jpeg';
-import { addZero, precioAreaBySucursal, toFormatterCurrency } from '../../../utils/utils';
-import myStyles from '../../../css';
-import { ButtonCustom } from '../../../components/basic/ButtonCustom';
-import { dermatologoDirectoId } from '../../../utils/constants';
+import React, { Fragment } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { Grid } from '@material-ui/core'
+import bannerMePiel from './../../../bannerMePiel.PNG'
+import bannerDermastetic from './../../../bannerDermastetic.jpeg'
+import qr_fede_ma from './../../../qr_fede_ma.png'
+import qr_occi from './../../../qr_occi.png'
+import { addZero, precioAreaBySucursal, toFormatterCurrency } from '../../../utils/utils'
+import myStyles from '../../../css'
+import { ButtonCustom } from '../../../components/basic/ButtonCustom'
+import { dermatologoDirectoId, sucursalManuelAcunaId, sucursalOccidentalId } from '../../../utils/constants'
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    paddingLeft: 15
-  },
-  textField: {
-    width: '100%',
-  },
-  formControl: {
-    minWidth: 120,
-    width: '100%',
-  },
-  button: {
-    width: '100%',
-    color: '#FFFFFF',
-  },
-  label: {
-    marginTop: '0px',
-    marginBottom: '0px',
-    textAlign: 'center',
-  },
-  label_left: {
-    marginTop: '0px',
-    marginBottom: '0px',
-    marginLeft: '10px',
-    textAlign: 'left',
-  },
-  label_right: {
-    marginTop: '0px',
-    marginBottom: '0px',
-    marginRight: '10px',
-    textAlign: 'right',
-  },
-  label_foot: {
-    fontSize: '11px',
-    marginTop: '0px',
-    marginRight: '10px',
-    marginBottom: '10px',
-    textAlign: 'right',
-    fontWeight: 'bold',
   }
-}));
+}
 
 const FormTratamiento = (props) => {
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
 
   const {
     datos,
@@ -79,22 +32,17 @@ const FormTratamiento = (props) => {
     hadleClickBack,
     show,
     colorBase,
-  } = props;
+  } = props
 
-  const sucursalManuelAcunaId = process.env.REACT_APP_SUCURSAL_MANUEL_ACUNA_ID;
-  const sucursalRubenDarioId = process.env.REACT_APP_SUCURSAL_RUBEN_DARIO_ID;
-  const sucursalOcciId = process.env.REACT_APP_SUCURSAL_OCCI_ID;
-  const sucursalFedeId = process.env.REACT_APP_SUCURSAL_FEDE_ID;
+  const classes = myStyles(colorBase)()
 
-  const classes = myStyles(colorBase)();
-
-  const fecha = new Date();
+  const fecha = new Date()
 
   const calcularDescuento = (datos) => {
-    const descuentoClinica = datos.descuento_clinica;
-    const descuentoDermatologo = (datos.precio - descuentoClinica) * datos.descuento_dermatologo / 100;
-    const descuentoTotal = descuentoClinica - descuentoDermatologo;
-    return descuentoTotal;
+    const descuentoClinica = datos.descuento_clinica
+    const descuentoDermatologo = (datos.precio - descuentoClinica) * datos.descuento_dermatologo / 100
+    const descuentoTotal = descuentoClinica - descuentoDermatologo
+    return descuentoTotal
   }
 
   return (
@@ -102,7 +50,7 @@ const FormTratamiento = (props) => {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description" >
       <img
-        src={sucursal === sucursalManuelAcunaId || sucursal === sucursalRubenDarioId ? bannerDermastetic : bannerMePiel}
+        src={sucursal === sucursalManuelAcunaId ? bannerDermastetic : bannerMePiel}
         alt='banner'
         width="300" />
       <Grid container>
@@ -168,7 +116,16 @@ const FormTratamiento = (props) => {
 
         <Grid item xs={12}>
           <p className={classes.label_foot}>*ESTE TICKET NO REPRESENTA UN COMPROBANTE FISCAL.*</p>
-          <p className={classes.label_foot}>*FICHA DE CABINA, ENTREGUE A SU COSMETÓLOGA.*</p>
+        </Grid>
+
+        <Grid item xs={12}>
+          <img
+            src={sucursal === sucursalOccidentalId ? qr_occi : qr_fede_ma}
+            alt='banner'
+            width="300" />
+        </Grid>
+        <Grid item xs={12}>
+            <h2>Escanear para facturar</h2>
         </Grid>
 
         <Grid item xs={12}>
@@ -205,7 +162,7 @@ const FormTratamiento = (props) => {
         }
       </Grid>
     </Fragment>
-  );
+  )
 }
 
-export default FormTratamiento;
+export default FormTratamiento

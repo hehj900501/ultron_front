@@ -1,32 +1,31 @@
-import React, { useState, Fragment } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import FormTratamiento from './FormTratamiento';
+import React, { useState, Fragment } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import FormTratamiento from './FormTratamiento'
 
 const ImprimirTratamiento = (props) => {
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const {
-    empleado,
     sucursal,
     datos,
     colorBase,
-  } = location.state;
+  } = location.state
 
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(true)
 
   const handleClickImprimir = (e) => {
 
-    setShow(false);
+    setShow(false)
     setTimeout(() => {
-      window.print();
-    }, 0);
-    setTimeout(() => { setShow(true); }, 15);
+      window.print()
+    }, 0)
+    setTimeout(() => { setShow(true) }, 15)
   }
 
   const hadleClickBack = () => {
-    navigate(-1);
+    navigate(-1)
   }
 
   return (
@@ -42,7 +41,7 @@ const ImprimirTratamiento = (props) => {
         show={show} />
     </Fragment>
 
-  );
+  )
 }
 
-export default ImprimirTratamiento;
+export default ImprimirTratamiento

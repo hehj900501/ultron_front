@@ -1,38 +1,37 @@
-import React, { useState, Fragment } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import FormConsulta from './FormConsulta';
+import React, { useState, Fragment } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import FormEstetica from './FormEstetica'
 
-const ImprimirConsulta = (props) => {
+const ImprimirEstetica = (props) => {
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const {
-    empleado,
     sucursal,
     datos,
     servicio,
     colorBase,
-  } = location.state;
+  } = location.state
 
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(true)
 
   const handleClickImprimir = (e) => {
 
-    setShow(false);
+    setShow(false)
     setTimeout(() => {
-      window.print();
-    }, 0);
-    setTimeout(() => { setShow(true); }, 15);
+      window.print()
+    }, 0)
+    setTimeout(() => { setShow(true) }, 15)
   }
 
   const hadleClickBack = () => {
-    navigate(-1);
+    navigate(-1)
   }
 
   return (
     <Fragment>
-      <FormConsulta
+      <FormEstetica
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         datos={datos}
@@ -44,7 +43,7 @@ const ImprimirConsulta = (props) => {
         show={show} />
     </Fragment>
 
-  );
+  )
 }
 
-export default ImprimirConsulta;
+export default ImprimirEstetica
