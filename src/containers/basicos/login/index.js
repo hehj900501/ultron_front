@@ -108,11 +108,7 @@ const LoginForm = (props) => {
     const response = await login(data.employee_number, data.password)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED && response.data !== '') {
       const empleado = response.data
-      if (empleado._id === '619eb0e78b088328c0c52fd6') {
-        setOpenAlert(true)
-        setSeverity('error')
-        setMessage('TE LA PELASTE KIKIN, YA TE QUITE PERMISOS...')
-      } else if (empleado.rol._id === rolCallCenterId) {
+      if (empleado.rol._id === rolCallCenterId) {
         navigate('/call_center', {
           state: {
             empleado: empleado,
