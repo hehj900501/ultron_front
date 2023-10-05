@@ -57,6 +57,7 @@ export const AgendarDermapenContainer = (props) => {
 		onChangePaymentMethod,
 		formasPago,
 		colorBase,
+		selectedAreas,
 		// TABLE DATES PROPERTIES
 		titulo,
 		columns,
@@ -182,7 +183,7 @@ export const AgendarDermapenContainer = (props) => {
 							className={classes.button}
 							color="primary"
 							variant="contained"
-							disabled={!isValid || isSubmitting || !paciente.nombres || !values.dermatologo}
+							disabled={!isValid || isSubmitting || !paciente.nombres || !values.dermatologo || !selectedAreas} 
 							onClick={() => onClickAgendar(values)}
 							text='GUARDAR' />
 					</Grid>

@@ -133,6 +133,7 @@ const AgendarDermapen = (props) => {
 	const [openModalPagos, setOpenModalPagos] = useState(false)
 	const [datosImpresion, setDatosImpresion] = useState()
 	const [materiales, setMateriales] = useState([])
+	const [selectedAreas, setSelectedAreas] = useState(false)
 
 	const date = new Date()
 	const dia = addZero(date.getDate())
@@ -610,6 +611,7 @@ const AgendarDermapen = (props) => {
 	}
 
 	const handleChangeAreas = async (items) => {
+		setSelectedAreas(items.length > 0)
 		setIsLoading(true)
 		setValues({
 			...values,
@@ -774,6 +776,7 @@ const AgendarDermapen = (props) => {
 								setFilterDate={setFilterDate}
 								onGuardarModalPagos={handleGuardarModalPagos}
 								materiales={materiales}
+								selectedAreas={selectedAreas}
 								{...props} />
 						}
 					</Formik> :
