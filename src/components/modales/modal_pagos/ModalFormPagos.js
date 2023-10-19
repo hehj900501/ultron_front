@@ -199,6 +199,7 @@ const ModalFormPagos = (props) => {
                 color="secondary"
                 variant="contained"
                 onClick={onClickCancel}
+                disabled={pagos.length > 0}
                 text={!servicio.pagado ? 'CANCELAR' : 'SALIR'} />
             </Grid>
             {
@@ -209,7 +210,7 @@ const ModalFormPagos = (props) => {
                   color="primary"
                   variant="contained"
                   onClick={calcularTotalPagos}
-                  disabled={pagos == ![]}
+                  disabled={pagos === ![]}
                   text='GUARDAR' />
               </Grid> //: ''
             }

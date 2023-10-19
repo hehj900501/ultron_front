@@ -101,6 +101,8 @@ const AgregarPagosAnticipados = (props) => {
     servicio: {},
   })
 
+  const [dataComplete, setDataComplete] = useState(false)
+
   const columns = [
     { title: 'SERVICIO', field: 'servicio.nombre' },
     { title: 'PRODUCTO', field: 'producto' },
@@ -174,6 +176,7 @@ const AgregarPagosAnticipados = (props) => {
           precio: 0,
           tratamientos: e,
         })
+        
       }
     })
   }
@@ -293,6 +296,8 @@ const AgregarPagosAnticipados = (props) => {
 
   const handleChangeServicio = async (event) => {
     const servicio = event.target.value
+    setDataComplete(servicio._id === servicioBiopsiaId || servicio._id === servicioConsultaId || servicio._id === servicioCuracionId)
+    setSelectedAreas(false)
     setValues({
       ...values,
       servicio: servicio,
@@ -774,6 +779,7 @@ const AgregarPagosAnticipados = (props) => {
             pagoAnticipado={pagoAnticipado}
             openModalPagosMultiservicios={openModalPagosMultiservicios}
             isHoliDay={isHoliDay}
+            dataComplete={dataComplete}
             onChangeHoliDay={(e) => handleChangeHoliDay(e)}
             onChangeServicio={(e) => handleChangeServicio(e)}
             onChangeTratamientos={(e) => handleChangeTratamientos(e)}

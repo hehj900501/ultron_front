@@ -57,6 +57,8 @@ const FormAgregarPagosAnticipados = (props) => {
     colorBase,
     totalPagar,
     onClickPagosMultiservicios,
+    dataComplete,
+    selectedAreas,
     // TABLE COMPONENT
     titulo,
     columns,
@@ -279,7 +281,7 @@ const FormAgregarPagosAnticipados = (props) => {
                   color="primary"
                   variant="contained"
                   onClick={(e) => onClickAgregarSesion(e, values)}
-                  disabled={isLoading}
+                  disabled={!selectedAreas && !dataComplete}
                   text='AGREGAR' />
               </Grid>
 
@@ -300,6 +302,7 @@ const FormAgregarPagosAnticipados = (props) => {
               <Grid item xs={12} sm={6}>
                 <ButtonCustom
                   className={classes.buttonCancel}
+                  disabled={sesionesAnticipadas.length > 0}
                   color="secondary"
                   variant="contained"
                   onClick={onClickCancel}

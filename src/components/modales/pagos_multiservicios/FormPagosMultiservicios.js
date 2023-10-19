@@ -150,6 +150,7 @@ const FormPagosMultiservicios = (props) => {
                 color="secondary"
                 variant="contained"
                 onClick={onClickCancel}
+                disabled={pagos.length > 0}
                 text={true ? 'CANCELAR' : 'SALIR'} />
             </Grid>
             {
@@ -160,7 +161,7 @@ const FormPagosMultiservicios = (props) => {
                   color="primary"
                   variant="contained"
                   onClick={() => onGuardarModalPagos(pagoAnticipado)}
-                  disabled={pagos == ![]}
+                  disabled={pagos === ![]}
                   text='GUARDAR' />
               </Grid> //: ''
             }
