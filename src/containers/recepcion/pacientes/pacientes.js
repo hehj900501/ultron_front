@@ -7,6 +7,7 @@ import { ButtonCustom } from '../../../components/basic/ButtonCustom'
 import { baseUrl } from '../../../services'
 import myStyles from '../../../css'
 import PagosAnticipados from '../../../components/modales/pagos_anticipados'
+import MenuHistoricaClinica from '../../../components/modales/modal_historia_clinica'
 
 export const PacientesContainer = (props) => {
 
@@ -21,6 +22,7 @@ export const PacientesContainer = (props) => {
     options,
     open,
     openHistoric,
+    openHistoriaClinica,
     openPagosAnticipados,
     handleOpen,
     handleClose,
@@ -67,6 +69,15 @@ export const PacientesContainer = (props) => {
         openHistoric ?
           <MenuHistoricos
             open={openHistoric}
+            onClose={handleClose}
+            paciente={paciente}
+            colorBase={colorBase}
+            empleado={empleado} /> : ''
+      }
+      {
+        openHistoriaClinica ?
+          <MenuHistoricaClinica
+            open={openHistoriaClinica}
             onClose={handleClose}
             paciente={paciente}
             colorBase={colorBase}

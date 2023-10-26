@@ -26,6 +26,7 @@ const Pacientes = (props) => {
 
 	const [open, setOpen] = useState(false)
 	const [openHistoric, setOpenHistoric] = useState(false)
+	const [openHistoriaClinica, setOpenHistoriaClinica] = useState(false)
 	const [openPagosAnticipados, setOpenPagosAnticipados] = useState(false)
 	const [openAlert, setOpenAlert] = useState(false)
 	const [paciente, setPaciente] = useState({})
@@ -82,6 +83,7 @@ const Pacientes = (props) => {
 		setPaciente({})
 		setOpen(false)
 		setOpenHistoric(false)
+		setOpenHistoriaClinica(false)
 		setOpenPagosAnticipados(false)
 	}
 
@@ -163,13 +165,8 @@ const Pacientes = (props) => {
 	}
 
 	const handleClickHistoriaClinica = (event, rowData) => {
-		navigate('/imprimir/historia_clinica', {
-			state: {
-				sucursal:sucursal,
-				paciente:rowData,
-				colorBase:colorBase, 
-			}
-		  })
+		setPaciente(rowData)
+		setOpenHistoriaClinica(true)
 	}
 
 	const actions = [
@@ -214,9 +211,9 @@ const Pacientes = (props) => {
 		{
 			tooltip: 'PAGOS ANTICIPADOS',
 		},
-		// {
-		// 	tooltip: 'HISTORIA CLINICA',
-		// }
+		{
+			tooltip: 'HISTORIA CLINÍCA',
+		}
 	]
 
 	const onChangeActions = (e, rowData) => {
@@ -249,7 +246,7 @@ const Pacientes = (props) => {
 			case 'PAGOS ANTICIPADOS':
 				handleClickPagosAnticipados(e, rowData)
 				break
-			case 'HISTORIA CLINICA':
+			case 'HISTORIA CLINÍCA':
 				handleClickHistoriaClinica(e, rowData)
 				break
 		}
@@ -292,6 +289,7 @@ const Pacientes = (props) => {
 						options={options}
 						open={open}
 						openHistoric={openHistoric}
+						openHistoriaClinica={openHistoriaClinica}
 						openPagosAnticipados={openPagosAnticipados}
 						paciente={paciente}
 						sucursal={sucursal}
