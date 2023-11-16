@@ -56,6 +56,7 @@ export const AgendarConsultaContainer = (props) => {
     onChangeFrecuencia,
     onChangePaymentMethod,
     dataComplete,
+    esTarjeta,
     frecuenciaReconsultaId,
     colorBase,
     // TABLE DATES PROPERTIES
@@ -206,7 +207,7 @@ export const AgendarConsultaContainer = (props) => {
               className={classes.button}
               color="primary"
               variant="contained"
-              disabled={dataComplete}
+              disabled={dataComplete || esTarjeta}
               onClick={() => onClickAgendar(values)}
               text='GUARDAR' />
           </Grid>

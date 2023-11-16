@@ -15,7 +15,7 @@ import { ControlCamera } from "@material-ui/icons"
 import { findEmployeeById } from "../../../../../services/empleados"
 import { findSesionAnticipadaByRangeDateAndSucursal } from "../../../../../services/sesiones_anticipadas"
 import { findPagoAnticipadoByRangeDateAndSucursal } from "../../../../../services/pagos_anticipados"
-import { statusCanceloSPId, tratamientoLuzpulzadaId } from "../../../../../utils/constants"
+import { statusCanceloSPId, tratamientoLuzpulzadaId, tratamientoRadiofrecuenciaId } from "../../../../../utils/constants"
 
 const useStyles = makeStyles(theme => ({
 	backdrop: {
@@ -345,9 +345,6 @@ const ReportesDetallesGeneral = (props) => {
 	}
 
 	const procesarAparatologia = (aparatologia, datos) => {
-		if (aparatologia.status && aparatologia.status._id === statusCanceloSPId) {
-			// servicioCancelado(aparatologia, datos)
-		}
 		aparatologia.tratamientos.forEach(tratamiento => {
 			const producto = tratamiento
 			producto.areasSeleccionadas.forEach(areaSeleccionada => {
@@ -440,7 +437,7 @@ const ReportesDetallesGeneral = (props) => {
 								const descuentoPorcentaje = 100 - (total * 100 / importe1)
 								const descuentoCantidad = (importe1 * descuentoPorcentaje / 100)
 								let pagoDermatologo = 0
-								if (tratamiento._id === tratamientoLuzpulzadaId)  {
+								if (tratamiento._id === tratamientoLuzpulzadaId || tratamiento._id === tratamientoRadiofrecuenciaId) {
 									pagoDermatologo = aparatologia.dermatologo._id !== dermatologoDirectoId
 									? comisionAreaBySucursalAndTipo(sucursal._id, aparatologia.tipo_cita._id, areaSeleccionada)
 									: 0
@@ -461,9 +458,6 @@ const ReportesDetallesGeneral = (props) => {
 									producto: producto,
 									impuesto_porcentaje: `${impuestoPorcentaje}%`,
 									impuesto_cantidad: toFormatterCurrency(impuesto),
-									//importe_servicio: aparatologia.precio_moneda,
-									//importe_producto: toFormatterCurrency(importe1),
-									//precio_real: toFormatterCurrency(areaSeleccionada.precio_real),
 									importe_1: toFormatterCurrency(importe1),
 									importe_2: toFormatterCurrency(importe2),
 									descuento_porcentaje: `${redondearDecimales(descuentoPorcentaje)}%`,
@@ -484,6 +478,8 @@ const ReportesDetallesGeneral = (props) => {
 									total_clinica: toFormatterCurrency(pagoClinica),
 									turno: pago.turno ? (pago.turno === 'm' ? 'MATUTINO' : 'VESPERTINO') : "SIN TURNO",
 								}
+								console.log("KAOZ", dato);
+
 								datos.push(dato)
 							} while (pago.total !== 0 && precioReal !== 0)
 						}

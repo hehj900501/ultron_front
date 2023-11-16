@@ -42,6 +42,7 @@ import { createEntrada, updateEntrada } from "../../../services/entradas"
 import { createPago } from "../../../services/pagos"
 import { findTurnoActualBySucursal } from "../../../services/corte"
 import {
+	formaPagoTarjetaId,
 	frecuenciaPrimeraVezObj,
 	productoConsultaObj,
 	rolRecepcionistaId
@@ -214,6 +215,10 @@ const AgendarConsulta = (props) => {
 	const dataComplete = !paciente.nombres || !values.precio || !values.dermatologo
 		|| !values.promovendedor || (sucursal._id === sucursalManuelAcunaId ? (!values.fecha_hora || !values.medio) : false)
 		|| (sucursal._id === sucursalRubenDarioId ? (!values.fecha_hora || !values.medio) : false)
+
+	const esTarjeta = (values.forma_pago === formaPagoTarjetaId && (sucursal._id !== sucursalManuelAcunaId)) ? 
+		!values.banco || !values.tipo_tarjeta || !values.digitos
+	: false
 
 	const options = {
 		rowStyle: rowData => {
@@ -938,6 +943,7 @@ const AgendarConsulta = (props) => {
 						productos={productos}
 						onChangeFrecuencia={handleChangeFrecuencia}
 						dataComplete={dataComplete}
+						esTarjeta={esTarjeta}
 						onCloseCuracion={handleCloseCuracion}
 						onCloseEstetica={handleCloseEstetica}
 						curacion={curacion}

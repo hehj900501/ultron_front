@@ -15,6 +15,7 @@ import ModalPacienteDomicilio from "../../../components/modales/modal_paciente_d
 import TableComponent from "../../../components/table/TableComponent";
 import ModalItemReceta from "../../../components/modales/item_receta";
 import ModalItemEstudio from "../../../components/modales/item_estudio";
+import { sucursalFederalismoId } from "../../../utils/constants";
 
 export const InicioContainer = (props) => {
 
@@ -67,6 +68,7 @@ export const InicioContainer = (props) => {
 		colorBase,
 	} = props;
 
+	console.log("KAOZ", sucursal);
 	const classes = myStyles(colorBase)()
 
 	return (
@@ -166,27 +168,31 @@ export const InicioContainer = (props) => {
 						?
 						<Grid item xs={12}>
 							<Paper>
-								<Grid container>
-									<Grid item xs={5}>
-										<ButtonCustom
-											className={classes.button}
-											color="primary"
-											variant="contained"
-											onClick={() => onClickItemReceta()}
-											text={'AGREGAR PRODUCTO'} />
-									</Grid>
-									<Grid item xs={2}>
+								{
+									sucursal._id !== sucursalFederalismoId ?
+									<Grid container>
+										<Grid item xs={5}>
+											<ButtonCustom
+												className={classes.button}
+												color="primary"
+												variant="contained"
+												onClick={() => onClickItemReceta()}
+												text={'AGREGAR PRODUCTO'} />
+										</Grid>
+										<Grid item xs={2}>
 
+										</Grid>
+										<Grid item xs={5}>
+											<ButtonCustom
+												className={classes.button}
+												color="primary"
+												variant="contained"
+												onClick={() => onClickItemEstudio()}
+												text={'AGREGAR ESTUDIO'} />
+										</Grid>
 									</Grid>
-									<Grid item xs={5}>
-										<ButtonCustom
-											className={classes.button}
-											color="primary"
-											variant="contained"
-											onClick={() => onClickItemEstudio()}
-											text={'AGREGAR ESTUDIO'} />
-									</Grid>
-								</Grid>
+									: ''
+								}
 								{
 									productosNormales && productosNormales.length > 0 ?
 									<Fragment>
@@ -214,7 +220,12 @@ export const InicioContainer = (props) => {
 											<br></br>
 										</Grid>
 									</Fragment>
-									: ''										
+									: 
+									<Fragment>
+										<h1>LAS CREACIÓN DE RECETAS EN EL SISTEMA ULTRON</h1>
+										<h1>HA SIDO DESHABILITADA POR EL MOMENTO EN LA SUCURSAL DE FEDERALISMO</h1>
+										<h1>PERO PUEDEN SEGUIR VIENDO EL HISTORIAL EN EL MENU DE LADO IZQUIERDO</h1>
+									</Fragment>																			
 								}
 
 								{

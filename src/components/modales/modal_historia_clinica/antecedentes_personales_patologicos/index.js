@@ -41,8 +41,6 @@ const AntecedentesPersonalesPatologicos = (props) => {
 		findConsultorio,
 	} = props
 
-	console.log("KAOZ", historiaClinica)
-
 	const [openAlert, setOpenAlert] = useState(false)
 	const [message, setMessage] = useState('')
 	const [severity, setSeverity] = useState('success')
