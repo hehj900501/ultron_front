@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react"
 import { makeStyles } from '@material-ui/core/styles'
-import { ReportesDetalleGeneralContainer } from "./reportes_detalle_general"
+import { ReportesDetalleGeneralContainer } from "./reportes_laser"
 import { findConsultsByRangeDateAndSucursal } from "../../../../../services/consultas"
 import { Backdrop, CircularProgress } from "@material-ui/core"
 import { toFormatterCurrency, addZero, getPagoDermatologoByServicio, redondearDecimales, precioAreaBySucursal, comisionAreaBySucursalAndTipo } from "../../../../../utils/utils"
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const ReportesDetallesGeneral = (props) => {
+const ReportesLaser = (props) => {
 
 	const classes = useStyles()
 
@@ -1293,4 +1293,4 @@ const ReportesDetallesGeneral = (props) => {
 	)
 }
 
-export default ReportesDetallesGeneral
+export default ReportesLaser

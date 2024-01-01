@@ -47,18 +47,21 @@ export const InicioContainer = (props) => {
 		onClickImprimirRecetaAntibioticos,
 		onClickImprimirRecetaControlados,
 		onClickImprimirEstudios,
+		onClickImprimirRecetaRecomendaciones,
 		receta,
 		sucursal,
 		// TABLE DATA
 		tituloNormal,
 		tituloAntibioticos,
 		tituloControlados,
+		tituloRecomendaciones,
 		tituloEstudios,
 		columns,
 		columnsEstudio,
 		productosNormales,
 		productosAntibioticos,
 		productosControlados,
+		productosRecomendaciones,
 		analisismedicos,
 		actions,
 		actionsEstudios,
@@ -68,7 +71,6 @@ export const InicioContainer = (props) => {
 		colorBase,
 	} = props;
 
-	console.log("KAOZ", sucursal);
 	const classes = myStyles(colorBase)()
 
 	return (
@@ -279,6 +281,36 @@ export const InicioContainer = (props) => {
 												onClick={() => onClickImprimirRecetaControlados()}
 												disabled={!receta.fecha_proxima_consulta}
 												text={'IMPRIMIR CONTROLADOS'} />
+										</Grid>
+
+										<Grid item xs={12}>
+											<br></br>
+										</Grid>
+									</Fragment>
+									: ''
+								}
+
+								{
+									productosRecomendaciones && productosRecomendaciones.length > 0 ?
+									<Fragment>
+										<Grid item xs={12}>
+											<TableComponent
+												titulo={tituloRecomendaciones}
+												columns={columns}
+												data={productosRecomendaciones}
+												actions={actions}
+												options={options}
+												components={components} />
+										</Grid>
+
+										<Grid item xs={12}>
+											<ButtonCustom
+												className={classes.button}
+												color="primary"
+												variant="contained"
+												onClick={() => onClickImprimirRecetaRecomendaciones()}
+												disabled={!receta.fecha_proxima_consulta}
+												text={'IMPRIMIR RECOMENDACIONES'} />
 										</Grid>
 
 										<Grid item xs={12}>

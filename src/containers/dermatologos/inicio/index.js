@@ -1,50 +1,50 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { findSurgeryBySucursalAndDermatologoId } from "../../../services/consultorios";
-import { createReceta, findRecetaByConsultaId, updateReceta } from "../../../services/recetas";
-import { createEstudio, findEstudioByConsultaId, updateEstudio } from "../../../services/estudios";
-import { InicioContainer } from "./inicio";
-import { Snackbar, Grid, Backdrop, CircularProgress, TablePagination, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
-import { findLaboratorioById } from "../../../services/laboratorios";
-import { findProductoComercialById } from "../../../services/productos_comerciales";
-import { tipoMedicamentoAntibioticoId, tipoMedicamentoControladoId, tipoMedicamentoNormalId } from "../../../utils/constants";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react"
+import { findSurgeryBySucursalAndDermatologoId } from "../../../services/consultorios"
+import { createReceta, findFolioBySucursal, findRecetaByConsultaId, updateReceta } from "../../../services/recetas"
+import { createEstudio, findEstudioByConsultaId, updateEstudio } from "../../../services/estudios"
+import { InicioContainer } from "./inicio"
+import { Snackbar, Grid, Backdrop, CircularProgress, TablePagination, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core"
+import MuiAlert from '@material-ui/lab/Alert'
+import { tipoMedicamentoAntibioticoId, tipoMedicamentoControladoId, tipoMedicamentoNormalId, tipoMedicamentoRecomendacionId } from "../../../utils/constants"
+import { useNavigate } from "react-router-dom"
 
 const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const InicioDermatologos = (props) => {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [consultorio, setConsultorio] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('success');
-  const [openModalPacienteDomicilio, setOpenModalPacienteDomicilio] = useState(false);
-  const [openModalItemReceta, setOpenModalItemReceta] = useState(false);
-  const [productosNormales, setProductosNormales] = useState([]);
-  const [productosAntibioticos, setProductosAntibioticos] = useState([]);
-  const [productosControlados, setProductosControlados] = useState([]);
-  const [producto, setProducto] = useState({});
-  const [receta, setReceta] = useState({});
-  const [openModalItemEstudio, setOpenModalItemEstudio] = useState(false);
-  const [analisismedicos, setAnalisisMedicos] = useState({});
+  const [consultorio, setConsultorio] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [message, setMessage] = useState('')
+  const [severity, setSeverity] = useState('success')
+  const [openModalPacienteDomicilio, setOpenModalPacienteDomicilio] = useState(false)
+  const [openModalItemReceta, setOpenModalItemReceta] = useState(false)
+  const [productosNormales, setProductosNormales] = useState([])
+  const [productosAntibioticos, setProductosAntibioticos] = useState([])
+  const [productosControlados, setProductosControlados] = useState([])
+  const [productosRecomendaciones, setProductoRecomendaciones] = useState([])
+  const [producto, setProducto] = useState({})
+  const [receta, setReceta] = useState({})
+  const [openModalItemEstudio, setOpenModalItemEstudio] = useState(false)
+  const [analisismedicos, setAnalisisMedicos] = useState({})
 
   const {
     dermatologo,
     sucursal,
     colorBase,
-  } = props;
+  } = props
 
-  const classes = props;
+  const classes = props
 
-  const tituloNormal = 'MEDICAMENTOS NORMALES';
-  const tituloAntibioticos = 'ANTIBIÓTICOS';
-  const tituloControlados = 'MEDICAMENTOS CONTROLADOS';
-  const tituloEstudios = 'ESTUDIOS';
+  const tituloNormal = 'MEDICAMENTOS NORMALES'
+  const tituloAntibioticos = 'ANTIBIÓTICOS'
+  const tituloControlados = 'MEDICAMENTOS CONTROLADOS'
+  const tituloRecomendaciones = 'RECOMENDACIONES'
+  const tituloEstudios = 'ESTUDIOS'
 
   const columns = [
     { title: 'LABORATORIO', field: 'nombre_laboratorio' },
@@ -54,7 +54,7 @@ const InicioDermatologos = (props) => {
 
   const columnsEstudio = [
     { title: 'NOMBRE', field: 'nombre' },
-  ];
+  ]
 
   const loadEstudios = async (consultaId) => {
     const response = await findEstudioByConsultaId(consultaId)
@@ -65,46 +65,46 @@ const InicioDermatologos = (props) => {
   }
 
   const findConsultorio = async () => {
-    setIsLoading(true);
-    const response = await findSurgeryBySucursalAndDermatologoId(sucursal._id, dermatologo._id);
+    setIsLoading(true)
+    const response = await findSurgeryBySucursalAndDermatologoId(sucursal._id, dermatologo._id)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      const consultorio = response.data;
-      setConsultorio(consultorio);
+      const consultorio = response.data
+      setConsultorio(consultorio)
       if (!consultorio.disponible) {
-        abrirReceta(consultorio);
+        abrirReceta(consultorio)
         loadEstudios(consultorio.consultaId)
       } {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
   }
 
   const handleOnClickEditarProducto = async (event, rowData) => {
-    setIsLoading(true);
-    setProducto(rowData);
-    setOpenModalItemReceta(true);
-    setIsLoading(false);
+    setIsLoading(true)
+    setProducto(rowData)
+    setOpenModalItemReceta(true)
+    setIsLoading(false)
   }
 
   const handleOnClickEliminarItem = async (event, rowData) => {
-    setIsLoading(true);
-    let ind = -1;
+    setIsLoading(true)
+    let ind = -1
     receta.productos.forEach((product, index) => {
       if (product.nombre_producto === rowData.nombre_producto && product.recomendacion === rowData.recomendacion){
         ind = index
       } 
     })
-    receta.productos.splice(ind, 1);
-    const response = await updateReceta(receta._id, receta);
+    receta.productos.splice(ind, 1)
+    const response = await updateReceta(receta._id, receta)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      findConsultorio();
+      findConsultorio()
     }
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   const handleOnClickEliminarItemEstudios = async (event, rowData) => {
-    setIsLoading(true);
+    setIsLoading(true)
     const index = analisismedicos.indexOf(rowData)
     analisismedicos.splice(index, 1)
     const response = await findEstudioByConsultaId(consultorio.consultaId)
@@ -116,7 +116,7 @@ const InicioDermatologos = (props) => {
         findConsultorio()
       }
     }
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   const handleClickImprimirUnProducto = async (event, rowData) => {
@@ -140,7 +140,7 @@ const InicioDermatologos = (props) => {
       tooltip: 'ELIMINAR',
       onClick: handleOnClickEliminarItem
     }
-  ];
+  ]
 
   const actions_controlados = [
     {
@@ -151,14 +151,14 @@ const InicioDermatologos = (props) => {
       tooltip: 'IMPRIMIR',
       onClick: handleClickImprimirUnProducto
     }
-  ];
+  ]
 
   const actionsEstudios = [
     {
       tooltip: 'ELIMINAR ESTUDIO',
       onClick: handleOnClickEliminarItemEstudios
     }
-  ];
+  ]
 
   const options = {
     headerStyle: {
@@ -175,17 +175,17 @@ const InicioDermatologos = (props) => {
       textAlign: 'center',
     },
     paging: false,
-  };
+  }
 
   const onChangeActions = (e, rowData) => {
-    const action = e.target.value;
+    const action = e.target.value
     switch (action) {
       case 'EDITAR':
         handleOnClickEditarProducto(e, rowData)
-        break;
+        break
       case 'ELIMINAR':
         handleOnClickEliminarItem(e, rowData)
-        break;
+        break
       case 'ELIMINAR ESTUDIO':
         handleOnClickEliminarItemEstudios(e, rowData)
         break
@@ -228,21 +228,21 @@ const InicioDermatologos = (props) => {
   }
 
   const handleCloseAlert = () => {
-    setOpenAlert(false);
-  };
+    setOpenAlert(false)
+  }
 
   const abrirReceta = async (consultorio) => {
-    setIsLoading(true);
-    const response = await findRecetaByConsultaId(consultorio.consultaId);
+    setIsLoading(true)
+    const response = await findRecetaByConsultaId(consultorio.consultaId)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      const receta = response.data;
+      const receta = response.data
       if (receta) {
-        setReceta(receta);
+        setReceta(receta)
         setReceta({
           ...receta,
           fecha_proxima_consulta: receta.fecha_proxima_consulta ? receta.fecha_proxima_consulta : ""
         })
-        let productos = receta.productos;
+        let productos = receta.productos
         let productosNormalesList = productos.filter(producto => {
           return producto.tipo_medicamento === tipoMedicamentoNormalId
         })
@@ -258,50 +258,41 @@ const InicioDermatologos = (props) => {
         })
         setProductosControlados(productosControladosList)
 
-        // receta.productos.forEach(async (producto) => {
-        //   const responseLaboratorio = await findLaboratorioById(producto.laboratorio._id);
-        //   const responseProductoComercial = await findProductoComercialById(producto.producto._id);
-        //   if (`${responseLaboratorio.status}` === process.env.REACT_APP_RESPONSE_CODE_OK &&
-        //     `${responseProductoComercial.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-        //     producto.laboratorio = responseLaboratorio.data;
-        //     producto.producto = responseProductoComercial.data;
-        //     setIsLoading(false);
-        //   }
-        // })
+        let productosRecomendacionesList = productos.filter(producto => {
+          return producto.tipo_medicamento === tipoMedicamentoRecomendacionId
+        })
+
+        setProductoRecomendaciones(productosRecomendacionesList)
       } else {
-        const newReceta = {
-          create_date: new Date(),
-          consultaId: consultorio.consultaId,
-          paciente: consultorio.paciente._id,
-          dermatologo: consultorio.dermatologo._id,
-          sucursal: consultorio.sucursal,
-          productos: [],
-          fecha_proxima_consulta: new Date(),
-        };
-
-        const responseReceta = await createReceta(newReceta);
-
-        if (`${responseReceta.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
-          setSeverity('success');
-          setOpenAlert(true);
-          setMessage('RECETA CREADA CORRECTAMENTE');
-          setReceta(responseReceta.data);
-          setReceta({
-            ...receta,
-            fecha_proxima_consulta: receta.fecha_proxima_consulta ? receta.fecha_proxima_consulta : ""
-          })
-          findConsultorio()
-          // responseReceta.data.productos.forEach(async (producto) => {
-          //   const responseLaboratorio = await findLaboratorioById(producto.laboratorio._id);
-          //   const responseProductoComercial = await findProductoComercialById(producto.producto._id);
-          //   if (`${responseLaboratorio.status}` === process.env.REACT_APP_RESPONSE_CODE_OK &&
-          //     `${responseProductoComercial.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-          //     producto.laboratorio = responseLaboratorio.data;
-          //     producto.producto = responseProductoComercial.data;
-          //   }
-          // })
+        const responseConsecutivo = await findFolioBySucursal(sucursal._id)
+        if (`${responseConsecutivo.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
+          const folio = `U${sucursal.clave}-${responseConsecutivo.data}`
+          const newReceta = {
+            create_date: new Date(),
+            folio: folio,
+            consultaId: consultorio.consultaId,
+            paciente: consultorio.paciente._id,
+            dermatologo: consultorio.dermatologo._id,
+            sucursal: consultorio.sucursal,
+            productos: [],
+            fecha_proxima_consulta: new Date(),
+          }
+  
+          const responseReceta = await createReceta(newReceta)
+  
+          if (`${responseReceta.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
+            setSeverity('success')
+            setOpenAlert(true)
+            setMessage('RECETA CREADA CORRECTAMENTE')
+            setReceta(responseReceta.data)
+            setReceta({
+              ...receta,
+              fecha_proxima_consulta: receta.fecha_proxima_consulta ? receta.fecha_proxima_consulta : ""
+            })
+            findConsultorio()
+          }
         }
-      }
+      }        
     }
   }
 
@@ -313,11 +304,11 @@ const InicioDermatologos = (props) => {
   }
 
   const handleClickCompletarDatos = (i) => {
-    setOpenModalPacienteDomicilio(true);
+    setOpenModalPacienteDomicilio(true)
   }
 
   const handleClickItemReceta = () => {
-    setOpenModalItemReceta(true);
+    setOpenModalItemReceta(true)
   }
 
   const handleClickItemEstudio = () => {
@@ -372,6 +363,24 @@ const InicioDermatologos = (props) => {
     }   
   }
 
+  const handleClickImprimirRecetaRecomendaciones = async () => {
+    const responseReceta = await updateReceta(receta._id, receta)
+    if (`${responseReceta.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
+      navigate('/imprimir/receta/recomendaciones',
+      {
+        state: {
+          sucursal: sucursal,
+          colorBase: colorBase,
+          productos: productosRecomendaciones,
+          consultorio: consultorio,
+          receta: receta
+        }
+      })
+    }   
+  }
+
+  
+
   const handleClickImprimirEstudios = async () => {
     const responseReceta = await updateReceta(receta._id, receta)
     if (`${responseReceta.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
@@ -388,11 +397,11 @@ const InicioDermatologos = (props) => {
     }   
   }
   const handleClosePacienteDomicilio = () => {
-    setOpenModalPacienteDomicilio(false);
+    setOpenModalPacienteDomicilio(false)
   }
 
   const handleCloseItemReceta = () => {
-    setOpenModalItemReceta(false);
+    setOpenModalItemReceta(false)
   }
 
   const handleCloseItemEstudio = () => {
@@ -408,10 +417,10 @@ const InicioDermatologos = (props) => {
       tipo_medicamento: newItem.producto._id.tipo_medicamento
     }
     receta.productos = receta.productos ? receta.productos : []
-    receta.productos.push(item);
-    const response = await updateReceta(receta._id, receta);
+    receta.productos.push(item)
+    const response = await updateReceta(receta._id, receta)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      findConsultorio();
+      findConsultorio()
     }
   }
 
@@ -434,7 +443,7 @@ const InicioDermatologos = (props) => {
     setIsLoading(true)
     findConsultorio()
 
-  }, []);
+  }, [])
 
   return (
     <Fragment>
@@ -455,6 +464,7 @@ const InicioDermatologos = (props) => {
               onClickImprimirReceta={handleClickImprimirReceta}
               onClickImprimirRecetaAntibioticos={handleClickImprimirRecetaAntibioticos}
               onClickImprimirRecetaControlados={handleClickImprimirRecetaControlados}
+              onClickImprimirRecetaRecomendaciones={handleClickImprimirRecetaRecomendaciones}
               onClickImprimirEstudios={handleClickImprimirEstudios}
               onChangeProximaConsulta={(e) => handleChangeProximaConsulta(e)}
               openModalPacienteDomicilio={openModalPacienteDomicilio}
@@ -472,12 +482,14 @@ const InicioDermatologos = (props) => {
               tituloNormal={tituloNormal}
               tituloAntibioticos={tituloAntibioticos}
               tituloControlados={tituloControlados}
+              tituloRecomendaciones={tituloRecomendaciones}
               tituloEstudios={tituloEstudios}
               columns={columns}
               columnsEstudio={columnsEstudio}
               productosNormales={productosNormales}
               productosAntibioticos={productosAntibioticos}
               productosControlados={productosControlados}
+              productosRecomendaciones={productosRecomendaciones}
               actions={actions}
               actionsEstudios={actionsEstudios}
               actions_controlados={actions_controlados}
@@ -495,7 +507,7 @@ const InicioDermatologos = (props) => {
       }
 
     </Fragment>
-  );
+  )
 }
 
-export default InicioDermatologos;
+export default InicioDermatologos

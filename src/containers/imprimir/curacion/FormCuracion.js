@@ -37,8 +37,6 @@ const FormCuracion = (props) => {
     colorBase,
   } = props
 
-  console.log("KAOZ", sucursal);
-
   const classes = myStyles(colorBase)()
 
   const fecha = new Date()

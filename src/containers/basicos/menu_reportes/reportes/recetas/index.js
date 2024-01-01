@@ -13,6 +13,7 @@ import myStyles from "../../../../../css";
 import PrintIcon from '@material-ui/icons/Print';
 import { ReportesRecetasContainer } from "./reportes_recetas";
 import { findRecetaByRangeDateAndSucursal } from "../../../../../services/recetas";
+import { sexoMasculinoId } from "../../../../../utils/constants";
 
 const useStyles = makeStyles(theme => ({
 	backdrop: {
@@ -52,10 +53,12 @@ const ReportesRecetas = (props) => {
 	});
 
 	const columns = [
+		{ title: 'FOLIO', field: 'folio' },
 		{ title: 'FECHA', field: 'fecha' },
 		{ title: 'DERMATOLOGO', field: 'nombre_dermatologo' },
 		{ title: 'PACIENTE', field: 'nombre_paciente' },
 		{ title: 'EDAD', field: 'edad_paciente' },
+		{ title: 'SEXO', field: 'sexo' },
 		{ title: 'TELÉFONO', field: 'telefono_paciente' },		
 		{ title: 'CP', field: 'cp_paciente' },
 		{ title: 'PROXIMA CONSULTA', field: 'fecha_proxima_consulta' },
@@ -94,11 +97,13 @@ const ReportesRecetas = (props) => {
 				receta.productos.forEach((pro) => {
 					let registro = {
 						fecha: dateToString(receta.create_date),
+						folio: receta.folio,
 						nombre_dermatologo: receta.dermatologo.nombre,
 						nombre_paciente: `${receta.paciente.nombres} ${receta.paciente.apellidos}`,
 						edad_paciente: culcularEdad(receta.paciente.fecha_nacimiento),
+						sexo: receta.paciente.sexo === sexoMasculinoId ? "MASCULINO" : "FEMENINO",
 						telefono_paciente: receta.paciente.telefono,
-						fecha_proxima_consulta: receta.fecha_proxima_consulta,
+						fecha_proxima_consulta: dateToString(receta.fecha_proxima_consulta),
 						cp_paciente: receta.paciente.codigo_postal,
 						nombre_laboratorio: pro.nombre_laboratorio,
 						nombre_producto: pro.nombre_producto,

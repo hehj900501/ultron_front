@@ -240,21 +240,6 @@ const ImprimirPagoDermatologo = (props) => {
     }
   }
 
-  const loadSesionesAnticipadas = async (hora_apertura, hora_cierre) => {
-    const response = await findSesionesAnticipadasByPayOfDoctorFechaPago(sucursal._id, dermatologo._id, hora_apertura, hora_cierre ? hora_cierre : new Date(), token)
-    if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
-      response.data.forEach(item => {
-        item.show_tratamientos = item.tratamientos.map(tratamiento => {
-          const show_areas = tratamiento.areasSeleccionadas.map(area => {
-            return `${area.nombre}`
-          })
-          return `►${tratamiento.nombre}(${show_areas}) `
-        })
-      })
-      // setSesionesAnticipadas(response.data)
-    }
-  }
-
   const loadPagosAnticipados = async (hora_apertura, hora_cierre) => {
     const response = await findPagosAnticipadssByPayOfDoctorFechaPago(sucursal._id, dermatologo._id, hora_apertura, hora_cierre ? hora_cierre : new Date(), token)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {

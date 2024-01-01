@@ -87,6 +87,7 @@ const ModalEstetica = (props) => {
     producto: estetica.producto,
     status: estetica.status._id,
     frecuencia: estetica.frecuencia._id,
+    observaciones: estetica.observaciones,
     hora: 0,
     minutos: 0,
   })

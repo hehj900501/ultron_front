@@ -192,6 +192,7 @@ const FormImprimirPagoDermatologo = (props) => {
   const formaPagoSesionAnticipadaId = process.env.REACT_APP_FORMA_PAGO_SESION_ANTICIPADA
   const tratamientoRadiofrecuencia = process.env.REACT_APP_RADIOFRECUENCIA_TRATAMIENTO_ID
   const sesionesAnticipadas = []
+  
   pagosAnticipados.forEach((pagoAnticipado) => {
     pagoAnticipado.sesiones_anticipadas.forEach((sesionAnticipada) => {
       sesionesAnticipadas.push(sesionAnticipada)

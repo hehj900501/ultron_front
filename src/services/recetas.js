@@ -69,3 +69,16 @@ export const findRecetaByRangeDateAndSucursal = async (diai, mesi, anioi, diaf, 
         return error;
     }
 }
+
+export const findFolioBySucursal = async (sucursalId) => {
+    try {
+        const response = await axios({
+            url: `${baseUrl}/receta/get/folio/sucursal/${sucursalId}`,
+            method: 'GET',
+        });
+        return response;
+    } catch (error) {
+        console.log('findFolioBySucursal', error);
+        return error;
+    }
+}

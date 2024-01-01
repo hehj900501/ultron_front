@@ -29,6 +29,7 @@ export const PacientesContainer = (props) => {
     onClickGuardar,
     onClickcConsulta,
     colorBase,
+    setIsLoading,
   } = props
 
   const classes = myStyles(colorBase)()
@@ -50,6 +51,42 @@ export const PacientesContainer = (props) => {
       })
     })
 })
+
+const pacientesSucrusal = () => {
+  setIsLoading(true);
+  const JsonFields = ["Nombre","Telefono","Email","Genero","Fecha nacimiento"]
+
+  let csvStr = JsonFields.join(",") + "\n";
+
+  const url = `${baseUrl}/paciente/`
+  fetch(url, {
+    headers: {
+      Authorization: `Bearer ${empleado.access_token}`
+    }
+  })
+    .then(response => response.json())
+    .then(result => {
+      result.forEach(({nombres, apellidos, email, sexo, fecha_nacimiento, telefono}) => {
+        const Name          = nombres +' '+ apellidos;
+        const Email         = email ? email : 'NA';
+        const Gender        = sexo ? sexo.nombre : 'NA';
+        const Date          = fecha_nacimiento;
+        const Phone         = telefono;
+    
+        csvStr += Name + ',' + Phone + ',' + Email + ',' + Gender + ','  + Date + "\n";
+      })
+
+      const exportName = 'Pacientes_' + new Date().toLocaleDateString('es-MX');
+      var dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(csvStr);
+      var downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href",     dataStr);
+      downloadAnchorNode.setAttribute("download", exportName + ".csv");
+      document.body.appendChild(downloadAnchorNode); // required for firefox
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+      setIsLoading(false);
+    })
+}
 
   return (
     <Fragment>
@@ -107,7 +144,7 @@ export const PacientesContainer = (props) => {
             className={classes.button}
             color="primary"
             variant="contained"
-            // onClick={pacientesSucrusal}
+            onClick={pacientesSucrusal}
             text='Obtener Pacientes' />
         </Grid>
         <Grid item xs={12}>

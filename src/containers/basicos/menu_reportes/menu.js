@@ -111,6 +111,7 @@ export const MenuContainer = props => {
 					<Tab label="RECETAS" {...a11yProps(9)} />
 					<Tab label="EXPEDIENTES" {...a11yProps(10)} />
 					<Tab label="VENTA DIARIA" {...a11yProps(11)} />
+					<Tab label="LÁSER" {...a11yProps(12)} />
 				</Tabs>
 			</AppBar>
 

@@ -77,6 +77,9 @@ const App = () => {
             exact path="/imprimir/receta/controlados"
             element={<ImprimirReceta />} />
           <Route
+            exact path="/imprimir/receta/recomendaciones"
+            element={<ImprimirReceta />} />
+          <Route
             exact path="/imprimir/estudios"
             element={<ImprimirEstudios />} />
           <Route

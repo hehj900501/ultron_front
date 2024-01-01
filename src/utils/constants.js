@@ -94,8 +94,12 @@ export const rolSuperEnfermeroId = process.env.REACT_APP_SUPER_ENFERMERO_ROL_ID
 export const tipoMedicamentoNormalId = process.env.REACT_APP_TIPO_MEDICAMENTO_NORMAL_ID
 export const tipoMedicamentoAntibioticoId = process.env.REACT_APP_TIPO_MEDICAMENTO_ANTIBIOTICO_ID
 export const tipoMedicamentoControladoId = process.env.REACT_APP_TIPO_MEDICAMENTO_CONTROLADO_ID
+export const tipoMedicamentoRecomendacionId = process.env.REACT_APP_TIPO_MEDICAMENTO_RECOMENDACION_ID
 
 export const dermatologoDirectoId = process.env.REACT_APP_DERMATOLOGO_DIRECTO_ID
+
+export const sexoMasculinoId = process.env.REACT_APP_SEXO_MASCULINO
+export const sexoFemeninoId = process.env.REACT_APP_SEXO_FEMENINO
 
 export const frecuenciaPrimeraVezObj = {
     _id: frecuenciaPrimeraVezId,
