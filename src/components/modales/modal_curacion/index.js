@@ -10,8 +10,8 @@ import {
   createCuracion,
   updateCuracion,
 } from "../../../services/curaciones"
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core'
-import { addZero } from '../../../utils/utils'
+import { Backdrop, CircularProgress, FormControl, InputLabel, MenuItem, Select, TablePagination, makeStyles } from '@material-ui/core'
+import { addZero, toFormatterCurrency } from '../../../utils/utils'
 import ModalFormCuracion from './ModalFormCuracion'
 import { createBiopsia } from '../../../services/biopsias'
 import { findProductoByServicio } from '../../../services/productos'
@@ -21,6 +21,7 @@ import { createSalida, findSalidaById, updateSalida } from '../../../services/sa
 import { findTurnoActualBySucursal } from '../../../services/corte'
 import { deleteEntrada } from '../../../services/entradas'
 import { deletePago } from '../../../services/pagos'
+import { showAllTipoBiopsias } from '../../../services/tipo_biopsias'
 
 const useStyles = makeStyles(theme => ({
   backdrop: {
@@ -54,7 +55,6 @@ const ModalCuracion = (props) => {
   const pendienteStatusId = process.env.REACT_APP_PENDIENTE_STATUS_ID
   const asistioStatusId = process.env.REACT_APP_ASISTIO_STATUS_ID
   const reagendoStatusId = process.env.REACT_APP_REAGENDO_STATUS_ID
-  const enProcedimientoStatusId = process.env.REACT_APP_EN_PROCEDIMIENTO_STATUS_ID
   const patologoRolId = process.env.REACT_APP_PATOLOGO_ROL_ID
   const curacionServicioId = process.env.REACT_APP_CURACION_SERVICIO_ID
   const biopsiaServicioId = process.env.REACT_APP_BIOPSIA_SERVICIO_ID
@@ -77,6 +77,10 @@ const ModalCuracion = (props) => {
   const [productos, setProductos] = useState([])
   const [statements, setStatements] = useState([])
   const [medios, setMedios] = useState([])
+  const [tipoBiopsias, setTipoBiopsias] = useState([])
+  const [biopsias, setBiopsias] = useState([])
+  const [tipoBiopsia, setTipoBiopsia] = useState()
+  const [patologo, setPatologo] = useState()
   const [turno, setTurno] = useState({})
   const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false)
   const [dataComplete, setDataComplete] = useState(false)
@@ -119,8 +123,42 @@ const ModalCuracion = (props) => {
     pagos: curacion.pagos,
   })
 
+  const tituloBiopsias = "BIOPSIAS"
+
+  const columns = [
+    { title: 'TIPO BIOPSIA', field: 'tipo_biopsia.nombre' },
+    { title: 'COSTO', field: 'tipo_biopsia.costo' },
+    { title: 'PATÓLOGO', field: 'patologo.nombre' },
+  ]
+
+  const options = {
+    headerStyle: {
+      backgroundColor: colorBase,
+      color: '#FFF',
+      fontWeight: 'bolder',
+      fontSize: '18px',
+      textAlign: 'center',
+    },
+    cellStyle: {
+      fontWeight: 'bolder',
+      fontSize: '16px',
+      padding: '5px',
+      textAlign: 'center',
+    },
+    paging: false,
+  }
+
+  const components = {
+    Pagination: props => {
+      return <TablePagination
+        {...props}
+        rowsPerPageOptions={[5, 10, 20, 30]}
+      />
+    }
+  }
+
   const isDataComplete = (data) => {
-    const validBiopsia = data.hasBiopsia ? !!(data.patologo && data.cantidad_biopsias > 0 && data.costo_biopsias > 0) : true
+    const validBiopsia = data.hasBiopsia ? !!(data.patologo && data.biopsias.length > 0) : true
     setDataComplete(!!(validBiopsia))
   }
 
@@ -131,6 +169,32 @@ const ModalCuracion = (props) => {
       materiales: items
     })
     setIsLoading(false)
+  }
+
+  const handleClickCrearBiopsia = async (event) => {
+    setIsLoading(true)
+    const fecha_actual = new Date()
+    const biopsia = {
+      fecha_realizacion: fecha_actual,
+      dermatologo: values.dermatologo,
+      paciente: values.paciente._id,
+      sucursal: values.sucursal,
+      patologo: patologo,
+      tipo_servicio: biopsiaServicioId,
+      hora_aplicacion: values.hora_aplicacion ? values.hora_aplicacion : new Date(),
+      tipo_biopsia: tipoBiopsia
+    }
+    const idBiopsias = [...values.biopsias]
+    const resp = await createBiopsia([biopsia])
+    if (`${resp.status}` === process.env.REACT_APP_RESPONSE_CODE_CREATED) {
+      resp.data.map(item => {
+        idBiopsias.push(item._id)
+      })
+    }
+    values.biopsias = idBiopsias
+    await updateCuracion(values._id, values, token)
+    await loadCuraciones(new Date(values.fecha_hora))
+    onClose()
   }
 
   const handleClickCrearCuracion = async (event, data) => {
@@ -260,8 +324,26 @@ const ModalCuracion = (props) => {
     })
   }
 
+  const handleChangePatologo = (e) => {
+    setPatologo( e.target.value )
+  }
+
+  const handleChangeTipoBiopsias = (e) => { 
+    const tipoBiopsiaSelect = tipoBiopsias.find(tipoBiopsiaItem => {
+      return tipoBiopsiaItem._id === e.target.value
+    })
+    const val = {
+      total: values.total,
+      total_aplicacion: values.total_aplicacion,
+      materiales: values.materiales,
+      costo_biopsias: tipoBiopsiaSelect.precio,
+    }
+    calcularTotal(val)
+    setTipoBiopsia( tipoBiopsiaSelect._id )
+  }
+
   const calcularTotal = (val) => {
-    let total_aplicacion = Number(val.total)
+    let total_aplicacion = Number(val.total_aplicacion)
     values.materiales.map(item => {
       total_aplicacion -= Number(item.precio)
     })
@@ -328,10 +410,10 @@ const ModalCuracion = (props) => {
   }
 
   const handleEliminarBiopsias = async (e) => {
-    values.total_aplicacion = Number(values.total_aplicacion) + Number(values.costo_biopsias)
 
     const newCuracion = {
       ...values,
+      total_aplicacion: values.total,
       biopsias: [],
       cantidad_biopsias: 0,
       costo_biopsias: 0,
@@ -525,7 +607,6 @@ const ModalCuracion = (props) => {
     }
   }
 
-
   const loadPatologos = async () => {
     const response = await findEmployeesByRolIdAvailable(patologoRolId, token)
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
@@ -541,8 +622,26 @@ const ModalCuracion = (props) => {
     }
   }
 
+  const getTipoBiopsias = async () => {
+    const response = await showAllTipoBiopsias(sucursal)
+    if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
+      setTipoBiopsias(response.data)
+    }
+  }
+
+  const preLoad = () => {
+    if (values.biopsias) {
+      values.biopsias.map(biopsia => {
+        if (biopsia.tipo_biopsia) {
+          biopsia.tipo_biopsia.costo = toFormatterCurrency(biopsia.tipo_biopsia.precio)
+        }
+      })
+    }
+  }
+
   const loadAll = async () => {
     setIsLoading(true)
+    preLoad()
     await loadMateriales()
     await loadPatologos()
     await loadHorariosByServicio()
@@ -553,6 +652,7 @@ const ModalCuracion = (props) => {
     await loadDermatologos()
     await loadStaus()
     await getTurno()
+    await getTipoBiopsias()
     setIsLoading(false)
   }
 
@@ -571,6 +671,7 @@ const ModalCuracion = (props) => {
             onClose={onClose}
             empleado={empleado}
             onClickCrearCuracion={handleClickCrearCuracion}
+            onClickCrearBiopsia={handleClickCrearBiopsia}
             onChangeFecha={(e) => handleChangeFecha(e)}
             onChange={handleChange}
             onChangeTotal={handleChangeTotal}
@@ -603,6 +704,7 @@ const ModalCuracion = (props) => {
             onChangePaymentMethod={(e) => handleChangePaymentMethod(e)}
             productos={productos}
             patologos={patologos}
+            tipoBiopsias={tipoBiopsias}
             tipoServicioId={curacionServicioId}
             frecuenciaReconsultaId={frecuenciaReconsultaId}
             onChangeMotivos={handleChangeMotivos}
@@ -610,7 +712,16 @@ const ModalCuracion = (props) => {
             onChangeMinutos={(e) => handleChangeMinutos(e)}
             isDataComplete={isDataComplete}
             eliminarBiopsias={curacion.hasBiopsia}
-            curacion={curacion} />
+            onChangePatologo={(e) => handleChangePatologo(e)}
+            onChangeTipoBiopsias={(e) => handleChangeTipoBiopsias(e)}
+            curacion={curacion}
+            biopsias={biopsias}
+            tipoBiopsia={tipoBiopsia}
+            patologo={patologo}
+            tituloBiopsias={tituloBiopsias}
+            columns={columns}
+            options={options}
+            components={components} />
           :
           <Backdrop className={classes.backdrop} open={isLoading} >
             <CircularProgress color="inherit" />

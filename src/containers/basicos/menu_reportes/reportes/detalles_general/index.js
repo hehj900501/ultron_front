@@ -624,7 +624,7 @@ const ReportesDetallesGeneral = (props) => {
 
 			curacion.biopsias.forEach(async (biopsia) => {
 
-				let precioBiopsias = Number(curacion.costo_biopsias)
+				let precioBiopsias = Number(biopsia.tipo_biopsia.precio)
 				do {
 
 					let total = 0
@@ -656,7 +656,7 @@ const ReportesDetallesGeneral = (props) => {
 						tipo_tarjeta: pago.tipo_tarjeta_nombre,
 						banco_nombre: pago.banco_nombre,
 						digitos: pago.digitos,
-						importe_1: toFormatterCurrency(curacion.costo_biopsias),
+						importe_1: toFormatterCurrency(biopsia.tipo_biopsia.precio),
 						area: "NO APLICA",
 						descuento_porcentaje_clinica: "0%",
 						descuento_cantidad_clinica: "$0.00",

@@ -9,6 +9,7 @@ import { Multiselect } from 'multiselect-react-dropdown'
 import { toFormatterCurrency } from '../../../utils/utils'
 import { ButtonCustom } from '../../basic/ButtonCustom'
 import myStyles from '../../../css'
+import TableComponent from '../../table/TableComponent'
 
 function getModalStyle() {
   const top = 50
@@ -35,6 +36,7 @@ const ModalFormCuracion = (props) => {
     handleSubmit,
     onClose,
     onClickCrearCuracion,
+    onClickCrearBiopsia,
     open,
     onChangeTotal,
     sucursal,
@@ -61,7 +63,10 @@ const ModalFormCuracion = (props) => {
     statements,
     onChangeObservaciones,
     patologos,
+    tipoBiopsias,
     onChangeCostoBiopsias,
+    onChangePatologo,
+    onChangeTipoBiopsias,
     openModalPagos,
     onCloseModalPagos,
     onGuardarModalPagos,
@@ -74,6 +79,13 @@ const ModalFormCuracion = (props) => {
     colorBase,
     isDataComplete,
     eliminarBiopsias,
+    tipoBiopsia,
+    patologo,
+    // TABLE BIOPSIAS
+    tituloBiopsias,
+    columns,
+    options,
+    components,
   } = props
 
   isDataComplete(values)
@@ -336,7 +348,7 @@ const ModalFormCuracion = (props) => {
 
               {values.hasBiopsia ?
                 <Fragment>
-                  <Grid item xs={12} sm={3}>
+                  {/* <Grid item xs={12} sm={3}>
                     <TextField
                       className={classes.textField}
                       name="cantidad_biopsias"
@@ -364,6 +376,21 @@ const ModalFormCuracion = (props) => {
                         e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 4)
                       }}
                       variant="outlined" />
+                  </Grid> */}
+
+                  <Grid item xs={12} sm={4}>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                      <InputLabel id="simple-select-outlined-hora">TIPO BIOPSIA</InputLabel>
+                      <Select
+                        labelId="simple-select-outlined-tipo-biopsia"
+                        id="simple-select-outlined-tipo-biopsia"
+                        value={tipoBiopsia}
+                        onChange={onChangeTipoBiopsias}
+                        name="tipoBiopsia"
+                        label="TIPO BIOPSIA" >
+                        {tipoBiopsias.sort().map((item, index) => <MenuItem key={index} value={item._id}>{`${item.nombre} - ${toFormatterCurrency(item.precio)}`}</MenuItem>)}
+                      </Select>
+                    </FormControl>
                   </Grid>
 
                   <Grid item xs={12} sm={4}>
@@ -372,14 +399,33 @@ const ModalFormCuracion = (props) => {
                       <Select
                         labelId="simple-select-outlined-patologo"
                         id="simple-select-outlined-patologo"
-                        value={values.patologo}
-                        onChange={onChange}
+                        value={patologo}
+                        onChange={onChangePatologo}
                         name="patologo"
                         label="PATÓLOGO" >
                         {patologos.sort().map((item, index) => <MenuItem key={index} value={item._id}>{item.nombre}</MenuItem>)}
                       </Select>
                     </FormControl>
                   </Grid>
+
+                  <Grid item xs={12} sm={2}>
+                    <ButtonCustom
+                      className={classes.button}
+                      color="primary"
+                      variant="contained"
+                      disabled={!patologo || !tipoBiopsia}
+                      onClick={(e) => onClickCrearBiopsia(e)}
+                      text="AGREGAR" />
+                  </Grid>
+
+                  <Grid item xs={12}>
+											<TableComponent
+												titulo={tituloBiopsias}
+												columns={columns}
+												data={curacion.biopsias}
+												options={options}
+												components={components} />
+										</Grid>
 
                 </Fragment> : ''
               }
