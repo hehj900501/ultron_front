@@ -46,6 +46,7 @@ const ImprimirPagoPatologo = (props) => {
   }
 
   const loadCuraciones = async (hora_apertura, hora_cierre) => {
+    console.log("KAOZ", sucursal._id, patologo._id, hora_apertura, hora_cierre ? hora_cierre : new Date());
     const response = await findCuracionesByPayOfPatologoHoraAplicacion(sucursal._id, patologo._id, hora_apertura, hora_cierre ? hora_cierre : new Date(), token);
     if (`${response.status}` === process.env.REACT_APP_RESPONSE_CODE_OK) {
       const curaciones = response.data;

@@ -8,7 +8,7 @@ import TableComponent from '../../../../../components/table/TableComponent';
 import { ButtonCustom } from '../../../../../components/basic/ButtonCustom';
 import myStyles from '../../../../../css';
 
-export const ReportesDetalleGeneralContainer = (props) => {
+export const ReportesLaserContainer = (props) => {
 
 	const {
 		onChangeStartDate,

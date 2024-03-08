@@ -345,6 +345,7 @@ const AgendarCuracion = (props) => {
 	}
 
 	const handleOnClickEditarCita = async (event, rowData) => {
+		console.log("KAOZ", rowData);
 		setIsLoading(true)
 		setCuracion(rowData)
 		setOpenModal(true)

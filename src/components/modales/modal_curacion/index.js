@@ -111,7 +111,7 @@ const ModalCuracion = (props) => {
     cantidad_biopsias: curacion.biopsias ? curacion.biopsias.length : 0,
     costo_biopsias: curacion.costo_biopsias ? curacion.costo_biopsias : 0,
     hora_aplicacion: curacion.hora_aplicacion,
-    total_aplicacion: curacion.total_aplicacion,
+    total_aplicacion: curacion.total_aplicacion ? curacion.total_aplicacion : curacion.total,
     frecuencia: curacion.frecuencia._id,
     medio: curacion.medio._id,
     forma_pago: curacion.forma_pago._id,
@@ -192,6 +192,7 @@ const ModalCuracion = (props) => {
       })
     }
     values.biopsias = idBiopsias
+    values.patologo = patologo
     await updateCuracion(values._id, values, token)
     await loadCuraciones(new Date(values.fecha_hora))
     onClose()
@@ -332,9 +333,10 @@ const ModalCuracion = (props) => {
     const tipoBiopsiaSelect = tipoBiopsias.find(tipoBiopsiaItem => {
       return tipoBiopsiaItem._id === e.target.value
     })
+    const precioAnterior = values.costo_biopsias
     const val = {
       total: values.total,
-      total_aplicacion: values.total_aplicacion,
+      total_aplicacion: Number(values.total_aplicacion) + Number(precioAnterior),
       materiales: values.materiales,
       costo_biopsias: tipoBiopsiaSelect.precio,
     }
@@ -345,9 +347,10 @@ const ModalCuracion = (props) => {
   const calcularTotal = (val) => {
     let total_aplicacion = Number(val.total_aplicacion)
     values.materiales.map(item => {
-      total_aplicacion -= Number(item.precio)
+      total_aplicacion -=  Number(item.precio ? item.precio : 0)
     })
-    total_aplicacion -= Number(val.costo_biopsias)
+    
+    total_aplicacion -= val.isCambioMaterial ? 0 : Number(val.costo_biopsias)
     setValues({
       ...values,
       precio: val.total,
@@ -361,7 +364,7 @@ const ModalCuracion = (props) => {
   const handleChangeTotal = e => {
     const val = {
       total: e.target.value,
-      total_aplicacion: values.total_aplicacion,
+      total_aplicacion: Number(e.target.value),
       materiales: values.materiales,
       costo_biopsias: values.costo_biopsias,
     }
@@ -370,20 +373,26 @@ const ModalCuracion = (props) => {
 
   const handleChangeItemPrecio = (e, index) => {
     const newMateriales = values.materiales
+    let precioAnterior = 0
+    values.materiales.map(item => {
+      precioAnterior += Number(item.precio ? item.precio : 0)
+    })
     newMateriales[index].precio = e.target.value
     const val = {
       total: values.total,
-      total_aplicacion: values.total_aplicacion,
+      total_aplicacion: Number(values.total_aplicacion) + Number(precioAnterior),
       materiales: newMateriales,
-      costo_biopsias: values.costo_biopsias,
+      isCambioMaterial: true,
+      costo_biopsias: values.costo_biopsias
     }
     calcularTotal(val)
   }
 
   const handleChangeCostoBiopsias = e => {
+    const precioAnterior = values.costo_biopsias
     const val = {
       total: values.total,
-      total_aplicacion: values.total_aplicacion,
+      total_aplicacion: Number(values.total_aplicacion) + Number(precioAnterior),
       materiales: values.materiales,
       costo_biopsias: e.target.value,
     }
@@ -402,11 +411,6 @@ const ModalCuracion = (props) => {
       pagos: pagos,
     })
     setOpenModalPagos(false)
-  }
-
-  const handleChangePagado = (e) => {
-    //setValues({ ...values, pagado: !values.pagado })
-    setOpenModalPagos(!values.pagado)
   }
 
   const handleEliminarBiopsias = async (e) => {
@@ -686,7 +690,6 @@ const ModalCuracion = (props) => {
             dataComplete={dataComplete}
             horarios={horarios}
             colorBase={colorBase}
-            onChangePagado={(e) => handleChangePagado(e)}
             onChangeBiopsia={(e) => handleChangeBiopsia(e)}
             onEliminarBiopsias={(e) => handleEliminarBiopsias(e)}
             onChangeCostoBiopsias={handleChangeCostoBiopsias}
